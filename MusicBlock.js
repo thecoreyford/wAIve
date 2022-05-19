@@ -1,7 +1,5 @@
 
 
-
-
 class MusicBlock{
 
 	constructor(x, y, width, height){
@@ -12,6 +10,8 @@ class MusicBlock{
 	    this.y = y;
 	    this.width = width; 
 	    this.height = height;
+
+	    this.grid = new MusicGrid(this.x, this.y, this.width, this.height);
 	}
 
 	//=================================================================	
@@ -22,10 +22,14 @@ class MusicBlock{
 		this.update();
 		this.over();
 		this.show();
+
+		this.grid.draw();
 	}
 
 	mousePressed(){
 		this.pressed();
+
+		this.grid.mousePressed();
 	}
 
 	mouseReleased(){
@@ -54,6 +58,7 @@ class MusicBlock{
 	    if (this.dragging) {
 	      this.x = mouseX + this.offsetX;
 	      this.y = mouseY + this.offsetY;
+	      this.grid.update(this.x, this.y, this.width, this.height);
 	    }
   	}
 
