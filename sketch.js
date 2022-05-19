@@ -13,28 +13,36 @@ var blockCreator = new BlockCreator(workspace.getX() + 10,
 									40,
 									40);
 
-var oneMusicBlock = new MusicBlock(100,100,125,130);
+
+let musicBlocks =  [];
 
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
 }
 
 function draw() {
-  background(lightGrey);
-  workspace.draw();
-  blockCreator.draw();
-  oneMusicBlock.draw();
+  	noStroke();
+  	background(lightGrey);
+  	workspace.draw();
+  	blockCreator.draw();
+
+  	for (let i = 0; i < musicBlocks.length; ++i){
+		musicBlocks[i].draw();
+	}
 }
 
-function mousePressed(){
-
-	oneMusicBlock.mousePressed();
-
+function mousePressed() {
 	if (blockCreator.hasMouseOver()) {
-		console.log("block creator pressed");
+		musicBlocks.push(new MusicBlock(100,100,180,100));
+	}
+
+	for (let i = 0; i < musicBlocks.length; ++i){
+		musicBlocks[i].mousePressed();
 	}
 }
 
 function mouseReleased(){
-	oneMusicBlock.mouseReleased();
+	for (let i = 0; i < musicBlocks.length; ++i){
+		musicBlocks[i].mouseReleased();
+	}
 }
