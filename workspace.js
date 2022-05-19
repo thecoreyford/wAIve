@@ -6,17 +6,20 @@ class Workspace {
 		this.width = width;
 		this.height = height;
 
-		this.blockCreator = new BlockCreator(this.x + 10,
-											 this.y + 10,
-											 40,
-											 40);
+		
 	}
 
-	draw(){
-		fill(lightGrey);
-		rect(this.x, this.y, this.width, this.height);
+	getX(){return this.x;}
 
-		this.blockCreator.draw();
+	getY(){return this.y;}
+
+	getWidth(){return this.width;}
+
+	getHeight(){return this.height;}
+
+	draw(){
+		fill(lightBlue);
+		rect(this.x, this.y, this.width, this.height);
 	}
 
 }

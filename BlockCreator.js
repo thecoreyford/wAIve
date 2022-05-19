@@ -8,8 +8,20 @@ class BlockCreator{
 	}
 
 	draw(){
-		fill(darkBlue);
+		fill(darkGrey);
 		rect(this.x, this.y, this.width, this.height);
+	}
+
+	hasMouseOver(){
+		if (mouseX >= this.x 
+		    && mouseX <= this.x+this.width
+		    && mouseY >= this.y
+		    && mouseY <= this.y+this.height){
+			return true;
+		}else{
+			return false;
+		}
+
 	}
 	
 }
