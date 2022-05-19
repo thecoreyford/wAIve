@@ -13,18 +13,28 @@ var blockCreator = new BlockCreator(workspace.getX() + 10,
 									40,
 									40);
 
+var oneMusicBlock = new MusicBlock(100,100,125,130);
+
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
-  background(lightGrey);
 }
 
 function draw() {
+  background(lightGrey);
   workspace.draw();
   blockCreator.draw();
+  oneMusicBlock.draw();
 }
 
 function mousePressed(){
+
+	oneMusicBlock.mousePressed();
+
 	if (blockCreator.hasMouseOver()) {
 		console.log("block creator pressed");
 	}
+}
+
+function mouseReleased(){
+	oneMusicBlock.mouseReleased();
 }
