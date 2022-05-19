@@ -1,5 +1,4 @@
 
-
 const canvasWidth = 1250;
 const canvasHeight = 780; //580;
 
@@ -10,7 +9,7 @@ var workspace  = new Workspace(canvasWidth * 0.10,
 
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
-  background(200);
+  background(darkGrey);
 }
 
 function draw() {
