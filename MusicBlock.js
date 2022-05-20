@@ -12,6 +12,8 @@ class MusicBlock{
 	    this.height = height;
 
 	    this.grid = new MusicGrid(this.x, this.y, this.width, this.height);
+	   	this.grid.update(this.x, this.y, this.width, this.height);
+
 	}
 
 	//=================================================================	
@@ -79,12 +81,14 @@ class MusicBlock{
 	    if (mouseX > this.x 
 	    	&& mouseX < this.x + this.width 
 	    	&& mouseY > this.y 
-	    	&& mouseY < this.y + this.height) {
-	      this.dragging = true;
-	      // If so, keep track of relative location 
-	      // of click to corner of rectangle
-	      this.offsetX = this.x - mouseX;
-	      this.offsetY = this.y - mouseY;
+	    	&& mouseY < this.y + this.height
+	    	&& this.grid.hasMouseOver() == false) {
+			this.dragging = true;
+
+			// If so, keep track of relative location 
+			// of click to corner of rectangle
+			this.offsetX = this.x - mouseX;
+			this.offsetY = this.y - mouseY;
 	    }
 	}
 

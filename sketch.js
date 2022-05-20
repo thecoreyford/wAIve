@@ -19,7 +19,7 @@ let musicBlocks =  [];
 
 //===========================================================================
 
-// Functions  
+// MAIN FUNCTIONS  
 
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
@@ -28,7 +28,7 @@ function setup() {
 function draw() {
   	noStroke();
   	background(lightGrey);
-  	
+
   	workspace.draw();
   	blockCreator.draw();
   	for (let i = 0; i < musicBlocks.length; ++i){

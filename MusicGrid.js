@@ -51,6 +51,17 @@ class MusicGrid {
   		}
 	}
 
+	hasMouseOver(){
+		if (mouseX >= this.x 
+		    && mouseX <= this.x+this.width
+		    && mouseY >= this.y
+		    && mouseY <= this.y+this.height){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	mousePressed() {
 		for (let i = 0; i < this.toggleButtons.length; ++i){
 	  		if(this.toggleButtons[i].hasMouseOver()){
