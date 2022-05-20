@@ -1,3 +1,4 @@
+// VARIABLES
 
 const canvasWidth = 1250;
 const canvasHeight = 780; //580;
@@ -16,6 +17,10 @@ var blockCreator = new BlockCreator(workspace.getX() + 10,
 
 let musicBlocks =  [];
 
+//===========================================================================
+
+// Functions  
+
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
 }
@@ -23,25 +28,28 @@ function setup() {
 function draw() {
   	noStroke();
   	background(lightGrey);
+  	
   	workspace.draw();
   	blockCreator.draw();
-
   	for (let i = 0; i < musicBlocks.length; ++i){
 		musicBlocks[i].draw();
 	}
 }
 
 function mousePressed() {
+	// If block creator is pressed
 	if (blockCreator.hasMouseOver()) {
 		musicBlocks.push(new MusicBlock(100,100,180,100));
 	}
 
+	// If a music block is pressed 
 	for (let i = 0; i < musicBlocks.length; ++i){
 		musicBlocks[i].mousePressed();
 	}
 }
 
 function mouseReleased(){
+	// If a music block is released
 	for (let i = 0; i < musicBlocks.length; ++i){
 		musicBlocks[i].mouseReleased();
 	}
