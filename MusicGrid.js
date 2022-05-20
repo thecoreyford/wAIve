@@ -23,9 +23,9 @@ class MusicGrid {
 	}
 
 	update(x, y, w, h){
-		this.x = x + (w * 0.075);
+		this.x = x + (w * 0.075) + 5;
 		this.y = y + (h * 0.05); 
-		this.width = w * 0.85;
+		this.width = w * 0.78;
 		this.height = h * 0.9;
 
 		let counter = 0; 

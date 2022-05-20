@@ -17,9 +17,15 @@ var blockCreator = new BlockCreator(workspace.getX() + 10,
 
 let musicBlocks =  [];
 
+var puzzle_image;
+
 //===========================================================================
 
 // MAIN FUNCTIONS  
+
+function preload() {
+	puzzle_image = loadImage("assets/puzzle.png");
+}
 
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
@@ -39,7 +45,7 @@ function draw() {
 function mousePressed() {
 	// If block creator is pressed
 	if (blockCreator.hasMouseOver()) {
-		musicBlocks.push(new MusicBlock(100,100,180,100));
+		musicBlocks.push(new MusicBlock(100,100,200,100));
 	}
 
 	// If a music block is pressed 

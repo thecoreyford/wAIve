@@ -4,7 +4,6 @@ class MusicBlock{
 
 	constructor(x, y, width, height){
 		this.dragging = false; // Is the object being dragged?
-	    this.rollover = false; // Is the mouse over the ellipse?
 
 	    this.x = x;
 	    this.y = y;
@@ -13,7 +12,6 @@ class MusicBlock{
 
 	    this.grid = new MusicGrid(this.x, this.y, this.width, this.height);
 	   	this.grid.update(this.x, this.y, this.width, this.height);
-
 	}
 
 	//=================================================================	
@@ -22,7 +20,6 @@ class MusicBlock{
 
 	draw(){
 		this.update();
-		this.over();
 		this.show();
 
 		this.grid.draw();
@@ -43,18 +40,6 @@ class MusicBlock{
 	// DRAG LOGIC:
 	// Taken from Shiffman. See https://editor.p5js.org/codingtrain/sketches/U0R5B6Z88 .
 
-	over() {
-	    // Is mouse over object
-	    if (mouseX > this.x 
-	    	&& mouseX < this.x + this.width 
-	    	&& mouseY > this.y 
-	    	&& mouseY < this.y + this.height){
-	      this.rollover = true;
-	    } else {
-	      this.rollover = false;
-	    }
-	}
-
 	update() {
 	    // Adjust location if being dragged
 	    if (this.dragging) {
@@ -65,15 +50,7 @@ class MusicBlock{
   	}
 
   	show() {
-	    // Different fill based on state
-	    if (this.dragging) {
-	      fill(darkBlue);
-	    } else if (this.rollover) {
-	      fill(100);
-	    } else {
-	      fill(darkBlue);
-	    }
-	    rect(this.x, this.y, this.width, this.height);
+	    image(puzzle_image, this.x, this.y, this.width, this.height);
 	}
 
 	pressed() {
