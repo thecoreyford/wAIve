@@ -12,6 +12,9 @@ class MusicBlock{
 
 	    this.grid = new MusicGrid(this.x, this.y, this.width, this.height);
 	   	this.grid.update(this.x, this.y, this.width, this.height);
+
+	   	// connections 
+	   	this.nextBlock = null;
 	}
 
 	//=================================================================	
@@ -46,7 +49,22 @@ class MusicBlock{
 	      this.x = mouseX + this.offsetX;
 	      this.y = mouseY + this.offsetY;
 	      this.grid.update(this.x, this.y, this.width, this.height);
+	      this.updateNeighbours();
 	    }
+  	}
+
+  	updateNeighbours(){
+  		var current = this.nextBlock;
+  		do
+  		{
+  			if(current != null){
+  				current.x = this.x + this.width - 19;
+	    		current.y = this.y;
+	    		current.grid.update(current.x, current.y, current.width, current.height);
+	    		current = current.nextBlock;
+	    	}	
+  		} while (current != null);
+		
   	}
 
   	show() {
@@ -122,6 +140,10 @@ class MusicBlock{
 
 		return false;
 
+  	}
+
+  	setNextBlock(newConnection) {
+  		this.nextBlock = newConnection;
   	}
 
 }

@@ -63,7 +63,12 @@ function mouseReleased(){
 		// Also check for connections with all other music blocks
 		for (let j = 0; j < musicBlocks.length; ++j){
 			if (j != i){
-				musicBlocks[i].shouldMakeConnection(musicBlocks[j].getRightPoints());
+				if (musicBlocks[i].shouldMakeConnection(musicBlocks[j].getRightPoints())){
+					musicBlocks[j].setNextBlock(musicBlocks[i]);
+					musicBlocks[j].updateNeighbours();
+					// TODO: Make sure blocks get disconnected when dragged
+					// to stop circular loops.... . 
+				}
 			}
 		}
 	}
