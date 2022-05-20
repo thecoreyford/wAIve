@@ -51,6 +51,12 @@ class MusicBlock{
 
   	show() {
 	    image(puzzle_image, this.x, this.y, this.width, this.height);
+
+	    // ellipse(this.x + 180, this.y, 10, 10);
+	    // ellipse(this.x + this.width, this.y, 10, 10);
+	    // ellipse(this.x + 180, this.y + this.height, 10, 10);
+	   	// ellipse(this.x + this.width, this.y + this.height, 10, 10);
+
 	}
 
 	pressed() {
@@ -70,9 +76,52 @@ class MusicBlock{
 	}
 
   	released() {
-    	this.dragging = false;// Quit dragging
+    	this.dragging = false; // Quit dragging
   	}
 
   	//=================================================================
+
+  	// CONNECTION LOGIC 
+
+  	getLeftPoints() {
+  		// both top then both bottom, left to right
+	    return [this.x, this.y, 
+	    		this.x + 20, this.y,
+	    		this.x, this.y + this.height,
+	    		this.x + 20, this.y + this.height];
+  	}
+
+  	getRightPoints() {
+  		// both top then both bottom, left to right
+	    return [this.x + 180, this.y, 
+	    		this.x + this.width, this.y,
+	    		this.x + 180, this.y + this.height,
+	    		this.x + this.width, this.y + this.height,];
+  	}
+
+  	shouldMakeConnection(other) {
+  		// Very helpful site here: https://www.geeksforgeeks.org/find-two-rectangles-overlap/
+  		
+  		let rx1 = this.getLeftPoints()[0];
+  		let ry1 = this.getLeftPoints()[1];
+  		let rx2 = this.getLeftPoints()[6];
+  		let ry2 = this.getLeftPoints()[7];
+
+  		let lx1 = other[0];
+  		let ly1 = other[1];
+  		let lx2 = other[6];
+  		let ly2 = other[7];
+
+    	if ( lx1 < rx2 
+    		 && lx2 > rx1 
+    		 && ly1 < ry2 
+    		 && ly2 > ry1 )
+        {   
+    		return true;
+    	}
+
+		return false;
+
+  	}
 
 }

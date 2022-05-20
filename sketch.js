@@ -57,6 +57,16 @@ function mousePressed() {
 function mouseReleased(){
 	// If a music block is released
 	for (let i = 0; i < musicBlocks.length; ++i){
+		// Stop dragging
 		musicBlocks[i].mouseReleased();
+
+		// Also check for connections with all other music blocks
+		for (let j = 0; j < musicBlocks.length; ++j){
+			if (j != i){
+				musicBlocks[i].shouldMakeConnection(musicBlocks[j].getRightPoints());
+			}
+		}
 	}
+
+	// Check connections amongst  the music blocks
 }
