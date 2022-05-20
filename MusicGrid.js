@@ -8,7 +8,7 @@ class MusicGrid {
 		this.gridWidth = 8;
 		this.gridHeight = 8;
 
-		this.padding = 2;
+		this.padding = 0.5;
 
 		this.toggleButtons = [];
 
@@ -43,7 +43,7 @@ class MusicGrid {
 
 	draw(){
 		noStroke();
-		fill("#FF88FF")
+		fill(darkGrey)
 		rect(this.x, this.y, this.width, this.height);
   
   		for (let i = 0; i < this.toggleButtons.length; ++i){

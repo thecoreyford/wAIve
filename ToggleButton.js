@@ -5,7 +5,7 @@ class ToggleButton{
 		this.width = width; 
 		this.height = height; 
 
-		this.isOn = true;
+		this.isOn = false;
 	}
 
 	update(x, y, w, h){
@@ -17,9 +17,9 @@ class ToggleButton{
 
 	draw(){
 		if(this.isOn){
-			fill("#FFFFFF")
+			fill(orange);
 		}else{
-			fill("#FF0000")
+			fill(lightGrey);
 		}
 		
 		rect(this.x, this.y, this.width, this.height);

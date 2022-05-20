@@ -6,3 +6,5 @@ const lightBlue = "#C4DBFA";
 const lightGrey = "#F7F7F7";
 
 const darkGrey = "#757575";
+
+const orange = "#F0A034";
