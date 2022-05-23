@@ -105,7 +105,7 @@ class PlayButton
 		// Find start blocks (filter example)
 		var startBlocks = data.filter(function(d) 
 		{ 
-			return d["leftConnection"] == null; 
+			return d["leftConnection"] === null; 
 		});
 
 		// Empty the buffers! 

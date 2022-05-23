@@ -115,7 +115,7 @@ class MusicBlock
 	    	&& mouseX < this.x + this.width 
 	    	&& mouseY > this.y 
 	    	&& mouseY < this.y + this.height
-	    	&& this.grid.hasMouseOver() == false) {
+	    	&& this.grid.hasMouseOver() === false) {
 			
 			// Start dragging
 			this.dragging = true;
