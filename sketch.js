@@ -58,7 +58,6 @@ function draw()
 
 // INTERACTIVITY
 
-
 function mousePressed() 
 {
 	// If block creator is pressed

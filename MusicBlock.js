@@ -194,4 +194,9 @@ class MusicBlock
 		return this.nextBlock; 
 	}
 
+	getGridArray()
+	{
+		return this.grid.getInternalButtonsArray();
+	}
+
 }
