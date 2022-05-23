@@ -89,6 +89,9 @@ class MusicBlock
 
   	show() 
   	{
+  		fill()
+  		rect(30, 20, 55, 55, 20);
+
 	    image(puzzle_image, this.x, this.y, this.width, this.height);
 
 	    // ellipse(this.x + 180, this.y, 10, 10);

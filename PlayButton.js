@@ -9,7 +9,7 @@ class PlayButton
 
 		this.player = new mm.Player();
 
-		this.buffer = [];
+		this.midiBuffer = [];
 		this.playhead = 0; 
 		this.mode = "STOPPED"; // "PREPARE_BUFFER" || "PLAYING"
 	}
@@ -30,7 +30,8 @@ class PlayButton
 
 	updatePlayback()
 	{
-		if (this.playhead >= this.buffer.length){
+		if (this.playhead >= this.midiBuffer.length)
+		{
 			this.mode = "STOPPED";
 			this.playhead = 0; 
 		}
@@ -38,11 +39,11 @@ class PlayButton
 		if (this.mode === "PREPARE_BUFFER")
 		{
 			let totalNotes = {notes: [], totalTime: 4};
-			for (let i = 0; i < this.buffer[this.playhead].length; ++i) 
+			for (let i = 0; i < this.midiBuffer[this.playhead].length; ++i) 
 			{
 				// Combine the notes vertically for the blocks 
-				for(let notes = 0; notes < this.buffer[this.playhead][i]["notes"].length; ++notes)
-				totalNotes["notes"].push(this.buffer[this.playhead][i]["notes"][notes]);
+				for(let notes = 0; notes < this.midiBuffer[this.playhead][i]["notes"].length; ++notes)
+				totalNotes["notes"].push(this.midiBuffer[this.playhead][i]["notes"][notes]);
 			}
 
 
@@ -83,11 +84,12 @@ class PlayButton
 		processDataset() //< collect all the blocks into the dataset. 
 
 		// Find start blocks (filter example)
-		var startBlocks = data.filter(function(d) { 
+		var startBlocks = data.filter(function(d) 
+		{ 
 			return d["leftConnection"] == null; 
 		});
 
-		this.buffer = []; // Empty the buffer! 
+		this.midiBuffer = []; // Empty the buffer! 
 
 		// For each of the found start blocks...
 		for (let i = 0; i < startBlocks.length; ++i)
@@ -100,16 +102,16 @@ class PlayButton
 
 			do
 			{
-				if (this.buffer[index] !== undefined) 
+				if (this.midiBuffer[index] !== undefined) 
 				{
 					// index exists 
-					this.buffer[index].push(this.gridArrayToNoteSequence(current.getGridArray()));
+					this.midiBuffer[index].push(this.gridArrayToNoteSequence(current.getGridArray()));
 				}
 				else
 				{
 					// index doesn't exist, so create the array 
 					// for this chunk in the buffer 
-					this.buffer.push([this.gridArrayToNoteSequence(current.getGridArray())]);
+					this.midiBuffer.push([this.gridArrayToNoteSequence(current.getGridArray())]);
 				}
 
 				// step to the next node in list
