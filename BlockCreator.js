@@ -13,6 +13,9 @@ class BlockCreator
 	{
 		fill(darkGrey);
 		rect(this.x, this.y, this.width, this.height);
+		fill(lightGrey);
+		rect(this.x + (this.width * 0.5) - 2.5, this.y + 5, 5, 30);
+		rect(this.x + 5, this.y + (this.height * 0.5) - 2.5, 30, 5);
 	}
 
 	hasMouseOver()

@@ -27,6 +27,19 @@ class PlayButton
 		}
 		
 		rect (this.x, this.y, this.width, this.height);
+
+		fill(lightGrey);
+		if (this.mode === "PLAYING" || this.mode === "PREPARE_BUFFER")
+		{
+			rect(this.x + 7, this.y + 7, this.width * 0.66, this.height * 0.66);
+
+		}
+		else
+		{
+			triangle(this.x + 7, this.y + 7, 
+					 this.x + this.width - 7, (this.y + this.height * 0.5),
+					 this.x + 7, this.y + this.height - 7);
+		}
 	}
 
 	updatePlayback()
