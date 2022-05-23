@@ -69,7 +69,7 @@ class PlayButton
 			}
 
 			this.playhead += 1;
-			this.mode = "PREPARE_BUFFER";
+			this.mode = "PREPARE_BUFFER"; //TODO: to function to stop gap.
 		}
 
 	}
