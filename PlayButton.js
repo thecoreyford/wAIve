@@ -10,6 +10,7 @@ class PlayButton
 		this.player = new mm.Player();
 
 		this.midiBuffer = [];
+		this.highlightBuffer = [];
 		this.playhead = 0; 
 		this.mode = "STOPPED"; // "PREPARE_BUFFER" || "PLAYING"
 	}
@@ -34,6 +35,8 @@ class PlayButton
 		{
 			this.mode = "STOPPED";
 			this.playhead = 0; 
+			// make sure all highlights are off... 
+
 		}
 
 		if (this.mode === "PREPARE_BUFFER")
@@ -42,8 +45,15 @@ class PlayButton
 			for (let i = 0; i < this.midiBuffer[this.playhead].length; ++i) 
 			{
 				// Combine the notes vertically for the blocks 
-				for(let notes = 0; notes < this.midiBuffer[this.playhead][i]["notes"].length; ++notes)
-				totalNotes["notes"].push(this.midiBuffer[this.playhead][i]["notes"][notes]);
+				for (let notes = 0; notes < this.midiBuffer[this.playhead][i]["notes"].length; ++notes){
+					totalNotes["notes"].push(this.midiBuffer[this.playhead][i]["notes"][notes]);	
+				}
+				
+			}
+
+			// show highlights for blocks 
+			for (let h = 0; h < this.highlightBuffer[this.playhead].length; ++h){
+				this.highlightBuffer[this.playhead][h].showHighlight = true;
 			}
 
 
@@ -53,6 +63,11 @@ class PlayButton
 
 		if (this.mode === "PLAYING" && !this.player.isPlaying())
 		{
+			// hide highlights for blocks 
+			for (let h = 0; h < this.highlightBuffer[this.playhead].length; ++h){
+				this.highlightBuffer[this.playhead][h].showHighlight = false;
+			}
+
 			this.playhead += 1;
 			this.mode = "PREPARE_BUFFER";
 		}
@@ -71,6 +86,10 @@ class PlayButton
 			{
 				this.player.stop();
 				this.mode = "STOPPED";
+				// stop highlights 
+				for (let h = 0; h < this.highlightBuffer[this.playhead].length; ++h){
+					this.highlightBuffer[this.playhead][h].showHighlight = false;
+				}
 			}
 			else
 			{
@@ -89,7 +108,9 @@ class PlayButton
 			return d["leftConnection"] == null; 
 		});
 
-		this.midiBuffer = []; // Empty the buffer! 
+		// Empty the buffers! 
+		this.midiBuffer = []; 
+		this.highlightBuffer = [];
 
 		// For each of the found start blocks...
 		for (let i = 0; i < startBlocks.length; ++i)
@@ -102,16 +123,18 @@ class PlayButton
 
 			do
 			{
-				if (this.midiBuffer[index] !== undefined) 
+				if (this.midiBuffer[index] !== undefined) //< should be same for highlight
 				{
 					// index exists 
 					this.midiBuffer[index].push(this.gridArrayToNoteSequence(current.getGridArray()));
+					this.highlightBuffer[index].push(current);
 				}
 				else
 				{
 					// index doesn't exist, so create the array 
 					// for this chunk in the buffer 
 					this.midiBuffer.push([this.gridArrayToNoteSequence(current.getGridArray())]);
+					this.highlightBuffer.push([current]);
 				}
 
 				// step to the next node in list
@@ -120,7 +143,6 @@ class PlayButton
 				index += 1;
 			} while (current != null)
 		}
-
 
 		// Start the beautiful music... 
 		this.playhead = 0; 

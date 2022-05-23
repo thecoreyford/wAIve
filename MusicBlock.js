@@ -18,6 +18,9 @@ class MusicBlock
 	   	// connections 
 	   	this.nextBlock = null;
 	   	this.previousBlock = null;
+
+	   	// playback feedback; 
+	   	this.showHighlight = false; 
 	}
 
 	//=================================================================	
@@ -89,10 +92,14 @@ class MusicBlock
 
   	show() 
   	{
-  		fill()
-  		rect(30, 20, 55, 55, 20);
-
 	    image(puzzle_image, this.x, this.y, this.width, this.height);
+
+	    if (this.showHighlight === true){
+	    	let highlightColour = color(yellow);
+  			highlightColour.setAlpha(80);
+  			fill(highlightColour);
+  			rect(this.x - 5, this.y - 2.5, this.width + 5, this.height + 5, 10);
+	    }
 
 	    // ellipse(this.x + 180, this.y, 10, 10);
 	    // ellipse(this.x + this.width, this.y, 10, 10);
