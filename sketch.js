@@ -44,12 +44,14 @@ function draw()
   	background(lightGrey);
 
   	workspace.draw();
-  	blockCreator.draw();
-  	playButton.draw();
+  	
   	for (let i = 0; i < musicBlocks.length; ++i)
   	{
 		musicBlocks[i].draw();
 	}
+
+	blockCreator.draw();
+  	playButton.draw();
 }
 
 //===========================================================================
