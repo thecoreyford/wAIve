@@ -1,5 +1,7 @@
-class ToggleButton{
-	constructor(x, y, width, height){
+class ToggleButton
+{
+	constructor (x, y, width, height)
+	{
 		this.x = x;
 		this.y = y; 
 		this.width = width; 
@@ -8,35 +10,45 @@ class ToggleButton{
 		this.isOn = false;
 	}
 
-	update(x, y, w, h){
+	update (x, y, w, h)
+	{
 		this.x = x;
 		this.y = y; 
 		this.width = w; 
 		this.height = h; 
 	}
 
-	draw(){
-		if(this.isOn){
+	draw()
+	{
+		if (this.isOn)
+		{
 			fill(orange);
-		}else{
+		}
+		else
+		{
 			fill(lightGrey);
 		}
 		
-		rect(this.x, this.y, this.width, this.height);
+		rect (this.x, this.y, this.width, this.height);
 	}
 
-	hasMouseOver(){
+	hasMouseOver()
+	{
 		if (mouseX >= this.x 
 		    && mouseX <= this.x+this.width
 		    && mouseY >= this.y
-		    && mouseY <= this.y+this.height){
+		    && mouseY <= this.y+this.height)
+		{
 			return true;
-		}else{
+		}
+		else
+		{
 			return false;
 		}
 	}
 	
-	toogle(){
+	toogle()
+	{
 		this.isOn = !this.isOn;
 	}
 }

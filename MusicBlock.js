@@ -1,8 +1,10 @@
 
 
-class MusicBlock{
+class MusicBlock
+{
 
-	constructor(x, y, width, height){
+	constructor (x, y, width, height)
+	{
 		this.dragging = false; // Is the object being dragged?
 
 	    this.x = x;
@@ -22,19 +24,22 @@ class MusicBlock{
 
 	// WRAPPER FOR DRAG LOGIC: 
 
-	draw(){
+	draw()
+	{
 		this.update();
 		this.show();
 
 		this.grid.draw();
 	}
 
-	mousePressed(){
+	mousePressed()
+	{
 		this.pressed();
 		this.grid.mousePressed();
 	}
 
-	mouseReleased(){
+	mouseReleased()
+	{
 		this.released();
 	}
 
@@ -43,26 +48,29 @@ class MusicBlock{
 	// DRAG LOGIC:
 	// Taken from Shiffman. See https://editor.p5js.org/codingtrain/sketches/U0R5B6Z88 .
 
-	update() {
+	update() 
+	{
 	    // Adjust location if being dragged
-	    if (this.dragging) {
+	    if (this.dragging) 
+	    {
 
-    	// undo block connections
-		  if (this.previousBlock != null){
-		  	  this.previousBlock.nextBlock = null
-		  	  this.previousBlock = null
-		  }
+	    	// undo block connections
+			  if (this.previousBlock != null)
+			  {
+			  	  this.previousBlock.nextBlock = null
+			  	  this.previousBlock = null
+			  }
 
-	      this.x = mouseX + this.offsetX;
-	      this.y = mouseY + this.offsetY;
-	      this.grid.update(this.x, this.y, this.width, this.height);
-	      
-	      this.updateNeighbours();
-
+		      this.x = mouseX + this.offsetX;
+		      this.y = mouseY + this.offsetY;
+		      this.grid.update(this.x, this.y, this.width, this.height);
+		      
+		      this.updateNeighbours();
 	    }
   	}
 
-  	updateNeighbours(){
+  	updateNeighbours()
+  	{
   		var current = this.nextBlock;
   		var previous = this;
 
@@ -79,7 +87,8 @@ class MusicBlock{
   		
   	}
 
-  	show() {
+  	show() 
+  	{
 	    image(puzzle_image, this.x, this.y, this.width, this.height);
 
 	    // ellipse(this.x + 180, this.y, 10, 10);
@@ -89,7 +98,8 @@ class MusicBlock{
 
 	}
 
-	pressed() {
+	pressed() 
+	{
 	    // Did I click on the rectangle?
 	    if (mouseX > this.x 
 	    	&& mouseX < this.x + this.width 
@@ -107,7 +117,8 @@ class MusicBlock{
 	    }
 	}
 
-  	released() {
+  	released() 
+  	{
     	this.dragging = false; // Quit dragging
   	}
 
@@ -115,7 +126,8 @@ class MusicBlock{
 
   	// CONNECTION LOGIC 
 
-  	getLeftPoints() {
+  	getLeftPoints() 
+  	{
   		// both top then both bottom, left to right
 	    return [this.x, this.y, 
 	    		this.x + 20, this.y,
@@ -123,7 +135,8 @@ class MusicBlock{
 	    		this.x + 20, this.y + this.height];
   	}
 
-  	getRightPoints() {
+  	getRightPoints() 
+  	{
   		// both top then both bottom, left to right
 	    return [this.x + 180, this.y, 
 	    		this.x + this.width, this.y,
@@ -131,7 +144,8 @@ class MusicBlock{
 	    		this.x + this.width, this.y + this.height,];
   	}
 
-  	shouldMakeConnection(other) {
+  	shouldMakeConnection(other) 
+  	{
   		// Very helpful site here: https://www.geeksforgeeks.org/find-two-rectangles-overlap/
   		
   		let rx1 = this.getLeftPoints()[0];
@@ -153,28 +167,31 @@ class MusicBlock{
     	}
 
 		return false;
-
   	}
 
-  	setNextBlock(newConnection) {
+  	setNextBlock(newConnection) 
+  	{
   		this.nextBlock = newConnection;
   	}
 
-  	setLeftConnection(newConnection){
+  	setLeftConnection(newConnection)
+  	{
 		this.previousBlock = newConnection; 
 	}
 
-	setRightConnection(newConnection){
+	setRightConnection(newConnection)
+	{
 		this.nextBlock = newConnection; 
 	}
 
-	getLeftConnection(){
+	getLeftConnection()
+	{
 		return this.previousBlock; 
 	}
 
-	getRightConnection(){
+	getRightConnection()
+	{
 		return this.nextBlock; 
 	}
-
 
 }

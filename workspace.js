@@ -1,6 +1,8 @@
-class Workspace {
+class Workspace 
+{
 	
-	constructor(x,y,width,height){
+	constructor (x,y,width,height)
+	{
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -17,9 +19,10 @@ class Workspace {
 
 	getHeight(){return this.height;}
 
-	draw(){
-		fill(lightBlue);
-		rect(this.x, this.y, this.width, this.height);
+	draw()
+	{
+		fill (lightBlue);
+		rect (this.x, this.y, this.width, this.height);
 	}
 
 }

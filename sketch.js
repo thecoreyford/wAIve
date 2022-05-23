@@ -23,28 +23,34 @@ var puzzle_image;
 
 // MAIN FUNCTIONS  
 
-function preload() {
+function preload() 
+{
 	puzzle_image = loadImage("assets/puzzle.png");
 }
 
-function setup() {
+function setup() 
+{
   createCanvas(canvasWidth, canvasHeight);
 }
 
-function draw() {
+function draw() 
+{
   	noStroke();
   	background(lightGrey);
 
   	workspace.draw();
   	blockCreator.draw();
-  	for (let i = 0; i < musicBlocks.length; ++i){
+  	for (let i = 0; i < musicBlocks.length; ++i)
+  	{
 		musicBlocks[i].draw();
 	}
 }
 
-function mousePressed() {
+function mousePressed() 
+{
 	// If block creator is pressed
-	if (blockCreator.hasMouseOver()) {
+	if (blockCreator.hasMouseOver()) 
+	{
 		musicBlocks.push(new MusicBlock(250 + random(0, 40),
 										150 + random(-20,40),
 										200,
@@ -52,16 +58,15 @@ function mousePressed() {
 	}
 
 	// If a music block is pressed 
-	for (let i = 0; i < musicBlocks.length; ++i){
+	for (let i = 0; i < musicBlocks.length; ++i)
+	{
 		musicBlocks[i].mousePressed();
 	}
 }
 
 function mouseReleased()
 {
-	print(musicBlocks.length); 
-
-	// If a music block is released
+	// If a music block is released...
 	for (let i = 0; i < musicBlocks.length; ++i)
 	{
 		// Stop dragging
