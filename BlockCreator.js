@@ -1,4 +1,5 @@
-class BlockCreator{
+class BlockCreator
+{
 
 	constructor (x,y,width,height)
 	{

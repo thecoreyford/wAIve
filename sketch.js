@@ -9,10 +9,15 @@ var workspace  = new Workspace(canvasWidth * 0.10,
 							   canvasHeight - (2 * (canvasHeight * 0.15)));
 
 
-var blockCreator = new BlockCreator(workspace.getX() + 10,
+var blockCreator = new BlockCreator(workspace.getX() + 60,
 									workspace.getY() + 10,
 									40,
 									40);
+
+var playButton = new PlayButton(workspace.getX() + 10,
+								workspace.getY() + 10,
+								40,
+								40);
 
 
 let musicBlocks = [];
@@ -40,11 +45,17 @@ function draw()
 
   	workspace.draw();
   	blockCreator.draw();
+  	playButton.draw();
   	for (let i = 0; i < musicBlocks.length; ++i)
   	{
 		musicBlocks[i].draw();
 	}
 }
+
+//===========================================================================
+
+// INTERACTIVITY
+
 
 function mousePressed() 
 {
@@ -62,6 +73,9 @@ function mousePressed()
 	{
 		musicBlocks[i].mousePressed();
 	}
+
+	// If play button is pressed
+	playButton.mousePressed();
 }
 
 function mouseReleased()
