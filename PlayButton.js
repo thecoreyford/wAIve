@@ -8,13 +8,15 @@ class PlayButton
 		this.height = height;
 
 		this.player = new mm.Player();
+
+		this.buffer = [];
+		this.playhead = 0; 
+		this.mode = "STOPPED"; // "PREPARE_BUFFER" || "PLAYING"
 	}
 
 	draw()
 	{
-		// Change button colour based on current 
-		// playback status... 
-		if (this.player.isPlaying()) 
+		if (this.mode === "PLAYING" || this.mode === "PREPARE_BUFFER") 
 		{
 			fill (red);
 		}
@@ -24,6 +26,36 @@ class PlayButton
 		}
 		
 		rect (this.x, this.y, this.width, this.height);
+	}
+
+	updatePlayback()
+	{
+		if (this.playhead >= this.buffer.length){
+			this.mode = "STOPPED";
+			this.playhead = 0; 
+		}
+
+		if (this.mode === "PREPARE_BUFFER")
+		{
+			let totalNotes = {notes: [], totalTime: 4};
+			for (let i = 0; i < this.buffer[this.playhead].length; ++i) 
+			{
+				// Combine the notes vertically for the blocks 
+				for(let notes = 0; notes < this.buffer[this.playhead][i]["notes"].length; ++notes)
+				totalNotes["notes"].push(this.buffer[this.playhead][i]["notes"][notes]);
+			}
+
+
+			this.player.start(totalNotes); //< Plays the first start buffer chunk 
+			this.mode = "PLAYING";
+		}
+
+		if (this.mode === "PLAYING" && !this.player.isPlaying())
+		{
+			this.playhead += 1;
+			this.mode = "PREPARE_BUFFER";
+		}
+
 	}
 
 	mousePressed()
@@ -37,6 +69,7 @@ class PlayButton
 			if (this.player.isPlaying())
 			{
 				this.player.stop();
+				this.mode = "STOPPED";
 			}
 			else
 			{
@@ -53,10 +86,8 @@ class PlayButton
 		var startBlocks = data.filter(function(d) { 
 			return d["leftConnection"] == null; 
 		});
-		
-		
-		// Create a buffer to store each vertical step
-		var buffer = []; //< move to private variable for real time playback!.... 
+
+		this.buffer = []; // Empty the buffer! 
 
 		// For each of the found start blocks...
 		for (let i = 0; i < startBlocks.length; ++i)
@@ -69,16 +100,16 @@ class PlayButton
 
 			do
 			{
-				if (buffer[index] !== undefined) 
+				if (this.buffer[index] !== undefined) 
 				{
 					// index exists 
-					buffer[index].push(this.gridArrayToNoteSequence(current.getGridArray()));
+					this.buffer[index].push(this.gridArrayToNoteSequence(current.getGridArray()));
 				}
 				else
 				{
 					// index doesn't exist, so create the array 
 					// for this chunk in the buffer 
-					buffer.push([this.gridArrayToNoteSequence(current.getGridArray())]);
+					this.buffer.push([this.gridArrayToNoteSequence(current.getGridArray())]);
 				}
 
 				// step to the next node in list
@@ -89,30 +120,9 @@ class PlayButton
 		}
 
 
-
-		let twinkle = {
-		  	notes: [
-		    	{pitch: 60, startTime: 0.0, endTime: 0.5},
-		    	{pitch: 60, startTime: 0.5, endTime: 1.0},
-		    	{pitch: 67, startTime: 1.0, endTime: 1.5},
-		    	{pitch: 67, startTime: 1.5, endTime: 2.0},
-		    	{pitch: 69, startTime: 2.0, endTime: 2.5},
-		    	{pitch: 69, startTime: 2.5, endTime: 3.0},
-		    	{pitch: 67, startTime: 3.0, endTime: 4.0},
-		    	{pitch: 65, startTime: 4.0, endTime: 4.5},
-		    	{pitch: 65, startTime: 4.5, endTime: 5.0},
-		    	{pitch: 64, startTime: 5.0, endTime: 5.5},
-		    	{pitch: 64, startTime: 5.5, endTime: 6.0},
-		    	{pitch: 62, startTime: 6.0, endTime: 6.5},
-		    	{pitch: 62, startTime: 6.5, endTime: 7.0},
-		    	{pitch: 60, startTime: 7.0, endTime: 8.0},  
-		  	],
-	  		totalTime: 8
-		};
-
-
 		// Start the beautiful music... 
-		this.player.start(buffer[0][0]); //< Plays the first start buffer chunk 
+		this.playhead = 0; 
+		this.mode = "PREPARE_BUFFER";
 	}
 
 	
@@ -123,17 +133,17 @@ class PlayButton
 
 		let noteSequence = {notes: [], totalTime: 4};
 
-		console.log(gridArray);
 		let counter = 0; 
-		for (let col = 0; col < 8; ++col) //column
+		for (let col = 0; col < 8; ++col) // column
 		{
-  			for (let row = 0; row < 8; ++row) //row 
+  			for (let row = 0; row < 8; ++row) // row 
   			{
   				let midiPitch = [72, 71, 69, 67, 65, 64, 62, 60];
   				let midiStartTime = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5];
   				let midiEndTime = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0];
 
-  				if (gridArray[counter].isOn === true){
+  				if (gridArray[counter].isOn === true)
+  				{
   					noteSequence["notes"].push({pitch: midiPitch[row], 
   												startTime: midiStartTime[col], 
   												endTime: midiEndTime[col]});
@@ -144,7 +154,6 @@ class PlayButton
   		}
 
   		return noteSequence;	
-
 	}
 
 	//===========================================================================

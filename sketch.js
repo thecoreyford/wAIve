@@ -52,6 +52,8 @@ function draw()
 
 	blockCreator.draw();
   	playButton.draw();
+
+  	playButton.updatePlayback();
 }
 
 //===========================================================================
