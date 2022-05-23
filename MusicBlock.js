@@ -15,6 +15,7 @@ class MusicBlock{
 
 	   	// connections 
 	   	this.nextBlock = null;
+	   	this.previousBlock = null;
 	}
 
 	//=================================================================	
@@ -30,7 +31,6 @@ class MusicBlock{
 
 	mousePressed(){
 		this.pressed();
-
 		this.grid.mousePressed();
 	}
 
@@ -46,25 +46,37 @@ class MusicBlock{
 	update() {
 	    // Adjust location if being dragged
 	    if (this.dragging) {
+
+    	// undo block connections
+		  if (this.previousBlock != null){
+		  	  this.previousBlock.nextBlock = null
+		  	  this.previousBlock = null
+		  }
+
 	      this.x = mouseX + this.offsetX;
 	      this.y = mouseY + this.offsetY;
 	      this.grid.update(this.x, this.y, this.width, this.height);
+	      
 	      this.updateNeighbours();
+
 	    }
   	}
 
   	updateNeighbours(){
   		var current = this.nextBlock;
-  		do
+  		var previous = this;
+
+  		while(current != null)
   		{
-  			if(current != null){
-  				current.x = this.x + this.width - 19;
-	    		current.y = this.y;
-	    		current.grid.update(current.x, current.y, current.width, current.height);
-	    		current = current.nextBlock;
-	    	}	
-  		} while (current != null);
-		
+			current.x = previous.x + previous.width - 18;
+			current.y = previous.y;
+			current.grid.update(current.x, current.y, current.width, current.height);
+
+			// step to the next node in list
+			previous = current;
+			current = current.nextBlock;
+  		}
+  		
   	}
 
   	show() {
@@ -84,6 +96,8 @@ class MusicBlock{
 	    	&& mouseY > this.y 
 	    	&& mouseY < this.y + this.height
 	    	&& this.grid.hasMouseOver() == false) {
+			
+			// Start dragging
 			this.dragging = true;
 
 			// If so, keep track of relative location 
@@ -145,5 +159,22 @@ class MusicBlock{
   	setNextBlock(newConnection) {
   		this.nextBlock = newConnection;
   	}
+
+  	setLeftConnection(newConnection){
+		this.previousBlock = newConnection; 
+	}
+
+	setRightConnection(newConnection){
+		this.nextBlock = newConnection; 
+	}
+
+	getLeftConnection(){
+		return this.previousBlock; 
+	}
+
+	getRightConnection(){
+		return this.nextBlock; 
+	}
+
 
 }

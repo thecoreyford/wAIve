@@ -15,7 +15,7 @@ var blockCreator = new BlockCreator(workspace.getX() + 10,
 									40);
 
 
-let musicBlocks =  [];
+let musicBlocks = [];
 
 var puzzle_image;
 
@@ -45,7 +45,10 @@ function draw() {
 function mousePressed() {
 	// If block creator is pressed
 	if (blockCreator.hasMouseOver()) {
-		musicBlocks.push(new MusicBlock(100,100,200,100));
+		musicBlocks.push(new MusicBlock(250 + random(0, 40),
+										150 + random(-20,40),
+										200,
+										100));
 	}
 
 	// If a music block is pressed 
@@ -54,24 +57,51 @@ function mousePressed() {
 	}
 }
 
-function mouseReleased(){
+function mouseReleased()
+{
+	print(musicBlocks.length); 
+
 	// If a music block is released
-	for (let i = 0; i < musicBlocks.length; ++i){
+	for (let i = 0; i < musicBlocks.length; ++i)
+	{
 		// Stop dragging
 		musicBlocks[i].mouseReleased();
 
-		// Also check for connections with all other music blocks
-		for (let j = 0; j < musicBlocks.length; ++j){
-			if (j != i){
-				if (musicBlocks[i].shouldMakeConnection(musicBlocks[j].getRightPoints())){
-					musicBlocks[j].setNextBlock(musicBlocks[i]);
-					musicBlocks[j].updateNeighbours();
-					// TODO: Make sure blocks get disconnected when dragged
-					// to stop circular loops.... . 
+		for (let j = 0; j < musicBlocks.length; ++j)
+		{
+			if (j != i)
+			{
+				let lhsBlock = musicBlocks[j];
+				let rhsBlock = musicBlocks[i];
+
+				// if there is an intersection
+				if (musicBlocks[i].shouldMakeConnection(musicBlocks[j].getRightPoints()))
+				{
+					// Reset blocks previous connections
+			        if (rhsBlock.getLeftConnection() != null)
+			        {
+			        	rhsBlock.getLeftConnection().setRightConnection (null);
+			        	rhsBlock.setLeftConnection (null);
+			        }
+
+			        if (lhsBlock.getRightConnection() != null)
+			        {
+			            lhsBlock.getRightConnection().setLeftConnection(null);
+			            lhsBlock.setRightConnection (null);
+			            // Note: did not port all the code here but this seemed to work okay; 
+			            // ...fingers crossed!
+			        }
+		        
+			        // The right blocks input should be the left block
+			        rhsBlock.setLeftConnection (lhsBlock);
+			        
+			        // The left blocks input output should be the right block
+			        lhsBlock.setRightConnection (rhsBlock);
+			        
+			        // Position blocks for a more aligned snap
+			        lhsBlock.updateNeighbours();
 				}
 			}
 		}
 	}
-
-	// Check connections amongst  the music blocks
 }
