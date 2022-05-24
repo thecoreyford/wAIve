@@ -183,7 +183,8 @@ class PlayButton
   				{
   					noteSequence["notes"].push({pitch: midiPitch[row], 
   												startTime: midiStartTime[col], 
-  												endTime: midiEndTime[col]});
+  												endTime: midiEndTime[col],
+  												velocity: 20});
   				}
 
   				counter++;
