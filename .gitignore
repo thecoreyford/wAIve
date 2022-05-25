@@ -1,0 +1,3 @@
+pre-computed/data/*
+!pre-computed/data/README.md
+!pre-computed
