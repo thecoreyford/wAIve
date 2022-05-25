@@ -1,3 +1,3 @@
-pre-computed/data/*
-!pre-computed/data/README.md
+pre-computed/dataset/*
+!pre-computed/dataset/README.md
 !pre-computed
