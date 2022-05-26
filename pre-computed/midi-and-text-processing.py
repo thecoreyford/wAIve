@@ -2,6 +2,8 @@ import glob
 import pandas as pd
 import music21 as m21
 
+#================================================================================
+
 def midi_corpus_to_text():
 	# Load and tokenize the data 
 	filenames = glob.glob("dataset/new-wave/*.mid")
@@ -172,10 +174,41 @@ def convert_to_dataset():
 
 #============================================================================
 
+def my_csv_to_javascript(csv_file):
+	df = pd.read_csv(csv_file)
+
+	print(len(df))
+
+	javascript_code = []
+
+	javascript_code.append("var generated_data = [")
+	for i in range(len(df)):
+		javascript_code.append("{")
+		javascript_code.append("\"music_grid\": ")
+		javascript_code.append(df.iloc[i]["music_grid"])
+		javascript_code.append(",\n")
+		javascript_code.append("\"pitch_count\": ")
+		javascript_code.append(df.iloc[i]["pitch_count"])
+		javascript_code.append(",\n")
+		javascript_code.append("\"pitch_range\": ")
+		javascript_code.append(df.iloc[i]["pitch_range"])
+		javascript_code.append(",\n")
+		javascript_code.append("\"average_pitch_interval\": ")
+		javascript_code.append(df.iloc[i]["average_pitch_interval"])
+		javascript_code.append("},\n")
+	
+	javascript_code[len(javascript_code) - 1] = "}"
+	javascript_code.append("]")
+	
+	with open (r'../GeneratedData.js', 'w') as fp:
+		fp.write("".join(str(item) for item in javascript_code))
+
+
 if __name__ == "__main__":
 	# midi_corpus_to_text()
 	# text_to_midi_corpus("new-wave.txt")
 	# generated_text_to_block_sized_files("generated.txt")
-	convert_to_dataset();
+	# convert_to_dataset();
+	my_csv_to_javascript("generated_block_data.csv")
 
 
