@@ -1,12 +1,13 @@
 import glob
 import pandas as pd
+import numpy as np
 import music21 as m21
 
 #================================================================================
 
-def midi_corpus_to_text():
+def midi_corpus_to_text(corpus_folder):
 	# Load and tokenize the data 
-	filenames = glob.glob("dataset/new-wave/*.mid")
+	filenames = glob.glob(corpus_folder+"*.mid")
 
 	music = []
 
@@ -34,23 +35,18 @@ def midi_corpus_to_text():
 
 #================================================================================
 
-def text_to_midi_corpus(my_file, midi_output_name):
+def text_to_midi(my_file, midi_output_name):
 	# Using readlines()
-	file1 = open(my_file, 'r')
-	lines = file1.readlines()
+	file = open(my_file, 'r')
+	lines = file.readlines()
 
 	# Turn lines into a list of notes
 	note_list = []
 	for line in lines:
 		midi_pitch = line.strip()[2:4]
-		# if "#" in midi_pitch:
-		# 	midi_pitch = line.strip()[2:5]
 		note = m21.note.Note(midi_pitch)
 		
 		duration = line.strip()[6:].replace("d:","")
-		# if "/" in duration:
-		# 	x = duration.split("/")
-		# 	duration = float(x[0]) / float(x[1])
 		note.duration.quarterLength = float(duration)
 
 		note_list.append(note)
@@ -65,6 +61,8 @@ def text_to_midi_corpus(my_file, midi_output_name):
 	print ("Writing...")
 	print ("NOTE: If text is long this may take a little while ...")
 	stream.write ('midi', midi_output_name)
+
+	stream.show('text')
 
 #============================================================================
 
@@ -93,23 +91,26 @@ def generated_text_to_block_sized_files(generated_text_file):
 			with open (r'dataset/final_text/generation' + str(counter) + '.txt', 'w') as fp:
 				fp.write("".join(str(item) for item in small_midi))
 				counter = counter + 1;
-
-			#reset array
+			
+			# reset array
 			small_midi = []
 			accum = 0.0
 
 
 #============================================================================
 
-def convert_to_dataset():
-	# # First turn all into midi
-	# filenames = glob.glob("dataset/final_text/*.txt")
-	# for i in range(len(filenames)):
-	# 	try:
-	# 		text_to_midi_corpus(filenames[i], 'dataset/final_midi/example' + str(i+1) + '.mid')
-	# 	except:
-	# 		print("Issue with ", str(i+1));
+def convert_small_text_to_midi():
+	filenames = glob.glob("dataset/final_text/*.txt")
+	for i in range(len(filenames)):
+		try:
+			fn = filenames[i].replace(".txt",".mid").replace("final_text", "final_midi").replace("generation","example")
+			text_to_midi(filenames[i], fn)
+		except:
+			print("Issue with ", str(i+1));
 
+#============================================================================
+
+def convert_to_csv_dataset():
 	#Create the dataframe 
 	data = {"extract":[],
 			"music_grid":[],
@@ -165,7 +166,9 @@ def convert_to_dataset():
 			for x in grid_df[grid_df["midi_pitch"] == notes[n]]["cum_sum"]:
 				grid[(n * 8) + int(x)] = 1
 
-		data["music_grid"].append(grid)	
+		# Flip it around to make the logic work
+		x = np.reshape(grid, (8, 8)).T.flatten().tolist()
+		data["music_grid"].append(x)	
 			
 		#====================================
 
@@ -184,6 +187,11 @@ def my_csv_to_javascript(csv_file):
 	javascript_code.append("var generated_data = [")
 	for i in range(len(df)):
 		javascript_code.append("{")
+		javascript_code.append("\"name\": ")
+		javascript_code.append("\"")
+		javascript_code.append(df.iloc[i]["extract"])
+		javascript_code.append("\"")
+		javascript_code.append(",\n")
 		javascript_code.append("\"music_grid\": ")
 		javascript_code.append(df.iloc[i]["music_grid"])
 		javascript_code.append(",\n")
@@ -206,9 +214,14 @@ def my_csv_to_javascript(csv_file):
 
 if __name__ == "__main__":
 	# midi_corpus_to_text()
-	# text_to_midi_corpus("new-wave.txt")
-	# generated_text_to_block_sized_files("generated.txt")
-	# convert_to_dataset();
+	# text_to_midi("new-wave.txt", "example.mid")
+	
+	## At this point use this text data to fine-tune GPT2, 
+	## and output some generations.
+	
+	generated_text_to_block_sized_files("generated.txt")
+	convert_small_text_to_midi();
+	convert_to_csv_dataset();
 	my_csv_to_javascript("generated_block_data.csv")
 
 

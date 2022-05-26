@@ -46,6 +46,9 @@ class ToggleButton
 			return false;
 		}
 	}
+
+	setOn(){ this.isOn = true; }
+	setOff(){ this.isOn = false; }
 	
 	toogle()
 	{

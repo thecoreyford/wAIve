@@ -86,6 +86,22 @@ class MusicGrid
 	  	}
 	}
 
+	setInternalButtonsFromBoolArray(boolArray)
+	{
+		for (let i = 0; i < boolArray.length; ++i)
+		{
+			if (boolArray[i] === 1)
+			{
+				this.toggleButtons[i].setOn();
+			}
+			else
+			{
+				this.toggleButtons[i].setOff();
+			}
+		}
+
+	}
+
 	getInternalButtonsArray()
 	{
 		return this.toggleButtons;
