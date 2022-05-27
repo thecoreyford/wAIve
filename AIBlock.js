@@ -6,7 +6,7 @@ class AIBlock extends MusicBlock
 
 		// Randomly select from generated data 
 		let ai_data = generated_data[Math.floor(Math.random() * 548)]
-		print(ai_data['name'])
+		// print(ai_data['name'])
 		this.grid.setInternalButtonsFromBoolArray(ai_data['music_grid']);
 	}
 
