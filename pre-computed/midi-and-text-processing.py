@@ -5,9 +5,9 @@ import music21 as m21
 
 #================================================================================
 
-def midi_corpus_to_text(corpus_folder):
+def midi_corpus_to_text(corpus_folder, text_file_name):
 	# Load and tokenize the data 
-	filenames = glob.glob(corpus_folder+"*.mid")
+	filenames = glob.glob(corpus_folder+"/*.mid")
 
 	music = []
 
@@ -18,19 +18,21 @@ def midi_corpus_to_text(corpus_folder):
 		midi = m21.converter.parse(filenames[files])
 		
 		for parts in midi:
-			for n in parts: #<--- for the different parts
-				if "rest" not in str(n):
-					if "note" in str(n):
-						# Only add notes that can be used in our interface... 
-						if n.pitch.midi in [72, 71, 69, 67, 65, 64, 62, 60]:
-							# and must be quantised to our grid... 
-							if n.duration.quarterLength in [0.0, 0.25, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0]:
-								# Append text representation 
-								music.append("n:" + str(n.pitch.nameWithOctave) + "d:" +
-							       str(n.duration.quarterLength));
+			for p in parts: #<--- for the different parts
+				if "Voice" in str(p):# <--- also look at voices
+					for n in p:
+						if "rest" not in str(n):
+							if "note" in str(n):
+								# Only add notes that can be used in our interface... 
+								if n.pitch.midi in [72, 71, 69, 67, 65, 64, 62, 60]:
+									# and must be quantised to our grid... 
+									if n.duration.quarterLength in [0.0, 0.25, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0]:
+										# Append text representation 
+										music.append("n:" + str(n.pitch.nameWithOctave) + "d:" +
+									       str(n.duration.quarterLength));
 
 	# Write to file
-	with open (r'new-wave.txt', 'w') as fp:
+	with open (text_file_name, 'w') as fp:
 		fp.write("\n".join(str(item) for item in music))
 
 #================================================================================
@@ -213,13 +215,12 @@ def my_csv_to_javascript(csv_file):
 
 
 if __name__ == "__main__":
-	# midi_corpus_to_text()
-	# text_to_midi("new-wave.txt", "example.mid")
+	# midi_corpus_to_text("dataset/giant-piano/debussy", "giant-piano.txt")
 	
 	## At this point use this text data to fine-tune GPT2, 
 	## and output some generations.
 	
-	generated_text_to_block_sized_files("generated.txt")
+	# generated_text_to_block_sized_files("generated2.txt")
 	convert_small_text_to_midi();
 	convert_to_csv_dataset();
 	my_csv_to_javascript("generated_block_data.csv")

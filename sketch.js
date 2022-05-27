@@ -22,6 +22,8 @@ var playButton = new PlayButton(workspace.getX() + 10,
 
 let musicBlocks = [];
 
+var aiBlockCreator = new AIBlockCreator();
+
 var puzzle_image, puzzle_image2;
 
 //===========================================================================
@@ -54,6 +56,7 @@ function draw()
 	blockCreator.draw();
   	playButton.draw();
 
+  	aiBlockCreator.update(musicBlocks);
   	playButton.updatePlayback();
 }
 
@@ -66,10 +69,10 @@ function mousePressed()
 	// If block creator is pressed
 	if (blockCreator.hasMouseOver()) 
 	{
-		musicBlocks.push(new AIBlock(250 + random(0, 40),
-										150 + random(-20,40),
-										200,
-										100));
+		musicBlocks.push (new MusicBlock(250 + random(0, 40),
+									  150 + random(-20,40),
+									  200,
+									  100));
 	}
 
 	// If a music block is pressed 
