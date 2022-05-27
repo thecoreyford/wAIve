@@ -3,10 +3,11 @@
 const canvasWidth = 1250;
 const canvasHeight = 780; //580;
 
-var workspace  = new Workspace(canvasWidth * 0.10, 
-							   canvasHeight * 0.15, 
-							   canvasWidth - (2 * (canvasWidth * 0.10)),
-							   canvasHeight - (2 * (canvasHeight * 0.15)));
+const workspaceX = canvasWidth * 0.10;
+const workspaceY = canvasHeight * 0.15;
+const workspaceWidth = canvasWidth - (2 * workspaceX);
+const workspaceHeight = canvasHeight - (2 * workspaceY);
+var workspace  = new Workspace(workspaceX, workspaceY, workspaceWidth, workspaceHeight);
 
 
 var blockCreator = new BlockCreator(workspace.getX() + 60,

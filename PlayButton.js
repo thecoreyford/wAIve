@@ -116,10 +116,11 @@ class PlayButton
 		processDataset() //< collect all the blocks into the dataset. 
 
 		// Find start blocks (filter example)
-		var startBlocks = data.filter(function(d) 
-		{ 
-			return d["leftConnection"] === null; 
-		});
+		var startBlocks = data.filter(function(d){return d["leftConnection"] === null;});
+		startBlocks = startBlocks.filter(function(d){return d["x"] >= workspaceX;});
+		startBlocks = startBlocks.filter(function(d){return d["y"] >= workspaceY;});
+		startBlocks = startBlocks.filter(function(d){return d["x"] < workspaceX+workspaceWidth;});
+		startBlocks = startBlocks.filter(function(d){return d["y"] < workspaceY+workspaceHeight;});
 
 		// Empty the buffers! 
 		this.midiBuffer = []; 
