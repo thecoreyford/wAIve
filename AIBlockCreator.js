@@ -8,6 +8,9 @@ class AIBlockCreator
 
 	update(musicBlocks)
 	{
+
+		//TODO: Come back and tweak these further... 
+		
 		// Set up some anchors for where we will spawn blocks from... 
 		let anchor1 = {"x": 20, "y": 20};
 		let anchor2 = {"x": workspaceX + workspaceWidth, "y": workspaceY - 80};
@@ -43,7 +46,7 @@ class AIBlockCreator
 			musicBlocks.push (new AIBlock (anchor3.x + random (30, 40), anchor3.y - 40, 200, 100));
 
    			this.onetime=false;
-  		}
+  		}	
 
 	}
 }
