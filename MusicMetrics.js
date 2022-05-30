@@ -5,6 +5,7 @@ class MusicMetrics
 	{
 		this.playButton = playButton;
 		this.buffer = [];
+		this.pitchesInPeice = [];
 	}
 
 	compareStartTimes (a, b) 
@@ -72,17 +73,25 @@ class MusicMetrics
 
 	getPitchCount()
 	{
-		let previous = [];
+		this.pitchesInPeice = [];
 		for (let i = 0; i <  this.buffer.length; ++i)
 		{
-			if (!previous.includes (this.buffer[i].pitch))
+			if (!this.pitchesInPeice.includes (this.buffer[i].pitch))
 			{
-				previous.push (this.buffer[i].pitch);
+				this.pitchesInPeice.push (this.buffer[i].pitch);
 			}
 		}
 
-		return previous.length;
+		return this.pitchesInPeice.length;
 	}
+
+	getPitchRange()
+	{
+		getPitchCount() //< to update pitches in piece
+
+		return Math.abs(Math.max(this.pitchesInPeice) - Math.min(this.pitchesInPeice))
+	}
+
 }
 
 
