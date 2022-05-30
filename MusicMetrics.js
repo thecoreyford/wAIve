@@ -68,7 +68,7 @@ class MusicMetrics
 		
 		this.buffer = this.buffer.sort (this.compareStartTimes)
 		
-		this.getAveragePitchInterval()
+		this.calculateMusicalDistancesForData()
 	}
 
 	getPitchCount()
@@ -87,7 +87,11 @@ class MusicMetrics
 
 	getPitchRange()
 	{
-		getPitchCount() //< to update pitches in piece
+		this.getPitchCount() //< to update pitches in piece
+
+		
+		// Format so that math dosen't go crazy 
+		this.pitchesInPeice = Math.max.apply(Math, this.pitchesInPeice);
 
 		return Math.abs(Math.max(this.pitchesInPeice) - Math.min(this.pitchesInPeice))
 	}
@@ -127,6 +131,24 @@ class MusicMetrics
 		const avg = (sum / pitchIntervals.length) || 0;
 
 		return avg
+	}
+
+	calculateMusicalDistancesForData()
+	{
+		// Get main values
+		var userPitchCount = this.getPitchCount();
+		var userPitchRange = this.getPitchRange();
+		var userAveragePitchInterval = this.getAveragePitchInterval();
+
+		// Add these distances the dataset
+		for (let g = 0; g < generated_data.length; ++g)
+		{
+			generated_data[g]["pitchCountDist"] = Math.abs(userPitchCount - generated_data[g]["pitch_count"]);
+			generated_data[g]["pitchRangeDist"] = Math.abs(userPitchRange - generated_data[g]["pitch_range"]);
+			generated_data[g]["averagePitchIntervalDist"] = Math.abs(userAveragePitchInterval - generated_data[g]["average_pitch_interval"]);
+		}
+
+		print (generated_data);
 	}
 
 }
