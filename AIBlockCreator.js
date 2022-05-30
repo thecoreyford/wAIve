@@ -26,7 +26,7 @@ class AIBlockCreator
 
 		let elapsedTime = millis() - startTime; 
 		
-		if (elapsedTime > (25 * 1000) && this.onetime === true) 
+		if (elapsedTime > (25 * 1000)) 
 		{
 
 			// TODO: this will currently take some of the most similar values 
@@ -65,7 +65,7 @@ class AIBlockCreator
 			musicBlocks.push (new AIBlock (anchor3.x - random(0,20), anchor3.y - random(100,150), 200, 100,
 											values[Math.floor(Math.random()*values.length)]["music_grid"]));
 
-   			this.onetime=false;
+   			startTime = millis();
   		}	
 
 	}
