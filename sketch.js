@@ -86,9 +86,6 @@ function mousePressed()
 
 	// If play button is pressed
 	playButton.mousePressed();
-
-	//TODO: move this so that it happens on a timer 
-	musicMetrics.calculateGetNotes(); //TODO: we want this to return a timestamped list of notes 
 }
 
 function mouseReleased()

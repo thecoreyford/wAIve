@@ -67,8 +67,6 @@ class MusicMetrics
 
 		
 		this.buffer = this.buffer.sort (this.compareStartTimes)
-		
-		this.calculateMusicalDistancesForData()
 	}
 
 	getPitchCount()
@@ -89,11 +87,11 @@ class MusicMetrics
 	{
 		this.getPitchCount() //< to update pitches in piece
 
-		
-		// Format so that math dosen't go crazy 
-		this.pitchesInPeice = Math.max.apply(Math, this.pitchesInPeice);
+		// Format so that math doesn't go crazy 
 
-		return Math.abs(Math.max(this.pitchesInPeice) - Math.min(this.pitchesInPeice))
+		// this.pitchesInPeice = Math.max.apply(Math, this.pitchesInPeice);
+
+		return Math.abs(Math.min.apply(Math, this.pitchesInPeice) - Math.max.apply(Math, this.pitchesInPeice))
 	}
 
 	getAveragePitchInterval()
@@ -136,6 +134,7 @@ class MusicMetrics
 	calculateMusicalDistancesForData()
 	{
 		// Get main values
+		this.calculateGetNotes(); //<--- to be used in the functions below 
 		var userPitchCount = this.getPitchCount();
 		var userPitchRange = this.getPitchRange();
 		var userAveragePitchInterval = this.getAveragePitchInterval();
@@ -148,8 +147,57 @@ class MusicMetrics
 			generated_data[g]["averagePitchIntervalDist"] = Math.abs(userAveragePitchInterval - generated_data[g]["average_pitch_interval"]);
 		}
 
-		print (generated_data);
+		// this.getMostSimilarDataValues("Pitch Count");
 	}
+
+	//=========
+
+	getMostSimiliarValues(metric)
+	{
+		if (metric === "pitchCount")
+		{
+			// sort by metric 
+			generated_data.sort((a, b) => (a.pitchCountDist > b.pitchCountDist) ? 1 : -1);
+
+			// take the top few values 
+			var pitchCount = generated_data.filter (function(d) {
+				return d["pitchCountDist"] === generated_data[0]["pitchCountDist"];
+			});
+
+			return pitchCount;
+		}
+
+		if (metric === "pitchRange")
+		{
+			// sort by metric 
+			generated_data.sort((a, b) => (a.pitchRangeDist > b.pitchRangeDist) ? 1 : -1);
+
+			// take the top few values 
+			var pitchRange = generated_data.filter (function(d) {
+				return d["pitchRangeDist"] === generated_data[0]["pitchRangeDist"];
+			});
+			
+			return pitchRange;
+		}
+
+		if (metric === "averagePitchInterval")
+		{
+			// sort by metric 
+			generated_data.sort((a, b) => (a.averagePitchIntervalDist > b.averagePitchIntervalDist) ? 1 : -1);
+
+			// take the top few values 
+			var averagePitchIntervalDist = generated_data.filter (function(d) {
+				return d["averagePitchIntervalDist"] === generated_data[0]["averagePitchIntervalDist"];
+			});
+			
+			return averagePitchIntervalDist;
+		}
+
+
+
+	}
+
+
 
 }
 

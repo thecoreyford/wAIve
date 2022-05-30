@@ -1,20 +1,17 @@
 class AIBlock extends MusicBlock
 {
-	constructor(x, y, width, height)
+	constructor(x, y, width, height, music_grid)
 	{
 		super(x, y, width, height)
 
-		// Randomly select from generated data 
-		let ai_data = generated_data[Math.floor(Math.random() * 548)]
-		// print(ai_data['name'])
-		this.grid.setInternalButtonsFromBoolArray(ai_data['music_grid']);
+		this.grid.setInternalButtonsFromBoolArray(music_grid);
 	}
 
 	show() 
   	{
 	    image(puzzle_image2, this.x, this.y, this.width, this.height);
 
-	    // copied over from music block
+	    // copied over from music block so highlighting on playback is preserved 
 	    if (this.showHighlight === true){
 	    	let highlightColour = color(yellow);
   			highlightColour.setAlpha(80);
