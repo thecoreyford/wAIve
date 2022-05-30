@@ -68,7 +68,7 @@ class MusicMetrics
 		
 		this.buffer = this.buffer.sort (this.compareStartTimes)
 		
-		this.getPitchCount()
+		this.getAveragePitchInterval()
 	}
 
 	getPitchCount()
@@ -90,6 +90,43 @@ class MusicMetrics
 		getPitchCount() //< to update pitches in piece
 
 		return Math.abs(Math.max(this.pitchesInPeice) - Math.min(this.pitchesInPeice))
+	}
+
+	getAveragePitchInterval()
+	{
+		// Collect the start times in the piece
+		var startTimesInPiece = [];
+		for (let i = 0; i <  this.buffer.length; ++i)
+		{
+			if (!startTimesInPiece.includes (this.buffer[i].startTime))
+			{
+				startTimesInPiece.push (this.buffer[i].startTime);
+			}
+		}
+
+
+		// Get the array of pitch intervals
+		var pitchIntervals = [];
+		for (let i = 0; i < startTimesInPiece.length - 1; ++i)
+		{
+			let curr = this.buffer.filter (function(d) {return d["startTime"] === startTimesInPiece[i];});
+			let next = this.buffer.filter (function(d) {return d["startTime"] === startTimesInPiece[i+1];});
+
+			for (let c = 0; c < curr.length; ++c)
+			{
+				for (let n = 0; n < next.length; ++n)
+				{
+					pitchIntervals.push (Math.abs (curr[c].pitch - next[n].pitch));
+				}
+			}
+
+		}
+		
+		// calculate average 
+		const sum = pitchIntervals.reduce((a, b) => a + b, 0);
+		const avg = (sum / pitchIntervals.length) || 0;
+
+		return avg
 	}
 
 }
