@@ -4,6 +4,22 @@ class MusicMetrics
 	constructor (playButton)
 	{
 		this.playButton = playButton;
+		this.buffer = [];
+	}
+
+	compareStartTimes (a, b) 
+	{
+		if ( a.startTime < b.startTime )
+		{
+    		return -1;
+  		}
+  		
+  		if ( a.startTime > b.startTime )
+  		{
+    		return 1;
+  		}
+  		
+  		return 0;
 	}
 
 	calculateGetNotes()
@@ -18,7 +34,7 @@ class MusicMetrics
 		startBlocks = startBlocks.filter (function(d) {return d["y"] < workspaceY+workspaceHeight;});
 
 		// Empty the buffer! 
-		var buffer = []; 
+		this.buffer = []; 
 
 		// For each of the found start blocks...
 		for (let i = 0; i < startBlocks.length; ++i)
@@ -28,12 +44,24 @@ class MusicMetrics
 			do
 			{
 				// push to list 
-				buffer.push(this.playButton.gridArrayToNoteSequence(current.getGridArray()));
+				if (this.buffer[0] === undefined) {
+					let sequence = this.playButton.gridArrayToNoteSequence (current.getGridArray());
+					this.buffer.push (sequence.notes);
+
+				} else {
+					let sequence = this.playButton.gridArrayToNoteSequence (current.getGridArray());
+					this.buffer.concat (sequence.notes);
+				}
+				
 				
 				// step to the next node in list
 				previous = current;
 				current = current.nextBlock;
 			} while (current != null)
 		}	
+
+		print(this.buffer.sort(this.compareStartTimes))
 	}
+
+
 }
