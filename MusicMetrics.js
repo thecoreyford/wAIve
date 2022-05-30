@@ -9,12 +9,12 @@ class MusicMetrics
 
 	compareStartTimes (a, b) 
 	{
-		if ( a.startTime < b.startTime )
+		if (a.startTime < b.startTime)
 		{
     		return -1;
   		}
   		
-  		if ( a.startTime > b.startTime )
+  		if (a.startTime > b.startTime)
   		{
     		return 1;
   		}
@@ -43,16 +43,20 @@ class MusicMetrics
 			var previous;
 			do
 			{
+				let sequence; //< have a sequence 
+
 				// push to list 
 				if (this.buffer[0] === undefined) {
-					let sequence = this.playButton.gridArrayToNoteSequence (current.getGridArray());
-					this.buffer.push (sequence.notes);
+					sequence = this.playButton.gridArrayToNoteSequence (current.getGridArray());
 
 				} else {
-					let sequence = this.playButton.gridArrayToNoteSequence (current.getGridArray());
-					this.buffer.concat (sequence.notes);
+					sequence = this.playButton.gridArrayToNoteSequence (current.getGridArray());
 				}
-				
+
+				for(let j = 0; j < sequence.notes.length; j++)
+				{
+					this.buffer.push (sequence.notes[j]);
+				}
 				
 				// step to the next node in list
 				previous = current;
@@ -60,8 +64,26 @@ class MusicMetrics
 			} while (current != null)
 		}	
 
-		print(this.buffer.sort(this.compareStartTimes))
+		
+		this.buffer = this.buffer.sort (this.compareStartTimes)
+		
+		this.getPitchCount()
 	}
 
+	getPitchCount()
+	{
+		let previous = [];
+		for (let i = 0; i <  this.buffer.length; ++i)
+		{
+			if (!previous.includes (this.buffer[i].pitch))
+			{
+				previous.push (this.buffer[i].pitch);
+			}
+		}
 
+		return previous.length;
+	}
 }
+
+
+
