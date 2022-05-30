@@ -29,12 +29,15 @@ var musicMetrics = new MusicMetrics(playButton);
 
 var puzzle_image, puzzle_image2;
 
+var startTime;
+
 //===========================================================================
 
 // MAIN FUNCTIONS  
 
 function preload() 
 {
+	startTime = millis();
 	puzzle_image = loadImage("assets/puzzle.png");
 	puzzle_image2 = loadImage("assets/puzzle2.png");
 }

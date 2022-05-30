@@ -24,8 +24,9 @@ class AIBlockCreator
 		// rect(anchor3.x, anchor3.y, 10, 10)
 
 
-		// TODO: if 25 seconds do the stuff in here
-		if (keyIsDown (LEFT_ARROW) && this.onetime === true) 
+		let elapsedTime = millis() - startTime; 
+		
+		if (elapsedTime > (25 * 1000) && this.onetime === true) 
 		{
 
 			// TODO: this will currently take some of the most similar values 
