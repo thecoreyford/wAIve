@@ -5,6 +5,8 @@ class AIBlock extends MusicBlock
 		super(x, y, width, height)
 
 		this.grid.setInternalButtonsFromBoolArray(music_grid);
+		
+		this.isAI = true;
 	}
 
 	show() 

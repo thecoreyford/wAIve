@@ -21,6 +21,8 @@ class MusicBlock
 
 	   	// playback feedback; 
 	   	this.showHighlight = false; 
+
+	   	this.isAI = false;
 	}
 
 	//=================================================================	

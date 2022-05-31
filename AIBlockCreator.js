@@ -9,33 +9,34 @@ class AIBlockCreator
 	update(musicBlocks)
 	{
 
-		//TODO: Come back and tweak these further... 
-		
 		// Set up some anchors for where we will spawn blocks from... 
 		let anchor1 = {"x": 10, "y": 10};
 		let anchor2 = {"x": workspaceX + workspaceWidth, "y": workspaceY - 80};
 		let anchor3 = {"x": workspaceX - 80, "y": workspaceY + workspaceHeight + 40};
-		
-		
-		// // Draw these (useful for debugging)
-		// fill(255,0,0)
-		// rect(anchor1.x, anchor1.y, 10, 10)
-		// rect(anchor2.x, anchor2.y, 10, 10)
-		// rect(anchor3.x, anchor3.y, 10, 10)
+
 
 
 		let elapsedTime = millis() - startTime; 
 		
 		if (elapsedTime > (25 * 1000)) 
 		{
+			print("h");
+			// Find AI blocks in the grey //TODO: Left off here
+			processDataset();
+			var aiBlocks = data.filter(function(d){return d["isAI"] === true;});
+			aiBlocks = aiBlocks.filter(function(d){return d["x"] < workspaceX 
+														  || d["x"] > workspaceX+workspaceWidth
+														  || d["y"] < workspaceY
+														  || d["y"] > workspaceY + workspaceHeight});
 
-			// TODO: this will currently take some of the most similar values 
+			// Remove AI blocks
+			for (let i =  0; i < aiBlocks.length; ++i) {
+				musicBlocks.splice(musicBlocks.indexOf(aiBlocks[i].block), 1);
+			}
 
 
-			// pitchCountDist
-			// pitchRangeDist
-			// averagePitchIntervalDist
-			musicMetrics.calculateMusicalDistancesForData(); //TODO: we want this to return a timestamped list of notes 
+			// Calculate the metrics for the users current data 
+			musicMetrics.calculateMusicalDistancesForData(); 
 
 
 			// // For the top left (PITCH COUNT)
@@ -65,6 +66,7 @@ class AIBlockCreator
 			musicBlocks.push (new AIBlock (anchor3.x - random(0,20), anchor3.y - random(100,150), 200, 100,
 											values[Math.floor(Math.random()*values.length)]["music_grid"]));
 
+			// update start time
    			startTime = millis();
   		}	
 
