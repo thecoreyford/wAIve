@@ -8,6 +8,8 @@ class ToggleButton
 		this.height = height; 
 
 		this.isOn = false;
+
+		this.blocksOutside = false;
 	}
 
 	update (x, y, w, h)
@@ -20,14 +22,27 @@ class ToggleButton
 
 	draw()
 	{
+		var squareColor;
+
 		if (this.isOn)
 		{
-			fill(orange);
+			squareColor = color(orange);
 		}
 		else
 		{
-			fill(lightGrey);
+			squareColor = color(lightGrey);
 		}
+
+		if (this.blocksOutside === true)
+  		{
+  			squareColor.setAlpha (182);
+  		}
+  		else
+  		{
+  			squareColor.setAlpha (255);
+  		}
+		
+		fill(squareColor);
 		
 		rect (this.x, this.y, this.width, this.height);
 	}

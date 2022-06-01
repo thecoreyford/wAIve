@@ -1,4 +1,5 @@
 import glob
+import shutil
 import pandas as pd
 import numpy as np
 import music21 as m21
@@ -18,18 +19,18 @@ def midi_corpus_to_text(corpus_folder, text_file_name):
 		midi = m21.converter.parse(filenames[files])
 		
 		for parts in midi:
-			for p in parts: #<--- for the different parts
-				if "Voice" in str(p):# <--- also look at voices
-					for n in p:
-						if "rest" not in str(n):
-							if "note" in str(n):
-								# Only add notes that can be used in our interface... 
-								if n.pitch.midi in [72, 71, 69, 67, 65, 64, 62, 60]:
-									# and must be quantised to our grid... 
-									if n.duration.quarterLength in [0.0, 0.25, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0]:
-										# Append text representation 
-										music.append("n:" + str(n.pitch.nameWithOctave) + "d:" +
-									       str(n.duration.quarterLength));
+			for n in parts: #<--- for the different parts
+				# if "Voice" in str(p):# <--- also look at voices
+				# 	for n in p:
+				if "rest" not in str(n):
+					if "note" in str(n):
+						# Only add notes that can be used in our interface... 
+						if n.pitch.midi in [72, 71, 69, 67, 65, 64, 62, 60]:
+							# and must be quantised to our grid... 
+							if n.duration.quarterLength in [0.0, 0.25, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0]:
+								# Append text representation 
+								music.append("n:" + str(n.pitch.nameWithOctave) + "d:" +
+							       str(n.duration.quarterLength));
 
 	# Write to file
 	with open (text_file_name, 'w') as fp:
@@ -215,14 +216,35 @@ def my_csv_to_javascript(csv_file):
 
 
 if __name__ == "__main__":
-	# midi_corpus_to_text("dataset/giant-piano/debussy", "giant-piano.txt")
+	midi_corpus_to_text("dataset/POP909/", "pop909.txt")
 	
 	## At this point use this text data to fine-tune GPT2, 
 	## and output some generations.
 	
 	# generated_text_to_block_sized_files("generated2.txt")
-	convert_small_text_to_midi();
-	convert_to_csv_dataset();
-	my_csv_to_javascript("generated_block_data.csv")
+	# convert_small_text_to_midi();
+	# convert_to_csv_dataset();
+	# my_csv_to_javascript("generated_block_data.csv")
 
 
+
+#========= 
+
+def move_files_for_pop909_data():
+	# Move files fro the POP909 dataset 
+	indexes = []
+	for i in range (1, 910):
+		myString = ""
+		if i < 10:
+			myString += "00"
+		elif i < 100:
+			myString += "0"
+
+		myString += str (i)
+		indexes.append (myString)
+
+
+	for idx in indexes: 
+		source = "dataset/POP909/" + idx + "/" + idx + ".mid"
+		destination = "dataset/POP909/" + idx + ".mid"
+		shutil.move(source, destination)

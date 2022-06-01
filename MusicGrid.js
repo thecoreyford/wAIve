@@ -48,6 +48,14 @@ class MusicGrid
   		}	
 	}
 
+	toggleTransparency(isTransparent)
+	{
+		for (let i = 0; i < this.toggleButtons.length; ++i)
+  		{
+  			this.toggleButtons[i].blocksOutside = isTransparent;
+  		}
+	}
+
 	draw()
 	{
 		noStroke();

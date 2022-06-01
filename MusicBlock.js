@@ -94,6 +94,22 @@ class MusicBlock
 
   	show() 
   	{
+  		if (this.x < workspaceX 
+  			|| this.x > workspaceX+workspaceWidth 
+  			|| this.y < workspaceY 
+  			|| this.y > workspaceY + workspaceHeight)
+  		{
+  			// Block is outside of the workspace so lets make transparent 
+  			tint (255, 126);
+  			this.grid.toggleTransparency(true);
+  		}
+  		else
+  		{
+  			tint (255, 255);
+  			this.grid.toggleTransparency(false);
+  		}
+  		
+
 	    image(puzzle_image, this.x, this.y, this.width, this.height);
 
 	    if (this.showHighlight === true){
