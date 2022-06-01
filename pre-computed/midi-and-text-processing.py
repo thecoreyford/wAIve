@@ -216,15 +216,15 @@ def my_csv_to_javascript(csv_file):
 
 
 if __name__ == "__main__":
-	midi_corpus_to_text("dataset/POP909/", "pop909.txt")
+	# midi_corpus_to_text("dataset/POP909/", "pop909.txt")
 	
 	## At this point use this text data to fine-tune GPT2, 
 	## and output some generations.
 	
-	# generated_text_to_block_sized_files("generated2.txt")
-	# convert_small_text_to_midi();
-	# convert_to_csv_dataset();
-	# my_csv_to_javascript("generated_block_data.csv")
+	generated_text_to_block_sized_files("generated3.txt")
+	convert_small_text_to_midi();
+	convert_to_csv_dataset();
+	my_csv_to_javascript("generated_block_data.csv")
 
 
 
