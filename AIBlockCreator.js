@@ -20,8 +20,7 @@ class AIBlockCreator
 		
 		if (elapsedTime > (25 * 1000)) 
 		{
-			print("h");
-			// Find AI blocks in the grey //TODO: Left off here
+			// Find AI blocks in the grey
 			processDataset();
 			var aiBlocks = data.filter(function(d){return d["isAI"] === true;});
 			aiBlocks = aiBlocks.filter(function(d){return d["x"] < workspaceX 

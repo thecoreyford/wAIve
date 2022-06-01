@@ -157,43 +157,44 @@ class MusicMetrics
 		if (metric === "pitchCount")
 		{
 			// sort by metric 
-			generated_data.sort((a, b) => (a.pitchCountDist > b.pitchCountDist) ? 1 : -1);
+			generated_data = generated_data.sort((a, b) => (a.pitchCountDist > b.pitchCountDist) ? 1 : -1);
+			print(generated_data)
 
 			// take the top few values 
-			var pitchCount = generated_data.filter (function(d) {
-				return d["pitchCountDist"] === generated_data[0]["pitchCountDist"];
-			});
+			// var pitchCount = generated_data.filter (function(d) {
+				// return d["pitchCountDist"] === generated_data[0]["pitchCountDist"];
+			// });
 
-			return pitchCount;
+			// return pitchCount;
 		}
 
 		if (metric === "pitchRange")
 		{
 			// sort by metric 
-			generated_data.sort((a, b) => (a.pitchRangeDist > b.pitchRangeDist) ? 1 : -1);
+			generated_data = generated_data.sort((a, b) => (a.pitchRangeDist > b.pitchRangeDist) ? 1 : -1);
 
 			// take the top few values 
-			var pitchRange = generated_data.filter (function(d) {
-				return d["pitchRangeDist"] === generated_data[0]["pitchRangeDist"];
-			});
+			// var pitchRange = generated_data.filter (function(d) {
+				// return d["pitchRangeDist"] === generated_data[0]["pitchRangeDist"];
+			// });
+
 			
-			return pitchRange;
 		}
 
 		if (metric === "averagePitchInterval")
 		{
 			// sort by metric 
-			generated_data.sort((a, b) => (a.averagePitchIntervalDist > b.averagePitchIntervalDist) ? 1 : -1);
+			generated_data = generated_data.sort((a, b) => (a.averagePitchIntervalDist > b.averagePitchIntervalDist) ? 1 : -1);
 
 			// take the top few values 
-			var averagePitchIntervalDist = generated_data.filter (function(d) {
-				return d["averagePitchIntervalDist"] === generated_data[0]["averagePitchIntervalDist"];
-			});
+			// var averagePitchIntervalDist = generated_data.filter (function(d) {
+				// return d["averagePitchIntervalDist"] === generated_data[0]["averagePitchIntervalDist"];
+			// });
 			
-			return averagePitchIntervalDist;
+			// return averagePitchIntervalDist;
 		}
 
-
+		return generated_data.slice (0, 10);
 
 	}
 
