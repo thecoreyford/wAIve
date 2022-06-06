@@ -154,17 +154,27 @@ class MusicMetrics
 
 	getMostSimiliarValues(metric)
 	{
+
+		const totalInList = 10;
+		// TODO: refactor this using "metric" + dist... would be way neater 
+
 		if (metric === "pitchCount")
 		{
 			// sort by metric 
 			generated_data = generated_data.sort((a, b) => (a.pitchCountDist > b.pitchCountDist) ? 1 : -1);
 
 			// take the top few values 
-			// var pitchCount = generated_data.filter (function(d) {
-				// return d["pitchCountDist"] === generated_data[0]["pitchCountDist"];
-			// });
+			var pitchCount = generated_data.filter (function(d) {
+				return d["pitchCountDist"] === generated_data[0]["pitchCountDist"];
+			});
 
-			// return pitchCount;
+			// and make sure we have at-least the top 10 values if not possible
+			// for variation...
+			while (pitchCount.length < totalInList) {
+				pitchCount.push(generated_data[pitchCount.length])
+			}
+
+			return pitchCount;
 		}
 
 		if (metric === "pitchRange")
@@ -172,11 +182,18 @@ class MusicMetrics
 			// sort by metric 
 			generated_data = generated_data.sort((a, b) => (a.pitchRangeDist > b.pitchRangeDist) ? 1 : -1);
 
-			// take the top few values 
-			// var pitchRange = generated_data.filter (function(d) {
-				// return d["pitchRangeDist"] === generated_data[0]["pitchRangeDist"];
-			// });
+			// take the top few value
+			var pitchRange = generated_data.filter (function(d) {
+				return d["pitchRangeDist"] === generated_data[0]["pitchRangeDist"];
+			});
 
+			// and make sure we have at-least the top 10 values if not possible
+			// for variation...
+			while (pitchRange.length < totalInList) {
+				pitchRange.push(generated_data[pitchRange.length])
+			}
+
+			return pitchRange;
 			
 		}
 
@@ -186,14 +203,18 @@ class MusicMetrics
 			generated_data = generated_data.sort((a, b) => (a.averagePitchIntervalDist > b.averagePitchIntervalDist) ? 1 : -1);
 
 			// take the top few values 
-			// var averagePitchIntervalDist = generated_data.filter (function(d) {
-				// return d["averagePitchIntervalDist"] === generated_data[0]["averagePitchIntervalDist"];
-			// });
-			
-			// return averagePitchIntervalDist;
-		}
+			var averagePitchInterval = generated_data.filter (function(d) {
+				return d["averagePitchIntervalDist"] === generated_data[0]["averagePitchIntervalDist"];
+			});
 
-		return generated_data.slice (0, 15);
+			// and make sure we have at-least the top 10 values if not possible
+			// for variation...
+			while (averagePitchInterval.length < totalInList) {
+				averagePitchInterval.push(generated_data[averagePitchInterval.length])
+			}
+			
+			return averagePitchInterval;
+		}
 
 	}
 
