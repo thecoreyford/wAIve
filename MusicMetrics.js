@@ -158,7 +158,6 @@ class MusicMetrics
 		{
 			// sort by metric 
 			generated_data = generated_data.sort((a, b) => (a.pitchCountDist > b.pitchCountDist) ? 1 : -1);
-			print(generated_data)
 
 			// take the top few values 
 			// var pitchCount = generated_data.filter (function(d) {
@@ -194,7 +193,7 @@ class MusicMetrics
 			// return averagePitchIntervalDist;
 		}
 
-		return generated_data.slice (0, 10);
+		return generated_data.slice (0, 15);
 
 	}
 
