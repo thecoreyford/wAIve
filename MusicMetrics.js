@@ -83,6 +83,20 @@ class MusicMetrics
 		return this.pitchesInPeice.length;
 	}
 
+	getAveragePitch()
+	{
+		var allPitches = [];
+		for (let i = 0; i <  this.buffer.length; ++i){
+			allPitches.push (this.buffer[i].pitch)
+		}
+
+		// calculate average 
+		const sum = allPitches.reduce((a, b) => a + b, 0);
+		const avg = (sum / allPitches.length) || 0;
+
+		return avg;
+	}
+
 	getPitchRange()
 	{
 		this.getPitchCount() //< to update pitches in piece
@@ -136,6 +150,7 @@ class MusicMetrics
 		// Get main values
 		this.calculateGetNotes(); //<--- to be used in the functions below 
 		var userPitchCount = this.getPitchCount();
+		var userPitchCount = this.getAveragePitch();
 		var userPitchRange = this.getPitchRange();
 		var userAveragePitchInterval = this.getAveragePitchInterval();
 
@@ -143,6 +158,7 @@ class MusicMetrics
 		for (let g = 0; g < generated_data.length; ++g)
 		{
 			generated_data[g]["pitchCountDist"] = Math.abs(userPitchCount - generated_data[g]["pitch_count"]);
+			generated_data[g]["averagePitchDist"] = Math.abs(userPitchRange - generated_data[g]["averagePitchDist"]);
 			generated_data[g]["pitchRangeDist"] = Math.abs(userPitchRange - generated_data[g]["pitch_range"]);
 			generated_data[g]["averagePitchIntervalDist"] = Math.abs(userAveragePitchInterval - generated_data[g]["average_pitch_interval"]);
 		}
@@ -176,6 +192,27 @@ class MusicMetrics
 
 			return pitchCount;
 		}
+
+
+		if (metric === "averagePitch")
+		{
+			// sort by metric 
+			generated_data = generated_data.sort((a, b) => (a.averagePitchDist > b.averagePitchDist) ? 1 : -1);
+
+			// take the top few values 
+			var averagePitch = generated_data.filter (function(d) {
+				return d["averagePitchDist"] === generated_data[0]["averagePitchDist"];
+			});
+
+			// and make sure we have at-least the top 10 values if not possible
+			// for variation...
+			while (averagePitch.length < totalInList) {
+				averagePitch.push(generated_data[averagePitch.length])
+			}
+
+			return averagePitch;
+		}
+
 
 		if (metric === "pitchRange")
 		{

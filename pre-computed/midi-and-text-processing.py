@@ -118,6 +118,7 @@ def convert_to_csv_dataset():
 	data = {"extract":[],
 			"music_grid":[],
 			"pitch_count":[], # Number of pitches used atleast once
+			"average_pitch":[], # Average pitch (in semitones)
 			"pitch_range":[], # Difference between highest and lowest pitches semitones
 			"average_pitch_interval":[]} #Average melodic interval (in semitones).
 
@@ -135,6 +136,7 @@ def convert_to_csv_dataset():
 
 		# store the features
 		data["pitch_count"].append(m21.features.jSymbolic.PitchVarietyFeature(file).extract().vector[0])
+		data["average_pitch"].append(m21.features.jSymbolic.PrimaryRegisterFeature(file).extract().vector[0])
 		data["pitch_range"].append(m21.features.jSymbolic.RangeFeature(file).extract().vector[0])
 
 		# store the file name 
@@ -200,6 +202,9 @@ def my_csv_to_javascript(csv_file):
 		javascript_code.append(",\n")
 		javascript_code.append("\"pitch_count\": ")
 		javascript_code.append(df.iloc[i]["pitch_count"])
+		javascript_code.append(",\n")
+		javascript_code.append("\"average_pitch\": ")
+		javascript_code.append(df.iloc[i]["average_pitch"])
 		javascript_code.append(",\n")
 		javascript_code.append("\"pitch_range\": ")
 		javascript_code.append(df.iloc[i]["pitch_range"])
