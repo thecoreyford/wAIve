@@ -1,11 +1,21 @@
+/** AI tool which spawns blocks into the interface. */
 class AIBlockCreator
 {
+	/** 
+	 * Constructor
+	 * @return {void} Nothing.
+	 */
 	constructor()
 	{
 		this.onetime = true;
 	}	
 
 
+	/**
+ 	 * Blocks to draw on update, spawing AI blocks where needed. 
+	 * @param {array} musicBlocks - the music block array which holds all the blocks in the project.
+ 	 * @return {void} Nothing
+ 	 */
 	update(musicBlocks)
 	{
 
@@ -18,7 +28,7 @@ class AIBlockCreator
 
 		let elapsedTime = millis() - startTime; 
 		
-		if (elapsedTime > (25 * 1000)) 
+		if (elapsedTime > (25 * 1000)) //< evey X seconds... 
 		{
 			// Find AI blocks in the grey
 			processDataset();
@@ -38,23 +48,23 @@ class AIBlockCreator
 			musicMetrics.calculateMusicalDistancesForData(); 
 
 
-			// // // For the top left (PITCH COUNT)
-			// var values = musicMetrics.getMostSimiliarValues("pitchCount");			
-			// musicBlocks.push (new AIBlock (anchor1.x, anchor1.y + random(0,5), 200, 100,
-			// 							   values[Math.floor(Math.random()*values.length)]["music_grid"]));
-			// musicBlocks.push (new AIBlock (anchor1.x + random (230, 220), anchor1.y, 200, 100,
-			// 							   values[Math.floor(Math.random()*values.length)]["music_grid"]));
-			// musicBlocks.push (new AIBlock (anchor1.x, anchor1.y + random (100, 120), 200, 100,
-			// 							   values[Math.floor(Math.random()*values.length)]["music_grid"]));
-
-			// // For the top left (AVERAGE PITCH)
-			var values = musicMetrics.getMostSimiliarValues("averagePitch");			
+			// // For the top left (PITCH COUNT)
+			var values = musicMetrics.getMostSimiliarValues("pitchCount");			
 			musicBlocks.push (new AIBlock (anchor1.x, anchor1.y + random(0,5), 200, 100,
 										   values[Math.floor(Math.random()*values.length)]["music_grid"]));
 			musicBlocks.push (new AIBlock (anchor1.x + random (230, 220), anchor1.y, 200, 100,
 										   values[Math.floor(Math.random()*values.length)]["music_grid"]));
 			musicBlocks.push (new AIBlock (anchor1.x, anchor1.y + random (100, 120), 200, 100,
 										   values[Math.floor(Math.random()*values.length)]["music_grid"]));
+
+			// // // For the top left (AVERAGE PITCH)
+			// var values = musicMetrics.getMostSimiliarValues("averagePitch");			
+			// musicBlocks.push (new AIBlock (anchor1.x, anchor1.y + random(0,5), 200, 100,
+			// 							   values[Math.floor(Math.random()*values.length)]["music_grid"]));
+			// musicBlocks.push (new AIBlock (anchor1.x + random (230, 220), anchor1.y, 200, 100,
+			// 							   values[Math.floor(Math.random()*values.length)]["music_grid"]));
+			// musicBlocks.push (new AIBlock (anchor1.x, anchor1.y + random (100, 120), 200, 100,
+			// 							   values[Math.floor(Math.random()*values.length)]["music_grid"]));
 
 			// // For the top right (PITCH RANGE)
 			var values = musicMetrics.getMostSimiliarValues("pitchRange");					

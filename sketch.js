@@ -1,3 +1,10 @@
+/**
+ * @file Main file for p5js sketch.
+ * @author Corey Ford
+ */
+
+//========================================================================================
+
 // VARIABLES
 
 const canvasWidth = 1250;
@@ -7,7 +14,10 @@ const workspaceX = canvasWidth * 0.10;
 const workspaceY = canvasHeight * 0.15;
 const workspaceWidth = canvasWidth - (2 * workspaceX);
 const workspaceHeight = canvasHeight - (2 * workspaceY);
-var workspace  = new Workspace(workspaceX, workspaceY, workspaceWidth, workspaceHeight);
+var workspace  = new Workspace(workspaceX, 
+							   workspaceY, 
+							   workspaceWidth, 
+							   workspaceHeight);
 
 
 var blockCreator = new BlockCreator(workspace.getX() + 60,
@@ -24,20 +34,24 @@ var bin = new Bin(workspaceX + workspaceWidth + 25,
 				  workspaceY + workspaceHeight + 10, 
 				  70, 85);
 
-let musicBlocks = [];
+let musicBlocks = []; //< Array of current blocks
 
-var aiBlockCreator = new AIBlockCreator();
+var aiBlockCreator = new AIBlockCreator(); //< Class spawns in AI blocks
 
-var musicMetrics = new MusicMetrics(playButton);
+var musicMetrics = new MusicMetrics(playButton); //< NOTE: MIDI note sequences is encapsulated through the play button
 
 var puzzle_image, puzzle_image2, binClosed, binOpen;
 
 var startTime;
 
-//===========================================================================
+//========================================================================================
 
 // MAIN FUNCTIONS  
 
+/**
+ * Preloads images and other info before app launch.
+ * @return {void} - Nothing.
+ */
 function preload() 
 {
 	startTime = millis();
@@ -47,11 +61,19 @@ function preload()
 	binOpen = loadImage("assets/binOpen.png");
 }
 
+/**
+ * Sets up canvas before drawing to screen.
+ * @return {void} - Nothing.
+ */
 function setup() 
 {
-  createCanvas(canvasWidth, canvasHeight);
+  createCanvas (canvasWidth, canvasHeight);
 }
 
+/**
+ * Timer update for drawings, updating app objects.
+ * @return {void} - Nothing.
+ */
 function draw() 
 {
   	noStroke();
@@ -76,6 +98,10 @@ function draw()
 
 // INTERACTIVITY
 
+/**
+ * If mouse is pressed, move blocks or trigger playback.
+ * @return {void} - Nothing.
+ */
 function mousePressed() 
 {
 	// If block creator is pressed
@@ -97,6 +123,10 @@ function mousePressed()
 	playButton.mousePressed();
 }
 
+/**
+ * If mouse is released, delete or stop dragging blocks.
+ * @return {void} - Nothing.
+ */
 function mouseReleased()
 {
 	// delete any blocks from the bin
