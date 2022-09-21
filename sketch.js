@@ -97,11 +97,11 @@ function draw()
 
   	// every so many seconds... 
   	let elapsedTime = millis() - startTime; 
-	if (elapsedTime % (25 * 1000) == 0)
+	if (elapsedTime > (25 * 1000))
 	{
 		aiBlockCreator.update(musicBlocks);
 		startTime = millis();
-		logger.save();
+		logger.save()
 	}
 
   	playButton.updatePlayback();
