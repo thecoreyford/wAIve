@@ -29,6 +29,10 @@ class MusicBlock
 	   	this.showHighlight = false; 
 
 	   	this.isAI = false;
+
+	   	// Assign a unique ID and then increment. 
+	   	this.id = blockIDTracker;
+	   	blockIDTracker = blockIDTracker + 1;
 	}
 
 	//=================================================================	

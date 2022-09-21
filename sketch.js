@@ -40,7 +40,11 @@ var aiBlockCreator = new AIBlockCreator(); //< Class spawns in AI blocks
 
 var musicMetrics = new MusicMetrics(playButton); //< NOTE: MIDI note sequences is encapsulated through the play button
 
+var logger = new Logger();
+
 var puzzle_image, puzzle_image2, binClosed, binOpen;
+
+var blockIDTracker; 
 
 var startTime;
 
@@ -54,6 +58,7 @@ var startTime;
  */
 function preload() 
 {
+	blockIDTracker = 0;
 	startTime = millis();
 	puzzle_image = loadImage("assets/puzzle.png");
 	puzzle_image2 = loadImage("assets/puzzle2.png");
@@ -90,7 +95,15 @@ function draw()
 	blockCreator.draw();
   	playButton.draw();
 
-  	aiBlockCreator.update(musicBlocks);
+  	// every so many seconds... 
+  	let elapsedTime = millis() - startTime; 
+	if (elapsedTime % (25 * 1000) == 0)
+	{
+		aiBlockCreator.update(musicBlocks);
+		startTime = millis();
+		logger.save();
+	}
+
   	playButton.updatePlayback();
 }
 
