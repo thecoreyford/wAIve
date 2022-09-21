@@ -42,11 +42,25 @@ class Logger
 		}
 
 
-
-		// Stringify in a JSON format... 
+		// Stringify into a JSON format... 
 		var JsonObject = JSON.stringify(myBlockArray);
 
 		// Write to file... 
-		console.log(JsonObject);
+		var today = new Date();
+		var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+		var dateTime = date+' '+time;
+ 
+		var file_name = "save file " + dateTime + ".json";
+
+		var dbx = new Dropbox.Dropbox({ accessToken: access_token });
+
+		dbx.filesUpload({path: '/' + file_name, contents: JsonObject})
+		.then( function (response) {
+			console.log(response);
+		})
+		.catch( function (error){
+			console.log(error);
+		})
 	}
 }
