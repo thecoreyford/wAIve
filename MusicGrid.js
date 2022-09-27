@@ -87,6 +87,9 @@ class MusicGrid
 	{
 		noStroke();
 		fill(darkGrey)
+
+		this.setToggleButtonColours()
+
 		rect(this.x, this.y, this.width, this.height);
   
   		for (let i = 0; i < this.toggleButtons.length; ++i)
@@ -157,5 +160,38 @@ class MusicGrid
 	getInternalButtonsArray()
 	{
 		return this.toggleButtons;
+	}
+
+
+	/**
+ 	 * Highlights patterns by changing toggle on buttons.
+ 	 * @return {void} nothing. 
+ 	 */
+	setToggleButtonColours()
+	{
+		// Make orange to clear the palette
+		for (let i = 0; i < (this.toggleButtons.length - 7); ++i){
+			this.toggleButtons[i].setOnColour(orange);
+		}
+		
+		// Check Ascending
+		print(this.toggleButtons.length);
+		for (let i = 0; i < (this.toggleButtons.length - 7); ++i)
+  		{
+  			if (i % 8 !== 0) // ignore top row
+  			{
+  				let start = i; 
+				let end = start + 7;
+				if (this.toggleButtons[start].isOn === true 
+					&& this.toggleButtons[end].isOn === true)
+				{
+					this.toggleButtons[start].setOnColour(googGreen);
+					this.toggleButtons[end].setOnColour(googGreen);
+				}
+  			}
+  			
+  		}
+
+
 	}
 }
