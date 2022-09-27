@@ -45,10 +45,10 @@ class MusicGrid
  	 */
 	update (x, y, w, h)
 	{
-		this.x = x + (w * 0.075) + 5;
-		this.y = y + (h * 0.05); 
-		this.width = w * 0.78;
-		this.height = h * 0.9;
+		this.x = x + (w * 0.075) + 5.5;
+		this.y = y + (h * 0.05) + 0.1; 
+		this.width = w * 0.76;
+		this.height = h * 0.89;
 
 		let counter = 0; 
 		for (let j = 0; j < this.gridWidth; ++j) 
