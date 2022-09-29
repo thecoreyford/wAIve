@@ -72,6 +72,9 @@ function preload()
  */
 function setup() 
 {
+  musicMetrics.getCountOfColour (orange, true);
+  musicMetrics.getCountOfColour (purple, true);
+  musicMetrics.getCountOfColour (googGreen, true);
   createCanvas (canvasWidth, canvasHeight);
 }
 

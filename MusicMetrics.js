@@ -210,7 +210,7 @@ class MusicMetrics
 	getMostSimiliarValues(metric)
 	{
 
-		const totalInList = 10;
+		const totalInList = 40;
 		// TODO: refactor this using "metric" + dist... would be way neater 
 
 		if (metric === "pitchCount")
@@ -223,7 +223,7 @@ class MusicMetrics
 				return d["pitchCountDist"] === generated_data[0]["pitchCountDist"];
 			});
 
-			// and make sure we have at-least the top 10 values if not possible
+			// and make sure we have at-least the top X values if not possible
 			// for variation...
 			while (pitchCount.length < totalInList) {
 				pitchCount.push(generated_data[pitchCount.length])
@@ -243,7 +243,7 @@ class MusicMetrics
 				return d["averagePitchDist"] === generated_data[0]["averagePitchDist"];
 			});
 
-			// and make sure we have at-least the top 10 values if not possible
+			// and make sure we have at-least the top X values if not possible
 			// for variation...
 			while (averagePitch.length < totalInList) {
 				averagePitch.push(generated_data[averagePitch.length])
@@ -263,7 +263,7 @@ class MusicMetrics
 				return d["pitchRangeDist"] === generated_data[0]["pitchRangeDist"];
 			});
 
-			// and make sure we have at-least the top 10 values if not possible
+			// and make sure we have at-least the top X values if not possible
 			// for variation...
 			while (pitchRange.length < totalInList) {
 				pitchRange.push(generated_data[pitchRange.length])
@@ -283,7 +283,7 @@ class MusicMetrics
 				return d["averagePitchIntervalDist"] === generated_data[0]["averagePitchIntervalDist"];
 			});
 
-			// and make sure we have at-least the top 10 values if not possible
+			// and make sure we have at-least the top X values if not possible
 			// for variation...
 			while (averagePitchInterval.length < totalInList) {
 				averagePitchInterval.push(generated_data[averagePitchInterval.length])
@@ -291,7 +291,61 @@ class MusicMetrics
 			
 			return averagePitchInterval;
 		}
-
 	}
 
+	getCountOfColour(colour, isGenerated)
+	{	
+		if(isGenerated === true)
+		{
+			for (let i = 0; i < generated_data.length; ++i)
+			{
+				let aiBlock = new AIBlock(0,0,0,0,generated_data[i]["music_grid"]);
+
+				let count = 0;
+				for (let j = 0; j < 64; ++j)
+				{
+					if (aiBlock["grid"]["toggleButtons"][j].onColour === colour &&
+						aiBlock["grid"]["toggleButtons"][j].isOn == true)
+					{
+						count++;
+					}
+				}
+				generated_data[i][colour] = count;
+			}
+		}
+	}
+
+	/**
+ 	 * Returns a list of the top 10 closest matches for a given metric.
+ 	 * @param {string} metric - the metric for the required sorted list of examples.
+ 	 * @return {void} Nothing.
+ 	 */
+	getMostColourValues(colour,list)
+	{
+		const totalInList = 10;
+
+		// sort by metric 
+		var colourCount = list.sort(function(a, b){return a[colour] - b[colour];});
+		colourCount = colourCount.reverse();
+
+		colourCount = colourCount.splice(0,totalInList);
+
+		// // take the top few values 
+		// var colourCount = list.filter (function(d) {
+		// 	return d[colour] === list[0][colour];
+		// });
+
+		// and make sure we have at-least the top X values if not possible
+		// for variation...
+		// while (colourCount.length < totalInList) {
+		// 	colourCount.push(list[colourCount.length])
+		// }
+
+		// var colourCount = list.splice(1);
+		// print(colourCount);
+
+		//TODO: Tidy up code !
+
+		return colourCount;
+	}
 }
