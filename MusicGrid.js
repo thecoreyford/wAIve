@@ -13,7 +13,7 @@ class MusicGrid
 	{
 		this.x = x;
 		this.y = y; 
-		this.width = width;
+		this.width = width - 10;
 		this.height = height;
 
 		this.gridWidth = 8;
