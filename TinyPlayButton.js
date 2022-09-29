@@ -54,8 +54,9 @@ class TinyPlayButton
 		if (mouseX > this.x 
 			&& mouseX < this.x + this.width 
 			&& mouseY > this.y 
-			&& mouseY < this.y + this.height) {
-			playButton.startPlayback(this.id);
+			&& mouseY < this.y + this.height
+			&& playButton.mode === "STOPPED") {
+				playButton.startPlayback(this.id);
 		}
 	}
 }
