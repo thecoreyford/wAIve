@@ -36,10 +36,30 @@ class TinyPlayButton
 		// this.width = 20; 
 		// this.height = 20; 
 
-		// draw the mini playback button.
-		fill(green);
+		var myAlpha = 255;
+		if (this.x - 10 < workspaceX 
+  			|| this.x - 10 > workspaceX+workspaceWidth 
+  			|| this.y - 6 < workspaceY 
+  			|| this.y -6 > workspaceY + workspaceHeight)
+  		{
+  			// Button is outside of the workspace so lets make transparent 
+  			myAlpha = 50;
+  		}
+  		else
+  		{
+  			myAlpha = 255;
+  		}
+
+		// draw the mini playback button...
+		var buttonBackground = color(green);
+		buttonBackground.setAlpha(myAlpha);
+		fill(buttonBackground);
 		rect(this.x, this.y, this.width, this.height,4);
-		fill(255);
+		
+		// ...with a triangle on it
+		var triangleColour = color(white);
+		triangleColour.setAlpha(myAlpha);
+		fill(triangleColour);
 		triangle(this.x+5, this.y+3, 
 				 this.x+20-3, this.y+10,
 				 this.x+5, this.y+18);
