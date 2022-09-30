@@ -191,39 +191,39 @@ class MusicGrid
   			
   		}
 
-  		// Check Descending
-  		for (let i = 0; i < (this.toggleButtons.length - 9); ++i)
-  		{
-  			if ((i+1) % 8 !== 0) // ignore bottom row
-  			{
-  				let start = i; 
-				let end = start + 9;
-				if (this.toggleButtons[start].isOn === true 
-					&& this.toggleButtons[end].isOn === true)
-				{
-					this.toggleButtons[start].setOnColour(purple);
-					this.toggleButtons[end].setOnColour(purple);
-				}
-  			}
+  		// // Check Descending
+  		// for (let i = 0; i < (this.toggleButtons.length - 9); ++i)
+  		// {
+  		// 	if ((i+1) % 8 !== 0) // ignore bottom row
+  		// 	{
+  		// 		let start = i; 
+				// let end = start + 9;
+				// if (this.toggleButtons[start].isOn === true 
+				// 	&& this.toggleButtons[end].isOn === true)
+				// {
+				// 	this.toggleButtons[start].setOnColour(purple);
+				// 	this.toggleButtons[end].setOnColour(purple);
+				// }
+  		// 	}
   			
-  		}
+  		// }
 
-  		// Check for thirds
-		for (let i = 0; i < (this.toggleButtons.length - 2); ++i)
-  		{
-  			let myList = [6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55, 62, 63];
-  			if (!myList.includes(i)) // ignore bottom rows
-  			{
-  				let start = i; 
-				let end = start + 2;
-				if (this.toggleButtons[start].isOn === true 
-					&& this.toggleButtons[end].isOn === true)
-				{
-					this.toggleButtons[start].setOnColour(googGreen);
-					this.toggleButtons[end].setOnColour(googGreen);
-				}
-  			}
-  		}
+  // 		// Check for thirds
+		// for (let i = 0; i < (this.toggleButtons.length - 2); ++i)
+  // 		{
+  // 			let myList = [6, 7, 14, 15, 22, 23, 30, 31, 38, 39, 46, 47, 54, 55, 62, 63];
+  // 			if (!myList.includes(i)) // ignore bottom rows
+  // 			{
+  // 				let start = i; 
+		// 		let end = start + 2;
+		// 		if (this.toggleButtons[start].isOn === true 
+		// 			&& this.toggleButtons[end].isOn === true)
+		// 		{
+		// 			this.toggleButtons[start].setOnColour(googGreen);
+		// 			this.toggleButtons[end].setOnColour(googGreen);
+		// 		}
+  // 			}
+  // 		}
 
   		// Check for dissonance
 		for (let i = 0; i < (this.toggleButtons.length - 1); ++i)
