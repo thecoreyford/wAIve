@@ -44,7 +44,7 @@ class AIBlockCreator
 		// // For the top left (PITCH COUNT)
 		var values = musicMetrics.getMostSimiliarValues("pitchCount", generated_data, 40);
 		values = musicMetrics.getMostSimiliarValues("pitchRange", values, 30);	
-		values = musicMetrics.getMostSimiliarValues("averagePitchInterval", 20);					
+		values = musicMetrics.getMostSimiliarValues("averagePitchInterval", values, 20);					
 		values = musicMetrics.getMostColourValues(orange, values, 10);
 		musicBlocks.push (new AIBlock (anchor1.x, anchor1.y + random(0,5), 200, 100,
 									   values[Math.floor(Math.random()*values.length)]["music_grid"]));
@@ -66,7 +66,7 @@ class AIBlockCreator
 		// // var values = musicMetrics.getMostSimiliarValues("pitchRange");	
 		var values = musicMetrics.getMostSimiliarValues("pitchCount", generated_data, 40);
 		values = musicMetrics.getMostSimiliarValues("pitchRange", values, 30);	
-		values = musicMetrics.getMostSimiliarValues("averagePitchInterval", 20);					
+		values = musicMetrics.getMostSimiliarValues("averagePitchInterval", values, 20);					
 		values = musicMetrics.getMostColourValues(googGreen, values, 10);				
 		musicBlocks.push (new AIBlock (anchor2.x - 300, anchor2.y - random(30, 20), 200, 100,
 									    values[Math.floor(Math.random()*values.length)]["music_grid"]));
@@ -79,7 +79,7 @@ class AIBlockCreator
 		// var values = musicMetrics.getMostSimiliarValues("averagePitchInterval");					
 		var values = musicMetrics.getMostSimiliarValues("pitchCount", generated_data, 40);
 		values = musicMetrics.getMostSimiliarValues("pitchRange", values, 30);	
-		values = musicMetrics.getMostSimiliarValues("averagePitchInterval", 20);					
+		values = musicMetrics.getMostSimiliarValues("averagePitchInterval", values, 20);					
 		values = musicMetrics.getMostColourValues(purple, values, 10);				
 		musicBlocks.push (new AIBlock (anchor3.x - 30, anchor3.y - 30, 200, 100,
 										values[Math.floor(Math.random()*values.length)]["music_grid"]));
