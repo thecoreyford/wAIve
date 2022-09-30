@@ -273,7 +273,7 @@ class MusicMetrics
 
 		if (metric === "averagePitchInterval")
 		{
-			// sort by metric 
+			// sort by metric
 			list = list.sort((a, b) => (a.averagePitchIntervalDist > b.averagePitchIntervalDist) ? 1 : -1);
 
 			// take the top few values 
