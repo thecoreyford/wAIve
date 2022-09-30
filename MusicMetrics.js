@@ -207,26 +207,24 @@ class MusicMetrics
  	 * @param {string} metric - the metric for the required sorted list of examples.
  	 * @return {void} Nothing.
  	 */
-	getMostSimiliarValues(metric)
+	getMostSimiliarValues(metric, list, totalInList)
 	{
-
-		const totalInList = 40;
 		// TODO: refactor this using "metric" + dist... would be way neater 
 
 		if (metric === "pitchCount")
 		{
 			// sort by metric 
-			generated_data = generated_data.sort((a, b) => (a.pitchCountDist > b.pitchCountDist) ? 1 : -1);
+			list = list.sort((a, b) => (a.pitchCountDist > b.pitchCountDist) ? 1 : -1);
 
 			// take the top few values 
-			var pitchCount = generated_data.filter (function(d) {
-				return d["pitchCountDist"] === generated_data[0]["pitchCountDist"];
+			var pitchCount = list.filter (function(d) {
+				return d["pitchCountDist"] === list[0]["pitchCountDist"];
 			});
 
 			// and make sure we have at-least the top X values if not possible
 			// for variation...
 			while (pitchCount.length < totalInList) {
-				pitchCount.push(generated_data[pitchCount.length])
+				pitchCount.push(list[pitchCount.length])
 			}
 
 			return pitchCount;
@@ -236,17 +234,17 @@ class MusicMetrics
 		if (metric === "averagePitch")
 		{
 			// sort by metric 
-			generated_data = generated_data.sort((a, b) => (a.averagePitchDist > b.averagePitchDist) ? 1 : -1);
+			list = list.sort((a, b) => (a.averagePitchDist > b.averagePitchDist) ? 1 : -1);
 
 			// take the top few values 
-			var averagePitch = generated_data.filter (function(d) {
-				return d["averagePitchDist"] === generated_data[0]["averagePitchDist"];
+			var averagePitch = list.filter (function(d) {
+				return d["averagePitchDist"] === list[0]["averagePitchDist"];
 			});
 
 			// and make sure we have at-least the top X values if not possible
 			// for variation...
 			while (averagePitch.length < totalInList) {
-				averagePitch.push(generated_data[averagePitch.length])
+				averagePitch.push(list[averagePitch.length])
 			}
 
 			return averagePitch;
@@ -256,17 +254,17 @@ class MusicMetrics
 		if (metric === "pitchRange")
 		{
 			// sort by metric 
-			generated_data = generated_data.sort((a, b) => (a.pitchRangeDist > b.pitchRangeDist) ? 1 : -1);
+			list = list.sort((a, b) => (a.pitchRangeDist > b.pitchRangeDist) ? 1 : -1);
 
 			// take the top few value
-			var pitchRange = generated_data.filter (function(d) {
-				return d["pitchRangeDist"] === generated_data[0]["pitchRangeDist"];
+			var pitchRange = list.filter (function(d) {
+				return d["pitchRangeDist"] === list[0]["pitchRangeDist"];
 			});
 
 			// and make sure we have at-least the top X values if not possible
 			// for variation...
 			while (pitchRange.length < totalInList) {
-				pitchRange.push(generated_data[pitchRange.length])
+				pitchRange.push(list[pitchRange.length])
 			}
 
 			return pitchRange;
@@ -276,17 +274,17 @@ class MusicMetrics
 		if (metric === "averagePitchInterval")
 		{
 			// sort by metric 
-			generated_data = generated_data.sort((a, b) => (a.averagePitchIntervalDist > b.averagePitchIntervalDist) ? 1 : -1);
+			list = list.sort((a, b) => (a.averagePitchIntervalDist > b.averagePitchIntervalDist) ? 1 : -1);
 
 			// take the top few values 
-			var averagePitchInterval = generated_data.filter (function(d) {
-				return d["averagePitchIntervalDist"] === generated_data[0]["averagePitchIntervalDist"];
+			var averagePitchInterval = list.filter (function(d) {
+				return d["averagePitchIntervalDist"] === list[0]["averagePitchIntervalDist"];
 			});
 
 			// and make sure we have at-least the top X values if not possible
 			// for variation...
 			while (averagePitchInterval.length < totalInList) {
-				averagePitchInterval.push(generated_data[averagePitchInterval.length])
+				averagePitchInterval.push(list[averagePitchInterval.length])
 			}
 			
 			return averagePitchInterval;
@@ -320,10 +318,8 @@ class MusicMetrics
  	 * @param {string} metric - the metric for the required sorted list of examples.
  	 * @return {void} Nothing.
  	 */
-	getMostColourValues(colour,list)
+	getMostColourValues(colour,list,totalInList)
 	{
-		const totalInList = 10;
-
 		// sort by metric 
 		var colourCount = list.sort(function(a, b){return a[colour] - b[colour];});
 		colourCount = colourCount.reverse();
