@@ -202,7 +202,7 @@ class MusicMetrics
 	}
 
 
-	/**
+	/** //TODO: Check comment
  	 * Returns a list of the top 10 closest matches for a given metric.
  	 * @param {string} metric - the metric for the required sorted list of examples.
  	 * @return {void} Nothing.
@@ -313,7 +313,7 @@ class MusicMetrics
 		}
 	}
 
-	/**
+	/** //TODO: Check comment
  	 * Returns a list of the top 10 closest matches for a given metric.
  	 * @param {string} metric - the metric for the required sorted list of examples.
  	 * @return {void} Nothing.
