@@ -72,7 +72,7 @@ function preload()
  */
 function setup() 
 {
-  musicMetrics.getCountOfColour (orange, true);
+  musicMetrics.getCountOfColour (orange, true); //< TODO: should these be in preload
   musicMetrics.getCountOfColour (purple, true);
   musicMetrics.getCountOfColour (googGreen, true);
   createCanvas (canvasWidth, canvasHeight);
@@ -110,9 +110,9 @@ function draw()
   	let elapsedTime = millis() - startTime; 
 	if (elapsedTime > (25 * 1000))
 	{
-		aiBlockCreator.update(musicBlocks);
+		aiBlockCreator.update (musicBlocks);
 		startTime = millis();
-		logger.save()
+		logger.save();
 	}
 
   	playButton.updatePlayback();
