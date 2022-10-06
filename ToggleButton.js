@@ -53,26 +53,27 @@ class ToggleButton
 		if (this.isOn)
 		{
 			squareColor = color(this.onColour);
-			if(this.onColour !== orange && this.doFade === true){
-				print("fadey");
+			if (this.onColour !== orange && this.doFade === true)
+			{
 				let elapsedTime = millis() - this.startTime; 
-				let fraction = elapsedTime / (15 /*sec*/ * 1000);
+				let fraction = elapsedTime / (30 /*sec*/ * 1000);
 				
 				let colour1R = squareColor._getRed();
 				let colour1G = squareColor._getGreen();
 				let colour1B = squareColor._getBlue();
 
-				let colour2R = color(orange)._getRed();
-				let colour2G = color(orange)._getGreen();
-				let colour2B = color(orange)._getBlue();
+				let colour2R = color (orange)._getRed();
+				let colour2G = color (orange)._getGreen();
+				let colour2B = color (orange)._getBlue();
 
 				let r = (colour2R-colour1R) * fraction + colour1R;
 				let g = (colour2G-colour1G) * fraction + colour1G;
 				let b = (colour2B-colour1B) * fraction + colour1B;
 
-				squareColor = color([r,g,b]);
-				if(fraction > 1.0){
-					squareColor = color(orange);
+				squareColor = color ([r,g,b]);
+				if (fraction > 1.0)
+				{
+					squareColor = color (orange);
 				}
 			}
 		}
