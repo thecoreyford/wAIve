@@ -7,13 +7,13 @@
 
 // VARIABLES
 
-const canvasWidth = 1250;
-const canvasHeight = 780; //580;
+const canvasWidth = 1410;
+const canvasHeight = 870; //580;
 
-const workspaceX = canvasWidth * 0.10;
-const workspaceY = canvasHeight * 0.15;
-const workspaceWidth = canvasWidth - (2 * workspaceX);
-const workspaceHeight = canvasHeight - (2 * workspaceY);
+const workspaceX = 125; //canvasWidth * 0.10; //125
+const workspaceY = 230; //canvasHeight * 0.15; //117
+const workspaceWidth = 1100; //canvasWidth - (2 * workspaceX); //1000
+const workspaceHeight = 600; //canvasHeight - (2 * workspaceY); //546
 var workspace  = new Workspace(workspaceX, 
 							   workspaceY, 
 							   workspaceWidth, 
@@ -30,8 +30,8 @@ var playButton = new PlayButton(workspace.getX() + 10,
 								40,
 								40);
 
-var bin = new Bin(workspaceX + workspaceWidth + 25, 
-				  workspaceY + workspaceHeight + 10, 
+var bin = new Bin(workspaceX + workspaceWidth + 50, 
+				  117 + workspaceHeight + 30, 
 				  70, 85);
 
 let musicBlocks = []; //< Array of current blocks
@@ -91,6 +91,9 @@ function draw()
   	rect(0,0,canvasWidth,canvasHeight,10);
 	noStroke();
 
+	fill(255,0,0);
+	rect(workspaceX,80,workspaceWidth,130);
+
 	// draw the following onto the background.... 
   	workspace.draw();
   	bin.draw();
@@ -129,7 +132,7 @@ function mousePressed()
 	if (blockCreator.hasMouseOver()) 
 	{
 		musicBlocks.push (new MusicBlock(250 + random(0, 40),
-									  150 + random(-20,40),
+									  250 + random(-20,40),
 									  200,
 									  100));
 	}
