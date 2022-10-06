@@ -40,7 +40,7 @@ class PlayButton
 			fill (green);
 		}
 		
-		rect (this.x, this.y, this.width, this.height);
+		rect (this.x, this.y, this.width, this.height, 5);
 
 		fill(lightGrey);
 		if (this.mode === "PLAYING" || this.mode === "PREPARE_BUFFER")
