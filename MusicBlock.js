@@ -135,21 +135,24 @@ class MusicBlock
  	 */
   	show() 
   	{
-  		if (this.x < workspace[0].getX() 
-  			|| this.x > workspace[0].getX()+workspace[0].getWidth() 
-  			|| this.y < workspace[0].getY() 
-  			|| this.y > workspace[0].getY() + workspace[0].getHeight())
-  		{
-  			// Block is outside of the workspace so lets make transparent 
-  			tint (255, 126);
-  			this.grid.toggleTransparency(true);
-  		}
-  		else
-  		{
-  			tint (255, 255);
-  			this.grid.toggleTransparency(false);
-  		}
-  		
+		for(let wks = 0; wks < workspace.length; wks++)
+      	{
+	  		if (this.x < workspace[wks].getX() 
+	  			|| this.x > workspace[wks].getX()+workspace[wks].getWidth() 
+	  			|| this.y < workspace[wks].getY() 
+	  			|| this.y > workspace[wks].getY() + workspace[wks].getHeight())
+	  		{
+	  			// Block is outside of the workspace so lets make transparent 
+	  			tint (255, 126);
+	  			this.grid.toggleTransparency(true);
+	  		}
+	  		else
+	  		{
+	  			tint (255, 255);
+	  			this.grid.toggleTransparency(false);
+	  			break;
+	  		}
+	  	}
 
 	    image(puzzle_image, this.x, this.y, this.width, this.height);
 

@@ -44,18 +44,22 @@ class TinyPlayButton
 		var myAlpha = 255;
 		if(this.id !== -2) //< if we are not looking at the block stack... . 
 		{
-			if (this.x - 10 < workspace[0].getX() 
-	  			|| this.x - 10 > workspace[0].getX()+workspace[0].getWidth() 
-	  			|| this.y - 6 < workspace[0].getY() 
-	  			|| this.y -6 > workspace[0].getY() + workspace[0].getHeight())
-	  		{
-	  			// Button is outside of the workspace so lets make transparent 
-	  			myAlpha = 50;
-	  		}
-	  		else
-	  		{
-	  			myAlpha = 255;
-	  		}
+			for(let wks = 0; wks < workspace.length; wks++)
+      		{
+				if (this.x - 10 < workspace[wks].getX() 
+		  			|| this.x - 10 > workspace[wks].getX()+workspace[wks].getWidth() 
+		  			|| this.y - 6 < workspace[wks].getY() 
+		  			|| this.y -6 > workspace[wks].getY() + workspace[wks].getHeight())
+		  		{
+		  			// Button is outside of the workspace so lets make transparent 
+		  			myAlpha = 50;
+		  		}
+		  		else
+		  		{
+		  			myAlpha = 255;
+		  			break;
+		  		}
+		  	}
 
 	  		// draw the mini playback button...
 			var buttonBackground = color(green);
