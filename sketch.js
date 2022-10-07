@@ -10,12 +10,12 @@
 const canvasWidth = 1410;
 const canvasHeight = 870; //580;
 
-const workspaceX = 125; //canvasWidth * 0.10; //125
-const workspaceY = 230; //canvasHeight * 0.15; //117
-const workspaceWidth = 1100; //canvasWidth - (2 * workspaceX); //1000
+const workspaceX = 200; //canvasWidth * 0.10; //125
+const workspaceY = 252; //canvasHeight * 0.15; //117
+const workspaceWidth = 1050; //canvasWidth - (2 * workspaceX); //1000
 const workspaceHeight = 600; //canvasHeight - (2 * workspaceY); //546
 const workspace2X = workspaceX; //canvasWidth * 0.10; //125
-const workspace2Y = 80; //canvasHeight * 0.15; //117
+const workspace2Y = 110; //canvasHeight * 0.15; //117
 const workspace2Width = workspaceWidth; //canvasWidth - (2 * workspaceX); //1000
 const workspace2Height = 130; //canvasHeight - (2 * workspaceY); //546
 var workspace  = [new Workspace(workspaceX, 
@@ -38,8 +38,8 @@ var playButton = new PlayButton(workspace[0].getX() + 10,
 								40,
 								40);
 
-var bin = new Bin(workspace[0].getX() + workspace[0].getWidth() + 50, 
-				  117 + workspace[0].getHeight() + 30, 
+var bin = new Bin(workspace[0].getX() + workspace[0].getWidth() + 40, 
+				  117 + workspace[0].getHeight() + 30 + 20, 
 				  70, 85);
 
 let musicBlocks = []; //< Array of current blocks
@@ -111,7 +111,9 @@ function draw()
 
 	blockCreator.draw();
   	playButton.draw();
-  	stackPlayer.draw(workspace[1].getX(),workspace[1].getY(),40,40,-2);
+  	stackPlayer.draw(workspace[1].getX(),
+  					 workspace[1].getY(),
+  					 40, 40, -2);
 
   	// every so many seconds... 
   	let elapsedTime = millis() - startTime; 
@@ -138,10 +140,10 @@ function mousePressed()
 	// If block creator is pressed
 	if (blockCreator.hasMouseOver()) 
 	{
-		musicBlocks.push (new MusicBlock(250 + random(0, 40),
-									  250 + random(-20,40),
-									  200,
-									  100));
+		musicBlocks.push (new MusicBlock(300 + random(0, 40),
+									     270 + random(-20,40),
+									     200,
+									     100));
 	}
 
 	// If a music block is pressed 
