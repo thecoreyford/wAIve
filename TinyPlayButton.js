@@ -44,10 +44,10 @@ class TinyPlayButton
 		var myAlpha = 255;
 		if(this.id !== -2) //< if we are not looking at the block stack... . 
 		{
-			if (this.x - 10 < workspace.getX() 
-	  			|| this.x - 10 > workspace.getX()+workspace.getWidth() 
-	  			|| this.y - 6 < workspace.getY() 
-	  			|| this.y -6 > workspace.getY() + workspace.getHeight())
+			if (this.x - 10 < workspace[0].getX() 
+	  			|| this.x - 10 > workspace[0].getX()+workspace[0].getWidth() 
+	  			|| this.y - 6 < workspace[0].getY() 
+	  			|| this.y -6 > workspace[0].getY() + workspace[0].getHeight())
 	  		{
 	  			// Button is outside of the workspace so lets make transparent 
 	  			myAlpha = 50;

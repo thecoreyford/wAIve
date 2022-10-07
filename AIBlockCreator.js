@@ -20,16 +20,16 @@ class AIBlockCreator
 	{
 		// Set up some anchors for where we will spawn blocks from... 
 		let anchor1 = {"x": 0, "y": 0};
-		let anchor2 = {"x": workspace.getX() + workspace.getWidth() + 30, "y": workspace.getY() - 200};
-		let anchor3 = {"x": workspace.getX() - 80, "y": workspace.getY() + workspace.getHeight() + 40};
+		let anchor2 = {"x": workspace[0].getX() + workspace[0].getWidth() + 30, "y": workspace[0].getY() - 200};
+		let anchor3 = {"x": workspace[0].getX() - 80, "y": workspace[0].getY() + workspace[0].getHeight() + 40};
 
 		// Find AI blocks in the grey
 		processDataset();
 		var aiBlocks = data.filter(function(d){return d["isAI"] === true;});
-		aiBlocks = aiBlocks.filter(function(d){return d["x"] < workspace.getX() 
-													  || d["x"] > workspace.getX()+workspace.getWidth()
-													  || d["y"] < workspace.getY()
-													  || d["y"] > workspace.getY() + workspace.getHeight()});
+		aiBlocks = aiBlocks.filter(function(d){return d["x"] < workspace[0].getX() 
+													  || d["x"] > workspace[0].getX()+workspace[0].getWidth()
+													  || d["y"] < workspace[0].getY()
+													  || d["y"] > workspace[0].getY() + workspace[0].getHeight()});
 
 		// Remove AI blocks
 		for (let i =  0; i < aiBlocks.length; ++i) {

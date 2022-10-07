@@ -27,10 +27,10 @@ class AIBlock extends MusicBlock
    */
 	show() 
   	{
-      if (this.x < workspace.getX() 
-        || this.x > workspace.getX()+workspace.getWidth() 
-        || this.y < workspace.getY() 
-        || this.y > workspace.getY() + workspace.getHeight())
+      if (this.x < workspace[0].getX() 
+        || this.x > workspace[0].getX()+workspace[0].getWidth() 
+        || this.y < workspace[0].getY() 
+        || this.y > workspace[0].getY() + workspace[0].getHeight())
       {
         // Block is outside of the workspace so lets make transparent 
         tint (255, 126);

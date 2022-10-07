@@ -149,11 +149,12 @@ class PlayButton
 			startBlocks = data.filter(function(d){return d["leftConnection"] === null;});
 
 			let workspaceID = -1;
-			if (id === -1) { workspaceID == 0; } else { workspaceID == 1; }
-			startBlocks = startBlocks.filter(function(d){return d["x"] >= workspace.getX();});
-			startBlocks = startBlocks.filter(function(d){return d["y"] >= workspace.getY();});
-			startBlocks = startBlocks.filter(function(d){return d["x"] < workspace.getX()+workspace.getWidth();});
-			startBlocks = startBlocks.filter(function(d){return d["y"] < workspace.getY()+workspace.getHeight();});
+			if (id === -1) { workspaceID = 0; } else { workspaceID = 1; }
+			print(workspaceID);
+			startBlocks = startBlocks.filter(function(d){return d["x"] >= workspace[workspaceID].getX();});
+			startBlocks = startBlocks.filter(function(d){return d["y"] >= workspace[workspaceID].getY();});
+			startBlocks = startBlocks.filter(function(d){return d["x"] < workspace[workspaceID].getX()+workspace[workspaceID].getWidth();});
+			startBlocks = startBlocks.filter(function(d){return d["y"] < workspace[workspaceID].getY()+workspace[workspaceID].getHeight();});
 
 			// For each of the found start blocks...
 			for (let i = 0; i < startBlocks.length; ++i)

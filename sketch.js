@@ -14,24 +14,32 @@ const workspaceX = 125; //canvasWidth * 0.10; //125
 const workspaceY = 230; //canvasHeight * 0.15; //117
 const workspaceWidth = 1100; //canvasWidth - (2 * workspaceX); //1000
 const workspaceHeight = 600; //canvasHeight - (2 * workspaceY); //546
-var workspace  = new Workspace(workspaceX, 
+const workspace2X = workspaceX; //canvasWidth * 0.10; //125
+const workspace2Y = 80; //canvasHeight * 0.15; //117
+const workspace2Width = workspaceWidth; //canvasWidth - (2 * workspaceX); //1000
+const workspace2Height = 130; //canvasHeight - (2 * workspaceY); //546
+var workspace  = [new Workspace(workspaceX, 
 							   workspaceY, 
 							   workspaceWidth, 
-							   workspaceHeight);
+							   workspaceHeight),
+					new Workspace(workspace2X, 
+							   workspace2Y, 
+							   workspace2Width, 
+							   workspace2Height)];
 
-
-var blockCreator = new BlockCreator(workspace.getX() + 60,
-									workspace.getY() + 10,
+var blockCreator = new BlockCreator(workspace[0].getX() + 60,
+									workspace[0].getY() + 10,
 									40,
 									40);
 
-var playButton = new PlayButton(workspace.getX() + 10,
-								workspace.getY() + 10,
+const stackPlayer = new TinyPlayButton(0,0,40,40,-2); //TODO: use something more descriptive than -2
+var playButton = new PlayButton(workspace[0].getX() + 10,
+								workspace[0].getY() + 10,
 								40,
 								40);
 
-var bin = new Bin(workspace.getX() + workspace.getWidth() + 50, 
-				  117 + workspace.getHeight() + 30, 
+var bin = new Bin(workspace[0].getX() + workspace[0].getWidth() + 50, 
+				  117 + workspace[0].getHeight() + 30, 
 				  70, 85);
 
 let musicBlocks = []; //< Array of current blocks
@@ -85,17 +93,15 @@ function setup()
 function draw() 
 {
 	// draw background with border
-	strokeWeight(1);
-  	stroke(0);
-  	fill(lightGrey);
-  	rect(0,0,canvasWidth,canvasHeight,10);
-	noStroke();
-
-	fill(255,0,0);
-	rect(workspaceX,80,workspaceWidth,130);
+	strokeWeight (1);
+  	stroke (0);
+  	fill (lightGrey);
+  	rect (0, 0, canvasWidth, canvasHeight, 10);
+	noStroke ();
 
 	// draw the following onto the background.... 
-  	workspace.draw();
+  	workspace[0].draw();
+  	workspace[1].draw();
   	bin.draw();
   	
   	for (let i = 0; i < musicBlocks.length; ++i)
@@ -105,7 +111,7 @@ function draw()
 
 	blockCreator.draw();
   	playButton.draw();
-  	stackPlayer.draw(workspace2X,workspace2Y,40,40,-2);
+  	stackPlayer.draw(workspace[1].getX(),workspace[1].getY(),40,40,-2);
 
   	// every so many seconds... 
   	let elapsedTime = millis() - startTime; 
