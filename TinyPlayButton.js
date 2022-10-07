@@ -14,9 +14,15 @@ class TinyPlayButton
 	{
 		this.x = x + 10; 
 		this.y = y + 6; 
-		this.width = 20; 
-		this.height = 20;
 		this.id = id;
+		if(id === -2){
+			this.width = w;
+			this.height = h;
+		}else{
+			this.width = 20;//(id === -1) ? w || 20; 
+			this.height = 20;//(id === -1) ? h || 20;
+		}
+		
 	}
 
 	/**
@@ -33,36 +39,64 @@ class TinyPlayButton
 		// update pos
 		this.x = x + 10; 
 		this.y = y + 6; 
-		// this.width = 20; 
-		// this.height = 20; 
-
+		// this.width = w; 
+		// this.height = h; 
 		var myAlpha = 255;
-		if (this.x - 10 < workspace.getX() 
-  			|| this.x - 10 > workspace.getX()+workspace.getWidth() 
-  			|| this.y - 6 < workspace.getY() 
-  			|| this.y -6 > workspace.getY() + workspace.getHeight())
-  		{
-  			// Button is outside of the workspace so lets make transparent 
-  			myAlpha = 50;
-  		}
-  		else
-  		{
-  			myAlpha = 255;
-  		}
+		if(this.id !== -2) //< if we are not looking at the block stack... . 
+		{
+			if (this.x - 10 < workspace.getX() 
+	  			|| this.x - 10 > workspace.getX()+workspace.getWidth() 
+	  			|| this.y - 6 < workspace.getY() 
+	  			|| this.y -6 > workspace.getY() + workspace.getHeight())
+	  		{
+	  			// Button is outside of the workspace so lets make transparent 
+	  			myAlpha = 50;
+	  		}
+	  		else
+	  		{
+	  			myAlpha = 255;
+	  		}
 
-		// draw the mini playback button...
-		var buttonBackground = color(green);
-		buttonBackground.setAlpha(myAlpha);
-		fill(buttonBackground);
-		rect(this.x, this.y, this.width, this.height,4);
-		
-		// ...with a triangle on it
-		var triangleColour = color(white);
-		triangleColour.setAlpha(myAlpha);
-		fill(triangleColour);
-		triangle(this.x+5, this.y+3, 
-				 this.x+20-3, this.y+10,
-				 this.x+5, this.y+18);
+	  		// draw the mini playback button...
+			var buttonBackground = color(green);
+			buttonBackground.setAlpha(myAlpha);
+			fill(buttonBackground);
+			rect(this.x, this.y, this.width, this.height,4);
+			
+			// ...with a triangle on it
+			var triangleColour = color(white);
+			triangleColour.setAlpha(myAlpha);
+			fill(triangleColour);
+			triangle(this.x+5, this.y+3, 
+					 this.x+20-3, this.y+10,
+					 this.x+5, this.y+18);
+		}
+		else
+		{
+			if (playButton.mode === "PLAYING" || playButton.mode === "PREPARE_BUFFER") 
+			{
+				fill (red);
+			}
+			else
+			{
+				fill (green);
+			}
+			
+			rect (this.x, this.y, this.width, this.height, 5);
+
+			fill(lightGrey);
+			if (playButton.mode === "PLAYING" || playButton.mode === "PREPARE_BUFFER")
+			{
+				rect (this.x + 7, this.y + 7, this.width * 0.66, this.height * 0.66);
+
+			}
+			else
+			{
+				triangle (this.x + 7, this.y + 7, 
+						  this.x + this.width - 7, (this.y + this.height * 0.5),
+						  this.x + 7, this.y + this.height - 7);
+			}
+		}
 	}
 
 	/**

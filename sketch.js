@@ -105,6 +105,7 @@ function draw()
 
 	blockCreator.draw();
   	playButton.draw();
+  	stackPlayer.draw(workspace2X,workspace2Y,40,40,-2);
 
   	// every so many seconds... 
   	let elapsedTime = millis() - startTime; 
@@ -145,6 +146,7 @@ function mousePressed()
 
 	// If play button is pressed
 	playButton.mousePressed();
+	stackPlayer.onClicked();
 }
 
 /**
