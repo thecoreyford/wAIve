@@ -152,10 +152,10 @@ class PlayButton
 		{
 			// Count up all the start blocks and play the entire piece!!!
 			startBlocks = data.filter(function(d){return d["leftConnection"] === null;});
-			startBlocks = startBlocks.filter(function(d){return d["x"] >= workspaceX;});
-			startBlocks = startBlocks.filter(function(d){return d["y"] >= workspaceY;});
-			startBlocks = startBlocks.filter(function(d){return d["x"] < workspaceX+workspaceWidth;});
-			startBlocks = startBlocks.filter(function(d){return d["y"] < workspaceY+workspaceHeight;});
+			startBlocks = startBlocks.filter(function(d){return d["x"] >= workspace.getX();});
+			startBlocks = startBlocks.filter(function(d){return d["y"] >= workspace.getY();});
+			startBlocks = startBlocks.filter(function(d){return d["x"] < workspace.getX()+workspace.getWidth();});
+			startBlocks = startBlocks.filter(function(d){return d["y"] < workspace.getY()+workspace.getHeight();});
 
 			// For each of the found start blocks...
 			for (let i = 0; i < startBlocks.length; ++i)

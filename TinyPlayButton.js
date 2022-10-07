@@ -37,10 +37,10 @@ class TinyPlayButton
 		// this.height = 20; 
 
 		var myAlpha = 255;
-		if (this.x - 10 < workspaceX 
-  			|| this.x - 10 > workspaceX+workspaceWidth 
-  			|| this.y - 6 < workspaceY 
-  			|| this.y -6 > workspaceY + workspaceHeight)
+		if (this.x - 10 < workspace.getX() 
+  			|| this.x - 10 > workspace.getX()+workspace.getWidth() 
+  			|| this.y - 6 < workspace.getY() 
+  			|| this.y -6 > workspace.getY() + workspace.getHeight())
   		{
   			// Button is outside of the workspace so lets make transparent 
   			myAlpha = 50;

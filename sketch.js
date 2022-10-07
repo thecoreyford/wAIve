@@ -30,8 +30,8 @@ var playButton = new PlayButton(workspace.getX() + 10,
 								40,
 								40);
 
-var bin = new Bin(workspaceX + workspaceWidth + 50, 
-				  117 + workspaceHeight + 30, 
+var bin = new Bin(workspace.getX() + workspace.getWidth() + 50, 
+				  117 + workspace.getHeight() + 30, 
 				  70, 85);
 
 let musicBlocks = []; //< Array of current blocks

@@ -20,16 +20,16 @@ class AIBlockCreator
 	{
 		// Set up some anchors for where we will spawn blocks from... 
 		let anchor1 = {"x": 0, "y": 0};
-		let anchor2 = {"x": workspaceX + workspaceWidth + 30, "y": workspaceY - 200};
-		let anchor3 = {"x": workspaceX - 80, "y": workspaceY + workspaceHeight + 40};
+		let anchor2 = {"x": workspace.getX() + workspace.getWidth() + 30, "y": workspace.getY() - 200};
+		let anchor3 = {"x": workspace.getX() - 80, "y": workspace.getY() + workspace.getHeight() + 40};
 
 		// Find AI blocks in the grey
 		processDataset();
 		var aiBlocks = data.filter(function(d){return d["isAI"] === true;});
-		aiBlocks = aiBlocks.filter(function(d){return d["x"] < workspaceX 
-													  || d["x"] > workspaceX+workspaceWidth
-													  || d["y"] < workspaceY
-													  || d["y"] > workspaceY + workspaceHeight});
+		aiBlocks = aiBlocks.filter(function(d){return d["x"] < workspace.getX() 
+													  || d["x"] > workspace.getX()+workspace.getWidth()
+													  || d["y"] < workspace.getY()
+													  || d["y"] > workspace.getY() + workspace.getHeight()});
 
 		// Remove AI blocks
 		for (let i =  0; i < aiBlocks.length; ++i) {

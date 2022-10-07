@@ -44,10 +44,10 @@ class MusicMetrics
 
 		// Find all start blocks 
 		var startBlocks = data.filter (function(d) {return d["leftConnection"] === null;});
-		startBlocks = startBlocks.filter (function(d) {return d["x"] >= workspaceX;});
-		startBlocks = startBlocks.filter (function(d) {return d["y"] >= workspaceY;});
-		startBlocks = startBlocks.filter (function(d) {return d["x"] < workspaceX+workspaceWidth;});
-		startBlocks = startBlocks.filter (function(d) {return d["y"] < workspaceY+workspaceHeight;});
+		startBlocks = startBlocks.filter (function(d) {return d["x"] >= workspace.getX();});
+		startBlocks = startBlocks.filter (function(d) {return d["y"] >= workspace.getY();});
+		startBlocks = startBlocks.filter (function(d) {return d["x"] < workspace.getX()+workspace.Width();});
+		startBlocks = startBlocks.filter (function(d) {return d["y"] < workspace.getY()+workspace.Height();});
 
 		// Empty the buffer! 
 		this.buffer = []; 

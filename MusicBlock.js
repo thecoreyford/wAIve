@@ -135,10 +135,10 @@ class MusicBlock
  	 */
   	show() 
   	{
-  		if (this.x < workspaceX 
-  			|| this.x > workspaceX+workspaceWidth 
-  			|| this.y < workspaceY 
-  			|| this.y > workspaceY + workspaceHeight)
+  		if (this.x < workspace.getX() 
+  			|| this.x > workspace.getX()+workspace.getWidth() 
+  			|| this.y < workspace.getY() 
+  			|| this.y > workspace.getY() + workspace.getHeight())
   		{
   			// Block is outside of the workspace so lets make transparent 
   			tint (255, 126);
