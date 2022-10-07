@@ -158,6 +158,16 @@ function mousePressed()
 }
 
 /**
+ * If left arrow pressed, force new AI blocks (useful to debug)
+ * @return {void} - Nothing.
+ */
+function keyPressed() {
+  if (keyCode === LEFT_ARROW && false) {
+ 	aiBlockCreator.update (musicBlocks);
+  }
+}
+
+/**
  * If mouse is released, delete or stop dragging blocks.
  * @return {void} - Nothing.
  */
