@@ -144,6 +144,10 @@ function mousePressed()
 									     270 + random(-20,40),
 									     200,
 									     100));
+		logger.log(JSON.stringify({"timestamp": str(round(millis(),3)),
+					"blockID": musicBlocks[musicBlocks.length-1].getID(),
+					"blockGrid": "blank",//musicBlocks[musicBlocks.length-1].getGridArray() 
+					"desc": "Added non-AI block."},null, "\t") + "\n");
 	}
 
 	// If a music block is pressed 

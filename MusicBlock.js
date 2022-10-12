@@ -11,6 +11,10 @@ class MusicBlock
  	 */
 	constructor (x, y, width, height)
 	{
+		// Assign a unique ID and then increment. 
+	   	this.id = blockIDTracker;
+	   	blockIDTracker = blockIDTracker + 1;
+
 		this.dragging = false; // Is the object being dragged?
 
 	    this.x = x;
@@ -18,8 +22,8 @@ class MusicBlock
 	    this.width = width; 
 	    this.height = height;
 
-	    this.grid = new MusicGrid(this.x, this.y, this.width, this.height);
-	   	this.grid.update(this.x + 15, this.y, this.width - 15, this.height);
+	    this.grid = new MusicGrid(this.x, this.y, this.width, this.height, this);
+	   	this.grid.update (this.x + 15, this.y, this.width - 15, this.height);
 
 	   	// connections 
 	   	this.nextBlock = null;
@@ -29,10 +33,6 @@ class MusicBlock
 	   	this.showHighlight = false; 
 
 	   	this.isAI = false;
-
-	   	// Assign a unique ID and then increment. 
-	   	this.id = blockIDTracker;
-	   	blockIDTracker = blockIDTracker + 1;
 
 	   	// Create the tiny play button and parse the id
 	   	this.tinyPlay = new TinyPlayButton(this.x, this.y, this.width, this.height, this.id);
@@ -201,6 +201,18 @@ class MusicBlock
  	 */
   	released() 
   	{
+  		// log if we are about to end dragging... 
+  		if (this.dragging && playButton.player.isPlaying() === false)
+    	{
+	    	logger.log(JSON.stringify({"timestamp": str(round(millis(),3)),
+									   "blockID": this.getID(),
+									   "blockGrid": this.getGridArray(), 
+									   "desc": "Dragged block",
+									   "x": this.x,
+									   "y": this.y,
+									   "isAI": this.isAI}, null, "\t"));
+	    }
+
     	this.dragging = false; // Quit dragging
   	}
 
@@ -237,7 +249,7 @@ class MusicBlock
 	/**
  	 * Checks if puzzle piece ends overlap. If so returns true. 
  	 * @param {object} other - a second adjacent block which could overlap.
- 	 * @return {bool} true is puzzle peices overlap
+ 	 * @return {bool} true is puzzle pieces overlap
  	 */
   	shouldMakeConnection(other) 
   	{
@@ -319,6 +331,15 @@ class MusicBlock
 	getGridArray()
 	{
 		return this.grid.getInternalButtonsArray();
+	}
+
+	/**
+ 	 * Getter for the block's music grid.
+ 	 * @return {int} the blocks unique ID.
+ 	 */
+	getID()
+	{
+		return this.id;
 	}
 
 }
