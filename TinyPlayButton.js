@@ -1,5 +1,5 @@
 /** A play button which triggers to the larger play button class, to playback snippets of audio for a block..*/
-class TinyPlayButton
+class TinyPlayButton //TODO: this would be better called surrogate play button or something like that... 
 {
 	/**
  	 * Constructor
