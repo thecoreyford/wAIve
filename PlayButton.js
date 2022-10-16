@@ -36,11 +36,9 @@ class PlayButton
 									{
 										highlightTracker++;
 										draw();
-										//TODO: needs to occour for timings also
 									}, 
 							   stop: function()
 							   		 {
-							   			
 							   		}};
 		this.player.callbackObject = this.callbackObject; 
 	}
@@ -221,6 +219,7 @@ class PlayButton
 		if (!this.player.isPlaying() && this.mode !== "START_PLAYING")
 		{
 			this.mode = "STOPPED";
+			this.stopPlayback();
 		}
 
 		if (this.mode === "START_PLAYING")
@@ -228,16 +227,6 @@ class PlayButton
 			this.player.start(this.midiBuffer[0]);
 			this.mode = "PLAYING";
 		}
-
-		// if (this.mode === "PLAYING" && !this.player.isPlaying())
-		// {
-		// 	this.mode = "STOPPING";
-		// 	// hide highlights for blocks 
-		// 	//TODO:
-		// 	// for (let h = 0; h < this.highlightBuffer[this.playhead].length; ++h){
-		// 	// 	this.highlightBuffer[this.playhead][h].showHighlight = false;
-		// 	// }
-		// }
 	}
 
 	/**
