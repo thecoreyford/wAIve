@@ -150,7 +150,6 @@ class PlayButton
 
 			let workspaceID = -1;
 			if (id === -1) { workspaceID = 0; } else { workspaceID = 1; }
-			print(workspaceID);
 			startBlocks = startBlocks.filter(function(d){return d["x"] >= workspace[workspaceID].getX();});
 			startBlocks = startBlocks.filter(function(d){return d["y"] >= workspace[workspaceID].getY();});
 			startBlocks = startBlocks.filter(function(d){return d["x"] < workspace[workspaceID].getX()+workspace[workspaceID].getWidth();});
