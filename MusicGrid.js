@@ -22,6 +22,8 @@ class MusicGrid
 		this.gridWidth = 8;
 		this.gridHeight = 8;
 
+		this.toggleButtonColoursOnAnalysis = false;
+
 		this.padding = 0.5;
 
 		this.toggleButtons = [];
@@ -91,7 +93,9 @@ class MusicGrid
 		noStroke();
 		fill(darkGrey)
 
-		this.setToggleButtonColours()
+		if (this.toggleButtonColoursOnAnalysis){
+			this.setToggleButtonColours();
+		}
 
 		rect(this.x, this.y, this.width, this.height);
   
