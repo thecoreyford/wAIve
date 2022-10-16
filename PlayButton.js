@@ -1,5 +1,14 @@
 /** GUI Play button which also controls the playback of note block sequences.
 	It also acts as the playback engine e.g. any playback triggered must go through the playback block.*/
+
+var highlightTracker = 0;
+function dynamicSort(property) {
+   return function(a, b) {
+       return (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+   }
+}
+
+
 class PlayButton
 {
 	/**
@@ -17,14 +26,23 @@ class PlayButton
 		this.width = width;
 		this.height = height;
 
-		this.masterPlayer = new mm.Player();
 		this.player = new mm.Player();
 
-		this.masterBuffer = [];
 		this.midiBuffer = [];
 		this.highlightBuffer = [];
-		this.playhead = 0; 
+		this.highlights = [];
 		this.mode = "STOPPED"; // "PREPARE_BUFFER" || "PLAYING"
+		this.callbackObject  = {run: function()
+									{
+										highlightTracker++;
+										draw();
+										//TODO: needs to occour for timings also
+									}, 
+							   stop: function()
+							   		 {
+							   			
+							   		}};
+		this.player.callbackObject = this.callbackObject; 
 	}
 
 	/** 
@@ -33,7 +51,8 @@ class PlayButton
 	 */
 	draw()
 	{
-		if (this.mode === "PLAYING" || this.mode === "PREPARE_BUFFER") 
+		// Play button GUI
+		if (this.mode === "PLAYING") 
 		{
 			fill (red);
 		}
@@ -45,13 +64,24 @@ class PlayButton
 		rect (this.x, this.y, this.width, this.height, 5);
 
 		fill(lightGrey);
-		if (this.mode === "PLAYING" || this.mode === "PREPARE_BUFFER")
+		if (this.mode === "PLAYING")
 		{
 			rect(this.x + 7, this.y + 7, this.width * 0.66, this.height * 0.66);
 
+			if (highlightTracker !== 0)
+			{
+				this.highlights[0][highlightTracker-1]["block"].showHighlight = true;
+				let prev = this.highlights[0][highlightTracker-1]["block"].previousBlock;
+				if (prev !== null
+					&& prev.showHighlight === true) 
+				{ 
+					prev.showHighlight = false; 
+				}
+			}
 		}
 		else
 		{
+			highlightTracker = 0;
 			triangle(this.x + 7, this.y + 7, 
 					 this.x + this.width - 7, (this.y + this.height * 0.5),
 					 this.x + 7, this.y + this.height - 7);
@@ -91,9 +121,9 @@ class PlayButton
 		processDataset() //< collect all the blocks into the dataset. 
 
 		// Empty the buffers! 
-		this.midiBuffer = []; 
 		this.highlightBuffer = [];
-		this.masterBuffer = [];
+		this.midiBuffer = [];
+		this.highlights = [[]];
 
 		// Find start blocks (filter example)
 		var startBlocks;
@@ -113,44 +143,50 @@ class PlayButton
 			for (let i = 0; i < startBlocks.length; ++i)
 			{
 				var index = 0; //< keep track of the buffer index
-				
 
 				var current = startBlocks[i]["block"];
 				var previous;//startBlocks[i]["block"];
 
 				do
 				{
-					if (this.midiBuffer[index] !== undefined) //< should be same for highlight
+					if (this.highlightBuffer[index] !== undefined)
 					{
-						// index exists 
-						this.midiBuffer[index].push(this.gridArrayToNoteSequence(current.getGridArray()));
-						this.highlightBuffer[index].push(current);
-
 						// add to the master buffer 
 						let x = this.gridArrayToNoteSequence(current.getGridArray(), index * 4.0)["notes"];
-						for(let i = 0; i < x.length; ++i) {this.masterBuffer[0]["notes"].push(x[i]);};
+						for(let i = 0; i < x.length; ++i) {
+							this.midiBuffer[0]["notes"].push(x[i]);
+							this.highlights[0].push({"block": current, 
+													 "time": x[i]["startTime"]});
+						};
+
+						// index exists 
+						this.highlightBuffer[index].push(current);
 					}
 					else
 					{
-						// index doesn't exist, so create the array 
-						// for this chunk in the buffer 
-						this.midiBuffer.push([this.gridArrayToNoteSequence(current.getGridArray())]);
-						this.highlightBuffer.push([current]);
+						if (index === 0 /* create buffer if not there */) 
+						{
+							this.midiBuffer.push(this.gridArrayToNoteSequence(current.getGridArray()));
 
-						
-						if (index === 0 /* create buffer if not there */) {
-							this.masterBuffer.push(this.gridArrayToNoteSequence(current.getGridArray()));
-						} else {
+							for(let i = 0; i < this.midiBuffer[0]["notes"].length; ++i) {
+								this.highlights[0].push({"block": current, 
+													 "time": this.midiBuffer[0]["notes"][i]["startTime"]});
+							}
+						} 
+						else 
+						{
 							let x = this.gridArrayToNoteSequence(current.getGridArray(), index * 4.0)["notes"];
-							for(let i = 0; i < x.length; ++i) {this.masterBuffer[0]["notes"].push(x[i]);};
-							this.masterBuffer[0]["totalTime"] = (index * 4.0) + 4.0;
+							for(let i = 0; i < x.length; ++i) {
+								this.midiBuffer[0]["notes"].push(x[i]);
+								this.highlights[0].push({"block": current, 
+													 "time": x[i]["startTime"]});
+							};
+							this.midiBuffer[0]["totalTime"] = (index * 4.0) + 4.0;
 						}
+						
+						// update trackers
+						this.highlightBuffer.push([current]);
 					}
-
-					//=== 
-					
-					// this.gridArrayToNoteSequence(
-					//=== 
 
 					// step to the next node in list
 					previous = current;
@@ -163,17 +199,17 @@ class PlayButton
 		{
 			// only play the block requested! 
 			startBlocks = data.filter(function(d){return d["id"] === id;});
-			var current = startBlocks[0]["block"];
-			this.midiBuffer.push([this.gridArrayToNoteSequence(current.getGridArray())]);
+			var current = startBlocks[0]["block"];	
+			this.midiBuffer.push(this.gridArrayToNoteSequence(current.getGridArray()));
 			this.highlightBuffer.push([current]);
 		}		
-		
-		// console.log(this.masterBuffer);
-		// console.log(this.midiBuffer);
 
 		// Start the beautiful music... 
-		this.playhead = 0; 
-		this.mode = "PREPARE_BUFFER";
+		if (startBlocks.length !== 0) {
+			this.highlights.sort(dynamicSort('time'));
+			this.mode = "START_PLAYING";
+			// this.updatePlayback();
+		}
 	}
 
 	/**
@@ -182,47 +218,26 @@ class PlayButton
  	 */
 	updatePlayback()
 	{
-		if (this.playhead >= this.midiBuffer.length)
+		if (!this.player.isPlaying() && this.mode !== "START_PLAYING")
 		{
 			this.mode = "STOPPED";
-			this.playhead = 0; 
 		}
 
-		if (this.mode === "PREPARE_BUFFER")
+		if (this.mode === "START_PLAYING")
 		{
-			let totalNotes = {notes: [], totalTime: 4};
-			for (let i = 0; i < this.midiBuffer[this.playhead].length; ++i) 
-			{
-				// Combine the notes vertically for the blocks 
-				for (let notes = 0; notes < this.midiBuffer[this.playhead][i]["notes"].length; ++notes){
-					totalNotes["notes"].push(this.midiBuffer[this.playhead][i]["notes"][notes]);	
-				}
-				
-			}
-
-			// show highlights for blocks 
-			for (let h = 0; h < this.highlightBuffer[this.playhead].length; ++h){
-				this.highlightBuffer[this.playhead][h].showHighlight = true;
-			}
-
-			//this.player.start(totalNotes); //< Plays the first start buffer chunk 
-			let callbackObject  = {run: function(){console.log("run");}, 
-									stop: function(){console.log("stop");}};
-			this.masterPlayer.callbackObject = callbackObject; 
-			this.masterPlayer.start(this.masterBuffer[0]);
+			this.player.start(this.midiBuffer[0]);
 			this.mode = "PLAYING";
 		}
 
-		if (this.mode === "PLAYING" && !this.player.isPlaying())
-		{
-			// hide highlights for blocks 
-			for (let h = 0; h < this.highlightBuffer[this.playhead].length; ++h){
-				this.highlightBuffer[this.playhead][h].showHighlight = false;
-			}
-
-			this.playhead += 1;
-			this.mode = "PREPARE_BUFFER"; //TODO: to function to stop gap.
-		}
+		// if (this.mode === "PLAYING" && !this.player.isPlaying())
+		// {
+		// 	this.mode = "STOPPING";
+		// 	// hide highlights for blocks 
+		// 	//TODO:
+		// 	// for (let h = 0; h < this.highlightBuffer[this.playhead].length; ++h){
+		// 	// 	this.highlightBuffer[this.playhead][h].showHighlight = false;
+		// 	// }
+		// }
 	}
 
 	/**
@@ -235,14 +250,15 @@ class PlayButton
 		this.mode = "STOPPED";
 		
 		// stop highlights 
-		for (let h = 0; h < this.highlightBuffer[this.playhead].length; ++h){
-			this.highlightBuffer[this.playhead][h].showHighlight = false;
+		for (let h = 0; h < musicBlocks.length; h++){
+			musicBlocks[h].showHighlight = false;
 		}
 	}
 
 	/**
  	 * For an array of buttons, calculated the corresponding MIDI note sequence
 	 * @param {array} gridArray - an array of toggle buttons 
+	 * @param {float} offset - the amount to offset note values by
  	 * @return {void} Nothing
  	 */
 	gridArrayToNoteSequence (gridArray, offset = 0)
