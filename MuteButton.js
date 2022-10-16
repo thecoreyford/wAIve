@@ -33,8 +33,8 @@ class MuteButton
 			||this.x - 10 < workspace[0].getX() 
 			|| this.x - 10 > workspace[0].getX()+workspace[0].getWidth() 
 			|| this.y - 6 < workspace[0].getY() 
-			|| this.y -6 > workspace[0].getY() + workspace[0].getHeight()) 
-			{
+			|| this.y -6 > workspace[0].getY() + workspace[0].getHeight())
+		{
 			var buttonBackground = color("#000000");
 			buttonBackground.setAlpha(100);
 			fill(buttonBackground);
