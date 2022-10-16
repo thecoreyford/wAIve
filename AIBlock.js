@@ -32,7 +32,8 @@ class AIBlock extends MusicBlock
         if (this.x < workspace[wks].getX() 
           || this.x > workspace[wks].getX()+workspace[wks].getWidth() 
           || this.y < workspace[wks].getY() 
-          || this.y > workspace[wks].getY() + workspace[wks].getHeight())
+          || this.y > workspace[wks].getY() + workspace[wks].getHeight()
+          || this.muteButton.isMuted)
         {
           // Block is outside of the workspace so lets make transparent 
           tint (255, 126);
