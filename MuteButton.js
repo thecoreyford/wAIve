@@ -35,23 +35,22 @@ class MuteButton
 			|| this.y - 6 < workspace[0].getY() 
 			|| this.y -6 > workspace[0].getY() + workspace[0].getHeight())
 		{
-			var buttonBackground = color("#000000");
-			buttonBackground.setAlpha(100);
+			var buttonBackground = color(lightGrey);
+			buttonBackground.setAlpha(80);
 			fill(buttonBackground);
 			rect (this.x, this.y, this.size, this.size, 5);
 
 			var buttonBackground = color(darkGrey);
-			buttonBackground.setAlpha(100);
+			buttonBackground.setAlpha(80);
 			fill(buttonBackground);
-			fill(darkGrey);
 			textSize(18);
 			text("M", this.x + 3, this.y + 17);
 		}
 		else
 		{
-			fill (darkGrey);
+			fill (lightGrey);
 			rect (this.x, this.y, this.size, this.size, 5);
-			fill(lightGrey);
+			fill("#000000");
 			textSize(18);
 			text("M", this.x + 3, this.y + 17);
 		}

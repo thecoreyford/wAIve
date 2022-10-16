@@ -68,7 +68,9 @@ class PlayButton
 
 			if (highlightTracker !== 0)
 			{
+				print(this.highlights[0][highlightTracker-1]["block"]);
 				this.highlights[0][highlightTracker-1]["block"].showHighlight = true;
+			
 				let prev = this.highlights[0][highlightTracker-1]["block"].previousBlock;
 				if (prev !== null
 					&& prev.showHighlight === true) 
@@ -199,11 +201,14 @@ class PlayButton
 			startBlocks = data.filter(function(d){return d["id"] === id;});
 			var current = startBlocks[0]["block"];	
 			this.midiBuffer.push(this.gridArrayToNoteSequence(current.getGridArray()));
+			for (let i = 0; i < this.midiBuffer[0]["notes"].length; ++i) {
+								this.highlights[0].push({"block": current, 
+													 	"time": this.midiBuffer[0]["notes"][i]["startTime"]});}
 			this.highlightBuffer.push([current]);
 		}		
 
 		// Start the beautiful music... 
-		if (startBlocks.length !== 0) {
+		if (startBlocks.length !== 0 && !this.player.isPlaying()) {
 			this.highlights.sort(dynamicSort('time'));
 			this.mode = "START_PLAYING";
 			// this.updatePlayback();
