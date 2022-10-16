@@ -25,6 +25,8 @@ class MusicBlock
 	    this.grid = new MusicGrid(this.x, this.y, this.width, this.height, this);
 	   	this.grid.update (this.x + 15, this.y, this.width - 15, this.height);
 
+	   	this.muteButton = new MuteButton (this.x,this.y);
+
 	   	// connections 
 	   	this.nextBlock = null;
 	   	this.previousBlock = null;
@@ -35,7 +37,7 @@ class MusicBlock
 	   	this.isAI = false;
 
 	   	// Create the tiny play button and parse the id
-	   	this.tinyPlay = new TinyPlayButton(this.x, this.y, this.width, this.height, this.id);
+	   	this.tinyPlay = new TinyPlayButton(this.x, this.y, this.width, this.height, this.id, this.muteButton);
 	}
 
 	//=================================================================	
@@ -54,6 +56,8 @@ class MusicBlock
 		this.grid.draw();
 
 		this.tinyPlay.draw(this.x, this.y, this.w, this.h);
+
+		this.muteButton.draw();
 	}
 
 	/**
@@ -105,6 +109,7 @@ class MusicBlock
 	    }
 
 	    this.tinyPlay.draw(this.x, this.y, this.w, this.h);
+	    this.muteButton.update(this.x, this.y);
   	}
 
 	/**
@@ -140,11 +145,13 @@ class MusicBlock
 	  		if (this.x < workspace[wks].getX() 
 	  			|| this.x > workspace[wks].getX()+workspace[wks].getWidth() 
 	  			|| this.y < workspace[wks].getY() 
-	  			|| this.y > workspace[wks].getY() + workspace[wks].getHeight())
+	  			|| this.y > workspace[wks].getY() + workspace[wks].getHeight()
+	  			|| this.muteButton.isMuted)
 	  		{
 	  			// Block is outside of the workspace so lets make transparent 
 	  			tint (255, 126);
 	  			this.grid.toggleTransparency(true);
+	  			//TODO: make this work >>>	this.tinyPlay.toggleTransparency(true);
 	  		}
 	  		else
 	  		{
@@ -193,6 +200,7 @@ class MusicBlock
 	    }
 
 	    this.tinyPlay.onClicked(); //< should this be played?.
+	    this.muteButton.mousePressed();
 	}
 
 	/**
@@ -330,7 +338,21 @@ class MusicBlock
  	 */
 	getGridArray()
 	{
-		return this.grid.getInternalButtonsArray();
+		if (this.muteButton.isMuted === false){
+			return this.grid.getInternalButtonsArray();
+		}
+
+		// If muted.... 
+		let arr = [];
+		for (let j = 0; j < 8; ++j){
+  			for (let i = 0; i < 8; ++i){
+  				arr.push(new ToggleButton (this.x + (this.width / this.gridWidth) * j + (this.padding * 0.5),
+  			 										this.y + (this.height / this.gridHeight) * i + (this.padding * 0.5), 
+  			 										(this.width / this.gridWidth) - this.padding,
+  			 										(this.height / this.gridHeight) - this.padding));
+  			}
+  		}	
+  		return arr;
 	}
 
 	/**

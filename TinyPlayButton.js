@@ -8,21 +8,23 @@ class TinyPlayButton //TODO: this would be better called surrogate play button o
 	 * @param {number} w - width of play button's block
 	 * @param {number} h - height of play button's block
 	 * @param {int} id - unique identifier for the block this tiny play button belongs to.
+	 * @param {object} mute - the mute button also on this block
  	 * @return {void} Nothing
  	 */
-	constructor(x,y,w,h,id)
+	constructor(x,y,w,h,id,mute)
 	{
 		this.x = x + 10; 
 		this.y = y + 6; 
 		this.id = id;
-		if(id === -2){
+		if (id === -2) {
 			this.width = w;
 			this.height = h;
-		}else{
+		} else {
 			this.width = 20;//(id === -1) ? w || 20; 
 			this.height = 20;//(id === -1) ? h || 20;
 		}
-		
+
+		this.mute = mute; 
 	}
 
 	/**
@@ -49,7 +51,8 @@ class TinyPlayButton //TODO: this would be better called surrogate play button o
 				if (this.x - 10 < workspace[wks].getX() 
 		  			|| this.x - 10 > workspace[wks].getX()+workspace[wks].getWidth() 
 		  			|| this.y - 6 < workspace[wks].getY() 
-		  			|| this.y -6 > workspace[wks].getY() + workspace[wks].getHeight())
+		  			|| this.y -6 > workspace[wks].getY() + workspace[wks].getHeight()
+		  			|| this.mute.isMuted === true)
 		  		{
 		  			// Button is outside of the workspace so lets make transparent 
 		  			myAlpha = 50;
