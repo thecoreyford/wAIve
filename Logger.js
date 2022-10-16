@@ -3,7 +3,7 @@ class Logger
 {
 	constructor() 
 	{
-		this.logFiles = true;
+		this.logFiles = false;
 		this.logged_items = ""; 
 	}
 
