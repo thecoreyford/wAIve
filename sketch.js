@@ -49,6 +49,8 @@ var bin = new Bin(workspace[0].getX() + workspace[0].getWidth() + 40,
 				  20 + workspace[0].getHeight(), 
 				  70, 85);
 
+var timeline = new TimelineBar();
+
 let musicBlocks = []; //< Array of current blocks
 
 var aiBlockCreator = new AIBlockCreator(); //< Class spawns in AI blocks
@@ -130,6 +132,8 @@ function draw()
 	}
 
   	playButton.updatePlayback();
+
+  	timeline.draw();
 }
 
 //===========================================================================
@@ -179,6 +183,11 @@ function keyPressed() {
   if (keyCode === LEFT_ARROW && true) {
  	aiBlockCreator.update (musicBlocks);
   }
+}
+
+//TODO: Comment
+function mouseDragged() {
+	timeline.mousePressed();
 }
 
 /**
