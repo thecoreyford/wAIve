@@ -60,6 +60,12 @@ class Workspace
 	getID(){return this.id;}
 
 	/**
+ 	 * Getter for colour
+ 	 * @return {string} hex colour for the workspace
+ 	 */
+	getColour(){return this.colour;}
+
+	/**
  	 * Function drawing shapes to canvas, updated regularly
  	 * @return {void} Nothing.
  	 */

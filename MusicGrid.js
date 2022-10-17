@@ -178,6 +178,17 @@ class MusicGrid
 		return this.toggleButtons;
 	}
 
+	/**
+ 	 * Change the on colour for all of the grids buttons. 
+ 	 * @return {void} nothing. 
+ 	 */
+	setAllButtonOnColours(colour)
+	{
+		for (let i = 0; i < this.toggleButtons.length; ++i)
+		{
+			this.toggleButtons[i].setOnColour(colour);
+		}
+	}
 
 	/**
  	 * Highlights patterns by changing toggle on buttons.
