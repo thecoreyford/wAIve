@@ -127,13 +127,20 @@ class PlayButton
 
 		// Find start blocks (filter example)
 		var startBlocks;
-		if (id === -1 || id === -2)
+		if (id < 0)
 		{
 			// Count up all the start blocks and play the entire piece!!!
 			startBlocks = data.filter(function(d){return d["leftConnection"] === null;});
 
 			let workspaceID = -1;
-			if (id === -1) { workspaceID = 0; } else { workspaceID = 1; }
+			if (id === -1) { //TODO: this is bad hard-coding but seems to work so meh...
+				workspaceID = 0; 
+			} else if (id === -2) { 
+				workspaceID = 1; 
+			}
+			else {
+				workspaceID = 2;
+			}
 			startBlocks = startBlocks.filter(function(d){return d["x"] >= workspace[workspaceID].getX();});
 			startBlocks = startBlocks.filter(function(d){return d["y"] >= workspace[workspaceID].getY();});
 			startBlocks = startBlocks.filter(function(d){return d["x"] < workspace[workspaceID].getX()+workspace[workspaceID].getWidth();});
@@ -152,25 +159,25 @@ class PlayButton
 					if (this.highlightBuffer[index] !== undefined)
 					{
 						// add to the master buffer 
-						let x = this.gridArrayToNoteSequence(current.getGridArray(), index * 4.0)["notes"];
+						let x = this.gridArrayToNoteSequence (current.getGridArray(), index * 4.0)["notes"];
 						for(let i = 0; i < x.length; ++i) {
-							this.midiBuffer[0]["notes"].push(x[i]);
-							this.highlights[0].push({"block": current, 
+							this.midiBuffer[0]["notes"].push (x[i]);
+							this.highlights[0].push ({"block": current, 
 													 "time": x[i]["startTime"]});
 						};
 
 						// index exists 
-						this.highlightBuffer[index].push(current);
+						this.highlightBuffer[index].push (current);
 					}
 					else
 					{
 						if (index === 0 /* create buffer if not there */) 
 						{
-							this.midiBuffer.push(this.gridArrayToNoteSequence(current.getGridArray()));
+							this.midiBuffer.push (this.gridArrayToNoteSequence(current.getGridArray()));
 
 							for(let i = 0; i < this.midiBuffer[0]["notes"].length; ++i) {
-								this.highlights[0].push({"block": current, 
-													 "time": this.midiBuffer[0]["notes"][i]["startTime"]});
+								this.highlights[0].push ({"block": current, 
+													      "time": this.midiBuffer[0]["notes"][i]["startTime"]});
 							}
 						} 
 						else 
@@ -178,8 +185,8 @@ class PlayButton
 							let x = this.gridArrayToNoteSequence(current.getGridArray(), index * 4.0)["notes"];
 							for(let i = 0; i < x.length; ++i) {
 								this.midiBuffer[0]["notes"].push(x[i]);
-								this.highlights[0].push({"block": current, 
-													 "time": x[i]["startTime"]});
+								this.highlights[0].push ({"block": current, 
+													      "time": x[i]["startTime"]});
 							};
 							this.midiBuffer[0]["totalTime"] = (index * 4.0) + 4.0;
 						}
