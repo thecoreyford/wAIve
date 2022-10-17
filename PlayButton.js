@@ -115,7 +115,7 @@ class PlayButton
  	 */
 	startPlayback(id)
 	{
-		processDataset() //< collect all the blocks into the dataset. 
+		processDataset("all") //< collect all the blocks into the dataset. 
 
 		highlightTrackerIdx = 0;
 		// Empty the buffers! 
