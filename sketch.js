@@ -14,9 +14,9 @@ const workspaceX = 205; //canvasWidth * 0.10; //125
 const workspaceY = 130; //canvasHeight * 0.15; //117
 const workspaceWidth = 1050; //canvasWidth - (2 * workspaceX); //1000
 const workspaceHeight = 700; //canvasHeight - (2 * workspaceY); //546
-const workspace2X = workspaceX + 35; //canvasWidth * 0.10; //125
+const workspace2X = workspaceX + 35 + 45; //canvasWidth * 0.10; //125
 const workspace2Y = 110 + 120; //canvasHeight * 0.15; //117
-const workspace2Width = workspaceWidth - 80; //canvasWidth - (2 * workspaceX); //1000
+const workspace2Width = workspaceWidth - 80 - 45; //canvasWidth - (2 * workspaceX); //1000
 const workspace2Height = 130; //canvasHeight - (2 * workspaceY); //546
 var workspace  = [new Workspace(workspaceX, 
 							   workspaceY, 

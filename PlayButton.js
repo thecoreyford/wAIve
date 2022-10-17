@@ -117,7 +117,6 @@ class PlayButton
 	{
 		processDataset() //< collect all the blocks into the dataset. 
 
-
 		highlightTrackerIdx = 0;
 		// Empty the buffers! 
 		this.highlightBuffer = [];
@@ -128,8 +127,12 @@ class PlayButton
 		var startBlocks;
 		if (id < 0)
 		{
+
+			//Find blocks where timeline.getX() is between X and X + block.width; 
+			startBlocks = data.filter(function(d){return timeline.getX() >= d["x"]
+										   && timeline.getX() <= d["x"]+d["block"].width});
 			// Count up all the start blocks and play the entire piece!!!
-			startBlocks = data.filter(function(d){return d["leftConnection"] === null;});
+			//startBlocks = data.filter(function(d){return d["leftConnection"] === null;});
 
 			let workspaceID = -1;
 			if (id === -1) { //TODO: this is bad hard-coding but seems to work so meh...

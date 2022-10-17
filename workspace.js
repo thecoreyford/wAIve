@@ -19,8 +19,8 @@ class Workspace
 		this.id = id;
 
 		
-		this.tinyPlay = new TinyPlayButton(this.x,
-										   this.y,
+		this.tinyPlay = new TinyPlayButton(this.x - 50,
+										   this.y - 5,
 										   40,
 										   40,
 										   this.id,
@@ -76,8 +76,8 @@ class Workspace
 
 		if (this.id !== -1)
 		{
-			this.tinyPlay.draw (this.x, 
-								this.y, 
+			this.tinyPlay.draw (this.x - 50, 
+								this.y - 5, 
 								this.tinyPlay.width, 
 								this.tinyPlay.height);
 		}
