@@ -1,13 +1,7 @@
 /** GUI Play button which also controls the playback of note block sequences.
 	It also acts as the playback engine e.g. any playback triggered must go through the playback block.*/
 
-var highlightTracker = 0;
-function dynamicSort(property) {
-   return function(a, b) {
-       return (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-   }
-}
-
+var highlightTrackerIdx = 0;
 
 class PlayButton
 {
@@ -34,12 +28,9 @@ class PlayButton
 		this.mode = "STOPPED"; // "PREPARE_BUFFER" || "PLAYING"
 		this.callbackObject  = {run: function()
 									{
-										highlightTracker++;
-										draw();
+										highlightTrackerIdx++;
 									}, 
-							   stop: function()
-							   		 {
-							   		}};
+							   stop: function(){}};
 		this.player.callbackObject = this.callbackObject; 
 	}
 
@@ -66,22 +57,28 @@ class PlayButton
 		{
 			rect(this.x + 7, this.y + 7, this.width * 0.66, this.height * 0.66);
 
-			if (highlightTracker !== 0)
+			if (highlightTrackerIdx !== 0)
 			{
-				print(this.highlights[0][highlightTracker-1]["block"]);
-				this.highlights[0][highlightTracker-1]["block"].showHighlight = true;
-			
-				let prev = this.highlights[0][highlightTracker-1]["block"].previousBlock;
-				if (prev !== null
-					&& prev.showHighlight === true) 
-				{ 
-					prev.showHighlight = false; 
+				// figure out the boundary for showing hilights 
+				let currTime = this.highlights[0][highlightTrackerIdx-1]["time"] + 0.5; 
+				currTime = 4.0*Math.ceil(currTime/4.0);
+				print(highlightTrackerIdx-1, (" : ") ,currTime);
+				
+				// Turn off highlights
+				for (let i = 0; i < data.length; ++i){
+					data[i]["block"].showHighlight = false;
+				}
+
+				// filter the blocks that need to be turned on
+				let c = this.highlights[0].filter(function(d){return d["elapsed"] === currTime;});
+				// c = c.filter(function(d){return d["time"] >/ (currTime-4.0);});
+				for (let i = 0; i < c.length; ++i){
+					c[i]["block"].showHighlight = true;
 				}
 			}
 		}
 		else
 		{
-			highlightTracker = 0;
 			triangle(this.x + 7, this.y + 7, 
 					 this.x + this.width - 7, (this.y + this.height * 0.5),
 					 this.x + 7, this.y + this.height - 7);
@@ -120,6 +117,8 @@ class PlayButton
 	{
 		processDataset() //< collect all the blocks into the dataset. 
 
+
+		highlightTrackerIdx = 0;
 		// Empty the buffers! 
 		this.highlightBuffer = [];
 		this.midiBuffer = [];
@@ -138,8 +137,10 @@ class PlayButton
 			} else if (id === -2) { 
 				workspaceID = 1; 
 			}
-			else {
+			else if (id === -3) {
 				workspaceID = 2;
+			} else {
+				workspaceID = 3;
 			}
 			startBlocks = startBlocks.filter(function(d){return d["x"] >= workspace[workspaceID].getX();});
 			startBlocks = startBlocks.filter(function(d){return d["y"] >= workspace[workspaceID].getY();});
@@ -163,7 +164,8 @@ class PlayButton
 						for(let i = 0; i < x.length; ++i) {
 							this.midiBuffer[0]["notes"].push (x[i]);
 							this.highlights[0].push ({"block": current, 
-													 "time": x[i]["startTime"]});
+													 "time": x[i]["startTime"],
+													 "elapsed": 4.0*Math.ceil((x[i]["startTime"]+0.5)/4.0)});
 						};
 
 						// index exists 
@@ -177,7 +179,8 @@ class PlayButton
 
 							for(let i = 0; i < this.midiBuffer[0]["notes"].length; ++i) {
 								this.highlights[0].push ({"block": current, 
-													      "time": this.midiBuffer[0]["notes"][i]["startTime"]});
+													      "time": this.midiBuffer[0]["notes"][i]["startTime"],
+													 	  "elapsed": 4.0*Math.ceil((this.midiBuffer[0]["notes"][i]["startTime"]+0.5)/4.0)});
 							}
 						} 
 						else 
@@ -186,7 +189,8 @@ class PlayButton
 							for(let i = 0; i < x.length; ++i) {
 								this.midiBuffer[0]["notes"].push(x[i]);
 								this.highlights[0].push ({"block": current, 
-													      "time": x[i]["startTime"]});
+													      "time": x[i]["startTime"],
+														  "elapsed": 4.0*Math.ceil((x[i]["startTime"]+0.5)/4.0)});
 							};
 							this.midiBuffer[0]["totalTime"] = (index * 4.0) + 4.0;
 						}
@@ -210,13 +214,14 @@ class PlayButton
 			this.midiBuffer.push(this.gridArrayToNoteSequence(current.getGridArray()));
 			for (let i = 0; i < this.midiBuffer[0]["notes"].length; ++i) {
 								this.highlights[0].push({"block": current, 
-													 	"time": this.midiBuffer[0]["notes"][i]["startTime"]});}
+													 	"time": this.midiBuffer[0]["notes"][i]["startTime"],
+													 	"elapsed": 4.0*Math.ceil((this.midiBuffer[0]["notes"][i]["startTime"]+0.5)/4.0)});}
 			this.highlightBuffer.push([current]);
 		}		
 
 		// Start the beautiful music... 
 		if (startBlocks.length !== 0 && !this.player.isPlaying()) {
-			this.highlights.sort(dynamicSort('time'));
+			this.highlights[0] = this.highlights[0].sort((a, b) => (a.elapsed > b.elapsed) ? 1 : -1);
 			this.mode = "START_PLAYING";
 			// this.updatePlayback();
 		}
@@ -232,6 +237,7 @@ class PlayButton
 		{
 			this.mode = "STOPPED";
 			this.stopPlayback();
+			highlightTrackerIdx = 0;
 		}
 
 		if (this.mode === "START_PLAYING")

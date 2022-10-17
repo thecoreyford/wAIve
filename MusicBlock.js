@@ -165,7 +165,7 @@ class MusicBlock
 
 	    if (this.showHighlight === true){
 	    	let highlightColour = color(yellow);
-  			highlightColour.setAlpha(80);
+  			highlightColour.setAlpha(180);
   			fill(highlightColour);
   			rect(this.x - 5, this.y - 2.5, this.width + 5, this.height + 5, 10);
 	    }
