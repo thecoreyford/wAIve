@@ -24,9 +24,9 @@ class AIBlockCreator
 		let anchor3 = {"x": 45, "y": 830};
 
 		// Find AI blocks in the grey
-		processDataset("all");
-		var aiBlocks = data.filter(function(d){return d["isAI"] === true;});
-		aiBlocks = aiBlocks.filter(function(d){return d["x"] < workspace[0].getX() 
+		processDataset ("all");
+		var aiBlocks = data.filter (function(d){return d["isAI"] === true;});
+		aiBlocks = aiBlocks.filter (function(d){return d["x"] < workspace[0].getX() 
 													  || d["x"] > workspace[0].getX()+workspace[0].getWidth()
 													  || d["y"] < workspace[1].getY()
 													  || d["y"] > workspace[0].getY() + workspace[0].getHeight()});
