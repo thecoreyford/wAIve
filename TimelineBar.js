@@ -23,7 +23,7 @@ class TimelineBar
 			&& mouseY > 150 
 			&& mouseY < 150 + 12) 
 		{
-			rect (this.ellipseX - 3,150,5,900,5);
+			rect (this.ellipseX - 3, 150, 5, 900, 5);
 		}
 
 		// rect(this.ellipseX,150,900 - (this.ellipseX - 300),12,5);

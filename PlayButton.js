@@ -35,6 +35,9 @@ class PlayButton
 
 
 		this.playLevelCounts = {"all": 0, "timeline": 0,  "block": 0};
+
+		this.flashing = false;
+		this.flashOffset = 0.001;
 	}
 
 	/** 
@@ -50,10 +53,20 @@ class PlayButton
 		}
 		else
 		{
-			fill (green);
+			fill (veryDarkGrey);
 		}
 		
+		if (this.flashing) //... Implement the flashing...
+		{
+			drawingContext.shadowBlur = 100 * sin(this.flashOffset); 
+			drawingContext.shadowColor = color(207,7,70);
+			this.flashOffset += 0.075;
+		}
 		rect (this.x, this.y, this.width, this.height, 5);
+		rect (this.x, this.y, this.width, this.height, 5);
+		rect (this.x, this.y, this.width, this.height, 5);
+		drawingContext.shadowBlur = 0;
+
 
 		fill(lightGrey);
 		if (this.mode === "PLAYING")
@@ -65,7 +78,7 @@ class PlayButton
 				// figure out the boundary for showing hilights 
 				let currTime = this.highlights[0][highlightTrackerIdx-1]["time"] + 0.5; 
 				currTime = 4.0*Math.ceil(currTime/4.0);
-				print(highlightTrackerIdx-1, (" : ") ,currTime);
+				// print(highlightTrackerIdx-1, (" : ") ,currTime);
 				
 				// Turn off highlights
 				for (let i = 0; i < data.length; ++i){
@@ -108,6 +121,8 @@ class PlayButton
 			{
 				this.startPlayback(-1);
 			}
+
+			this.flashing = false;
 		}
 	}
 
@@ -314,8 +329,51 @@ class PlayButton
 
 
 	//TODO: Comment
-	resetPlayLevelCounts()
+	setPlayLevelCountsAndGUI()
 	{
+		// If mostly using the timelines
+		if (this.playLevelCounts["timeline"] > this.playLevelCounts["block"]
+			&& this.playLevelCounts["timeline"] > this.playLevelCounts["all"])
+		{
+			// try listening to a single block
+			let myData = data.filter(function(d){return d["x"] >= workspace[0].getX();});
+			myData = myData.filter(function(d){return d["y"] >= workspace[0].getY();});
+			myData = myData.filter(function(d){return d["x"] < workspace[0].getX()+workspace[0].getWidth();});
+			myData = myData.filter(function(d){return d["y"] < workspace[0].getY()+workspace[0].getHeight();});
+
+			if (myData.length>0){
+				myData[int(random(0,myData.length))]["block"].tinyPlay.flashing=true;
+			}	
+		}
+
+		// if mostly using block things 
+		if (this.playLevelCounts["block"] > this.playLevelCounts["timeline"]
+			&& this.playLevelCounts["block"] > this.playLevelCounts["all"])
+		{
+			// listen to everything as a whole!
+			this.flashing = true;	
+			
+		}
+
+		// if listening to everything
+		if (this.playLevelCounts["all"] > this.playLevelCounts["timeline"]
+			&& this.playLevelCounts["all"] > this.playLevelCounts["block"])
+		{
+			let myData, timelineID;
+			do
+			{
+				timelineID = int(random(1,4));
+				myData = data.filter(function(d){return d["x"] >= workspace[timelineID].getX();});
+				myData = myData.filter(function(d){return d["y"] >= workspace[timelineID].getY();});
+				myData = myData.filter(function(d){return d["x"] < workspace[timelineID].getX()+workspace[timelineID].getWidth();});
+				myData = myData.filter(function(d){return d["y"] < workspace[timelineID].getY()+workspace[timelineID].getHeight();});
+			} while (myData.length == 0)
+
+			// listen to a timeline
+			workspace[timelineID].tinyPlay.flashing = true;
+		}
+
+		// reset counter for next time 
 		this.playLevelCounts["timeline"] = 0;
 		this.playLevelCounts["block"] = 0;
 		this.playLevelCounts["all"] = 0;

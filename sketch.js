@@ -93,7 +93,7 @@ function setup()
   musicMetrics.getCountOfColour (purple, true);
   musicMetrics.getCountOfColour (googGreen, true);
   createCanvas (canvasWidth, canvasHeight);
-  playButton.resetPlayLevelCounts();
+  playButton.setPlayLevelCountsAndGUI();
 }
 
 /**
@@ -130,7 +130,8 @@ function draw()
 		aiBlockCreator.update (musicBlocks);
 		startTime = millis();
 		logger.save();
-		playbutton.resetPlayLevelCounts();
+
+		playButton.setPlayLevelCountsAndGUI();
 	}
 
   	playButton.updatePlayback();
