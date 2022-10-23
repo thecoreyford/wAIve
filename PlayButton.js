@@ -32,6 +32,9 @@ class PlayButton
 									}, 
 							   stop: function(){}};
 		this.player.callbackObject = this.callbackObject; 
+
+
+		this.playLevelCounts = {"all": 0, "timeline": 0,  "block": 0};
 	}
 
 	/** 
@@ -137,13 +140,17 @@ class PlayButton
 			let workspaceID = -1;
 			if (id === -1) { //TODO: this is bad hard-coding but seems to work so meh...
 				workspaceID = 0; 
+				this.playLevelCounts["all"] = this.playLevelCounts["all"] + 1;
 			} else if (id === -2) { 
 				workspaceID = 1; 
+				this.playLevelCounts["timeline"] = this.playLevelCounts["timeline"] + 1;
 			}
 			else if (id === -3) {
 				workspaceID = 2;
+				this.playLevelCounts["timeline"] = this.playLevelCounts["timeline"] + 1;
 			} else {
 				workspaceID = 3;
+				this.playLevelCounts["timeline"] = this.playLevelCounts["timeline"] + 1;
 			}
 			startBlocks = startBlocks.filter(function(d){return d["x"] >= workspace[workspaceID].getX();});
 			startBlocks = startBlocks.filter(function(d){return d["y"] >= workspace[workspaceID].getY();});
@@ -211,6 +218,7 @@ class PlayButton
 		}
 		else
 		{
+			this.playLevelCounts["block"] = this.playLevelCounts["block"] + 1;
 			// only play the block requested! 
 			startBlocks = data.filter(function(d){return d["id"] === id;});
 			var current = startBlocks[0]["block"];	
@@ -226,6 +234,7 @@ class PlayButton
 		if (startBlocks.length !== 0 && !this.player.isPlaying()) {
 			this.highlights[0] = this.highlights[0].sort((a, b) => (a.elapsed > b.elapsed) ? 1 : -1);
 			this.mode = "START_PLAYING";
+			print(this.playLevelCounts)
 			// this.updatePlayback();
 		}
 	}
@@ -300,6 +309,22 @@ class PlayButton
   		}
 
   		return noteSequence;	
+	}
+
+
+
+	//TODO: Comment
+	resetPlayLevelCounts()
+	{
+		this.playLevelCounts["timeline"] = 0;
+		this.playLevelCounts["block"] = 0;
+		this.playLevelCounts["all"] = 0;
+	}
+
+	//TODO: Comment
+	getPlayLevelCounts()
+	{
+		return this.PlayLevelCounts;
 	}
 
 }
