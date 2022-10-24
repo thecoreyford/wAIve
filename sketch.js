@@ -139,7 +139,7 @@ function draw()
   	let elapsedTime = millis() - startTime; 
 	if (elapsedTime > (25 * 1000))
 	{
-		aiBlockCreator.update (musicBlocks);
+		aiBlockCreator.magentaUpdate (musicBlocks);
 		startTime = millis();
 		logger.save();
 
@@ -197,7 +197,8 @@ function mousePressed()
  */
 function keyPressed() {
   if (keyCode === LEFT_ARROW && true) {
- 	aiBlockCreator.update (musicBlocks);
+ 	// aiBlockCreator.update (musicBlocks);
+ 	aiBlockCreator.magentaUpdate (musicBlocks);
   }
 }
 

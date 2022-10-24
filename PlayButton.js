@@ -131,7 +131,7 @@ class PlayButton
  	 * 
  	 * @return {void} Nothing
  	 */
-	startPlayback(id)
+	startPlayback(id, returnNoteSequence = false)
 	{
 		processDataset("all") //< collect all the blocks into the dataset. 
 
@@ -145,12 +145,14 @@ class PlayButton
 		var startBlocks;
 		if (id < 0)
 		{
-
-			//Find blocks where timeline.getX() is between X and X + block.width; 
-			startBlocks = data.filter(function(d){return timeline.getX() >= d["x"]
+			if(returnNoteSequence === true) {
+				// Count up all the start blocks and play the entire piece!!!
+				startBlocks = data.filter(function(d){return d["leftConnection"] === null;});
+			}else{
+				//Find blocks where timeline.getX() is between X and X + block.width; 
+				startBlocks = data.filter(function(d){return timeline.getX() >= d["x"]
 										   && timeline.getX() <= d["x"]+d["block"].width});
-			// Count up all the start blocks and play the entire piece!!!
-			//startBlocks = data.filter(function(d){return d["leftConnection"] === null;});
+			}			
 
 			let workspaceID = -1;
 			if (id === -1) { //TODO: this is bad hard-coding but seems to work so meh...
@@ -246,12 +248,17 @@ class PlayButton
 		}		
 
 		// Start the beautiful music... 
-		if (startBlocks.length !== 0 && !this.player.isPlaying()) {
+		if (startBlocks.length !== 0 && !this.player.isPlaying()
+			&& returnNoteSequence === false) {
 			this.highlights[0] = this.highlights[0].sort((a, b) => (a.elapsed > b.elapsed) ? 1 : -1);
 			this.mode = "START_PLAYING";
-			print(this.playLevelCounts)
-			// this.updatePlayback();
 		}
+
+		if (returnNoteSequence === true)
+		{
+			return this.midiBuffer[0];
+		}
+		return null; 
 	}
 
 	/**
@@ -396,5 +403,70 @@ class PlayButton
 		this.x = x;
 		this.y = y;
 	}
+
+	//TODO: comment
+	noteSequenceToBoolArray (noteSequence, offset = 0)
+	{
+		// Make a blank array 
+		let gridArray = [];
+		for(let j = 0; j < (8 * 8); j++){
+			// gridArray.push([]);
+			// for(let i = 0; i < 8; i++){
+			gridArray.push(0);
+		}
+		// }
+
+		print(noteSequence);
+
+
+		// thanks to 2/11/2019 by Gav's blog Find the closest number in an array JavaScript
+		for (let n = 0; n < noteSequence.length; n++)
+		{
+			if (noteSequence[n]["startTime"] >= 4.0){
+				return gridArray;
+			}
+
+			let colIdx = (((8 * (noteSequence[n]["startTime"] + 0.5)) / 4) - 1);
+
+
+  			let midiPitch = [72, 71, 69, 67, 65, 64, 62, 60];
+			const needle = noteSequence[n]["pitch"];
+			const closest = midiPitch.reduce((a, b) => {
+    			return Math.abs(b - needle) < Math.abs(a - needle) ? b : a;
+			});
+			let rowIdx = midiPitch.indexOf(closest);
+
+			print(colIdx * 8 + rowIdx);
+			gridArray[(int(colIdx) * 8) + rowIdx] = 1;
+		}
+
+		return gridArray;
+
+
+
+		// let counter = 0; 
+		// for (let col = 0; col < 8; ++col) // column
+		// {
+  // 			for (let row = 0; row < 8; ++row) // row 
+  // 			{
+  // 				let midiPitch = [72, 71, 69, 67, 65, 64, 62, 60];
+  // 				let midiStartTime = [0.0 + offset, 0.5 + offset, 1.0 + offset, 1.5 + offset, 2.0 + offset, 2.5 + offset, 3.0 + offset, 3.5 + offset];
+  // 				let midiEndTime = [0.5 + offset, 1.0 + offset, 1.5 + offset, 2.0 + offset, 2.5 + offset, 3.0 + offset, 3.5+ offset, 4.0 + offset];
+
+  // 				if (gridArray[counter].isOn === true)
+  // 				{
+  // 					noteSequence["notes"].push({pitch: midiPitch[row], 
+  // 												startTime: midiStartTime[col], 
+  // 												endTime: midiEndTime[col],
+  // 												velocity: 20});
+  // 				}
+
+  // 				counter++;
+  // 			}
+  // 		}
+
+  // 		return noteSequence;	
+	}
+
 
 }
