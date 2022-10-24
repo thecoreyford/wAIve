@@ -94,6 +94,19 @@ function setup()
   musicMetrics.getCountOfColour (googGreen, true);
   createCanvas (canvasWidth, canvasHeight);
   playButton.setPlayLevelCountsAndGUI();
+
+  // add blue blocks on load 
+  musicBlocks.push (new MusicBlock(160, 215, 200, 100));
+  musicBlocks.push (new MusicBlock(160, 415, 200, 100));
+  musicBlocks.push (new MusicBlock(160, 615, 200, 100));
+  //---
+  musicBlocks.push (new MusicBlock(30, 18, 200, 100));
+  musicBlocks.push (new MusicBlock(418, 18, 200, 100));
+  musicBlocks.push (new MusicBlock(790, 18, 200, 100));
+  //---
+  musicBlocks.push (new MusicBlock(35, 760, 200, 100));
+  musicBlocks.push (new MusicBlock(370, 760, 200, 100));
+  musicBlocks.push (new MusicBlock(650, 760, 200, 100));
 }
 
 /**
