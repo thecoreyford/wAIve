@@ -15,7 +15,7 @@ const workspaceY = 130; //canvasHeight * 0.15; //117
 const workspaceWidth = 1050; //canvasWidth - (2 * workspaceX); //1000
 const workspaceHeight = 620; //canvasHeight - (2 * workspaceY); //546
 const workspace2X = workspaceX + 35 + 45; //canvasWidth * 0.10; //125
-const workspace2Y = 190; //canvasHeight * 0.15; //117
+const workspace2Y = 200; //canvasHeight * 0.15; //117
 const workspace2Width = workspaceWidth - 80 - 45; //canvasWidth - (2 * workspaceX); //1000
 const workspace2Height = 130; //canvasHeight - (2 * workspaceY); //546
 var workspace  = [new Workspace(workspaceX, 
@@ -121,7 +121,6 @@ function draw()
 	}
 
 	// blockCreator.draw();
-  	playButton.draw();
 
   	// every so many seconds... 
   	let elapsedTime = millis() - startTime; 
@@ -137,6 +136,7 @@ function draw()
   	playButton.updatePlayback();
 
   	timeline.draw();
+  	playButton.draw();
 }
 
 //===========================================================================

@@ -385,4 +385,12 @@ class PlayButton
 		return this.PlayLevelCounts;
 	}
 
+
+	// TODO: Comment 
+	setXandY(x,y)
+	{
+		this.x = x;
+		this.y = y;
+	}
+
 }
