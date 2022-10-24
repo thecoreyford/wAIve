@@ -416,8 +416,6 @@ class PlayButton
 		}
 		// }
 
-		print(noteSequence);
-
 
 		// thanks to 2/11/2019 by Gav's blog Find the closest number in an array JavaScript
 		for (let n = 0; n < noteSequence.length; n++)
@@ -436,7 +434,6 @@ class PlayButton
 			});
 			let rowIdx = midiPitch.indexOf(closest);
 
-			print(colIdx * 8 + rowIdx);
 			gridArray[(int(colIdx) * 8) + rowIdx] = 1;
 		}
 

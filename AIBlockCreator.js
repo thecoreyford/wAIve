@@ -55,9 +55,10 @@ class AIBlockCreator
 			{
 				// get id's 
 				let workspaceId = 0; 
-				if(i == -2){workspaceId = 0;}; 
-				if(i == -3){workspaceId = 1;} 
-				if(i == -4){workspaceId = 2;};
+				let colour = "";
+				if(i == -2){workspaceId = 0; colour = orange;}; 
+				if(i == -3){workspaceId = 1; colour = googGreen;} 
+				if(i == -4){workspaceId = 2; colour = purple;};
 
 				// get note sequence
 				let ns = playButton.startPlayback(i, true);
@@ -75,10 +76,10 @@ class AIBlockCreator
 					// push to the blocks at the anchored places 
 					musicBlocks.push (new AIBlock (aiWorkspacePlaces[workspaceId][0].x, 
 												   aiWorkspacePlaces[workspaceId][0].y, 
-												   200, 100, grid));
+												   200, 100, grid, colour));
 				});
 				
-				this.vae.similar(ns, 1, 0.75, vaeTemperature).then(function(sample)  {
+				this.vae.similar(ns, 1, 0.8, vaeTemperature).then(function(sample)  {
 					let s1 = mm.sequences.unquantizeSequence(sample[0]); //unquantize 
 
 					// convert note sequences to blocks (checking the right notes)	
@@ -87,10 +88,10 @@ class AIBlockCreator
 					// push to the blocks at the anchored places 
 					musicBlocks.push (new AIBlock (aiWorkspacePlaces[workspaceId][1].x, 
 												   aiWorkspacePlaces[workspaceId][1].y, 
-												   200, 100, grid));
+												   200, 100, grid, colour));
 				});
 
-				this.vae.similar(ns, 1, 0.6, vaeTemperature).then(function(sample)  {
+				this.vae.similar(ns, 1, 0.7, vaeTemperature).then(function(sample)  {
 					let s1 = mm.sequences.unquantizeSequence(sample[0]); //unquantize 
 
 					// convert note sequences to blocks (checking the right notes)	
@@ -99,7 +100,7 @@ class AIBlockCreator
 					// push to the blocks at the anchored places 
 					musicBlocks.push (new AIBlock (aiWorkspacePlaces[workspaceId][2].x, 
 												   aiWorkspacePlaces[workspaceId][2].y, 
-												   200, 100, grid));
+												   200, 100, grid, colour));
 				});
 			}
 		}
