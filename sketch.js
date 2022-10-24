@@ -186,9 +186,6 @@ function mousePressed()
 	{
 		workspace[i].onClicked();
 	}
-
-	// If a play button is pressed
-	playButton.mousePressed();
 }
 
 /**
@@ -213,6 +210,9 @@ function mouseDragged() {
  */
 function mouseReleased()
 {
+	// If a play button is released
+	playButton.mousePressed();
+
 	// delete any blocks from the bin
 	bin.mouseReleased (musicBlocks);
 
