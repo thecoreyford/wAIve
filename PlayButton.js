@@ -341,7 +341,7 @@ class PlayButton
 			myData = myData.filter(function(d){return d["x"] < workspace[0].getX()+workspace[0].getWidth();});
 			myData = myData.filter(function(d){return d["y"] < workspace[0].getY()+workspace[0].getHeight();});
 
-			if (myData.length>0){
+			if (myData.length > 0){
 				myData[int(random(0,myData.length))]["block"].tinyPlay.flashing=true;
 			}	
 		}
@@ -360,6 +360,7 @@ class PlayButton
 			&& this.playLevelCounts["all"] > this.playLevelCounts["block"])
 		{
 			let myData, timelineID;
+			let count = 0;
 			do
 			{
 				timelineID = int(random(1,4));
@@ -367,10 +368,13 @@ class PlayButton
 				myData = myData.filter(function(d){return d["y"] >= workspace[timelineID].getY();});
 				myData = myData.filter(function(d){return d["x"] < workspace[timelineID].getX()+workspace[timelineID].getWidth();});
 				myData = myData.filter(function(d){return d["y"] < workspace[timelineID].getY()+workspace[timelineID].getHeight();});
-			} while (myData.length == 0)
+				count = count + 1;
+			} while (myData.length == 0 && count !== 10)
 
 			// listen to a timeline
-			workspace[timelineID].tinyPlay.flashing = true;
+			if (count !== 10) {
+				workspace[timelineID].tinyPlay.flashing = true;
+			}
 		}
 
 		// reset counter for next time 
