@@ -9,7 +9,7 @@ class AIBlockCreator
 	{
 		this.onetime = true;
 
-		this.vae = new mm.MusicVAE('https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/mel_4bar_small_q2');
+		this.vae = new mm.MusicVAE('https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/mel_2bar_small');
 		this.vae.initialize();
 
 	}	
@@ -23,8 +23,8 @@ class AIBlockCreator
 
 		// set up the co-ords for the ai blocks
 		let aiWorkspacePlaces =[[{"x": anchor1.x, "y": anchor1.y},
-								{"x": anchor1.x + random (50, 80), "y": anchor1.y + random(-100,-70)},
-								{"x": anchor1.x + random (50, 80), "y": anchor1.y + random (60, 80)}],
+								{"x": anchor1.x + random (50, 80), "y": anchor1.y + random (60, 80)},
+								{"x": anchor1.x + random (50, 80), "y": anchor1.y + random(-100,-70)}],
 								[{"x": anchor2.x , "y": anchor2.y },
 								{"x": anchor2.x + random (50, 80), "y": anchor2.y + random(-90,-70)},
 								{"x": anchor2.x  + random (50, 80), "y": anchor2.y + random (60, 80)}],
@@ -32,22 +32,24 @@ class AIBlockCreator
 								{"x":anchor3.x + random (50, 80), "y":anchor3.y  + random(-60,-70)},
 								{"x":anchor3.x - random (50, 80), "y":anchor3.y + random (90, 90)}]];
 
-		// Find AI blocks in the grey
-		processDataset ("all");
-		var aiBlocks = data.filter (function(d){return d["isAI"] === true;});
-		aiBlocks = aiBlocks.filter (function(d){return d["x"] < workspace[0].getX() 
-													  || d["x"] > workspace[0].getX()+workspace[0].getWidth()
-													  || d["y"] < workspace[0].getY()
-													  || d["y"] > workspace[0].getY() + workspace[0].getHeight()});
-		// Remove AI blocks
-		for (let i =  0; i < aiBlocks.length; ++i) {
-			musicBlocks.splice(musicBlocks.indexOf(aiBlocks[i].block), 1);
-		}
-
 		//================================================================================
 
-		if (this.vae.initialized)
+		if (this.vae.initialized && !playButton.player.isPlaying())
 		{
+			// Find AI blocks in the grey
+			processDataset ("all");
+			var aiBlocks = data.filter (function(d){return d["isAI"] === true;});
+			aiBlocks = aiBlocks.filter (function(d){return d["x"] < workspace[0].getX() 
+														  || d["x"] > workspace[0].getX()+workspace[0].getWidth()
+														  || d["y"] < workspace[0].getY()
+														  || d["y"] > workspace[0].getY() + workspace[0].getHeight()});
+			// Remove AI blocks
+			for (let i =  0; i < aiBlocks.length; ++i) {
+				musicBlocks.splice(musicBlocks.indexOf(aiBlocks[i].block), 1);
+			}
+
+			// ---
+
 			let vaeTemperature = 1.0;
 
 			// For the workspaces
@@ -62,12 +64,10 @@ class AIBlockCreator
 
 				// get note sequence
 				let ns = playButton.startPlayback(i, true);
-				
-				// quantize note sequence
 				ns = mm.sequences.quantizeNoteSequence(ns,4);
 
 				// generate similar samples 
-				this.vae.similar(ns, 1, 0.9, vaeTemperature).then(function(sample)  {
+				this.vae.similar(ns, 3, 0.9, vaeTemperature).then(function(sample)  {
 					let s1 = mm.sequences.unquantizeSequence(sample[0]); //unquantize 
 
 					// convert note sequences to blocks (checking the right notes)	
@@ -91,17 +91,18 @@ class AIBlockCreator
 												   200, 100, grid, colour));
 				});
 
-				this.vae.similar(ns, 1, 0.7, vaeTemperature).then(function(sample)  {
-					let s1 = mm.sequences.unquantizeSequence(sample[0]); //unquantize 
+				// hide the third things...
+				// this.vae.similar(ns, 1, 0.7, vaeTemperature).then(function(sample)  {
+				// 	let s1 = mm.sequences.unquantizeSequence(sample[0]); //unquantize 
 
-					// convert note sequences to blocks (checking the right notes)	
-					let grid = playButton.noteSequenceToBoolArray(s1["notes"]);
+				// 	// convert note sequences to blocks (checking the right notes)	
+				// 	let grid = playButton.noteSequenceToBoolArray(s1["notes"]);
 
-					// push to the blocks at the anchored places 
-					musicBlocks.push (new AIBlock (aiWorkspacePlaces[workspaceId][2].x, 
-												   aiWorkspacePlaces[workspaceId][2].y, 
-												   200, 100, grid, colour));
-				});
+				// 	// push to the blocks at the anchored places 
+				// 	musicBlocks.push (new AIBlock (aiWorkspacePlaces[workspaceId][2].x, 
+				// 								   aiWorkspacePlaces[workspaceId][2].y, 
+				// 								   200, 100, grid, colour));
+				// });
 			}
 		}
 

@@ -75,22 +75,26 @@ class PlayButton
 
 			if (highlightTrackerIdx !== 0)
 			{
-				// figure out the boundary for showing hilights 
-				let currTime = this.highlights[0][highlightTrackerIdx-1]["time"] + 0.5; 
-				currTime = 4.0*Math.ceil(currTime/4.0);
-				// print(highlightTrackerIdx-1, (" : ") ,currTime);
-				
-				// Turn off highlights
-				for (let i = 0; i < data.length; ++i){
-					data[i]["block"].showHighlight = false;
-				}
+				try
+				{
+					// figure out the boundary for showing hilights 
+					let currTime = this.highlights[0][highlightTrackerIdx-1]["time"] + 0.5; 
+					currTime = 4.0*Math.ceil(currTime/4.0);
+					// print(highlightTrackerIdx-1, (" : ") ,currTime);
+					
+					// Turn off highlights
+					for (let i = 0; i < data.length; ++i){
+						data[i]["block"].showHighlight = false;
+					}
 
-				// filter the blocks that need to be turned on
-				let c = this.highlights[0].filter(function(d){return d["elapsed"] === currTime;});
-				// c = c.filter(function(d){return d["time"] >/ (currTime-4.0);});
-				for (let i = 0; i < c.length; ++i){
-					c[i]["block"].showHighlight = true;
+					// filter the blocks that need to be turned on
+					let c = this.highlights[0].filter(function(d){return d["elapsed"] === currTime;});
+					// c = c.filter(function(d){return d["time"] >/ (currTime-4.0);});
+					for (let i = 0; i < c.length; ++i){
+						c[i]["block"].showHighlight = true;
+					}
 				}
+				catch(err){}
 			}
 		}
 		else
@@ -339,8 +343,8 @@ class PlayButton
 	setPlayLevelCountsAndGUI()
 	{
 		// If mostly using the timelines
-		if (this.playLevelCounts["timeline"] > this.playLevelCounts["block"]
-			&& this.playLevelCounts["timeline"] > this.playLevelCounts["all"])
+		if (this.playLevelCounts["timeline"] >= this.playLevelCounts["block"]
+			&& this.playLevelCounts["timeline"] >= this.playLevelCounts["all"])
 		{
 			// try listening to a single block
 			let myData = data.filter(function(d){return d["x"] >= workspace[0].getX();});
@@ -351,21 +355,18 @@ class PlayButton
 			if (myData.length > 0){
 				myData[int(random(0,myData.length))]["block"].tinyPlay.flashing=true;
 			}	
-		}
-
-		// if mostly using block things 
-		if (this.playLevelCounts["block"] > this.playLevelCounts["timeline"]
-			&& this.playLevelCounts["block"] > this.playLevelCounts["all"])
+		} 
+		else if (this.playLevelCounts["block"] >= this.playLevelCounts["timeline"]
+			&& this.playLevelCounts["block"] >= this.playLevelCounts["all"])
 		{
+			// if mostly using block things 
 			// listen to everything as a whole!
 			this.flashing = true;	
-			
 		}
-
-		// if listening to everything
-		if (this.playLevelCounts["all"] > this.playLevelCounts["timeline"]
-			&& this.playLevelCounts["all"] > this.playLevelCounts["block"])
+		else if (this.playLevelCounts["all"] >= this.playLevelCounts["timeline"]
+			&& this.playLevelCounts["all"] >= this.playLevelCounts["block"])
 		{
+			// if listening to everything
 			let myData, timelineID;
 			let count = 0;
 			do
