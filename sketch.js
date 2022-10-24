@@ -101,12 +101,12 @@ function setup()
   musicBlocks.push (new MusicBlock(160, 615, 200, 100));
   //---
   musicBlocks.push (new MusicBlock(30, 18, 200, 100));
-  musicBlocks.push (new MusicBlock(418, 18, 200, 100));
-  musicBlocks.push (new MusicBlock(790, 18, 200, 100));
+  musicBlocks.push (new MusicBlock(280, 18, 200, 100));
+  musicBlocks.push (new MusicBlock(550, 18, 200, 100));
   //---
   musicBlocks.push (new MusicBlock(35, 760, 200, 100));
-  musicBlocks.push (new MusicBlock(370, 760, 200, 100));
-  musicBlocks.push (new MusicBlock(650, 760, 200, 100));
+  musicBlocks.push (new MusicBlock(295, 760, 200, 100));
+  musicBlocks.push (new MusicBlock(545, 760, 200, 100));
 }
 
 /**
