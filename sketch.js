@@ -186,6 +186,8 @@ function mousePressed()
 	{
 		workspace[i].onClicked();
 	}
+
+	timeline.mousePressed();
 }
 
 /**
