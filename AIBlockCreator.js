@@ -65,7 +65,9 @@ class AIBlockCreator
 
 				// get note sequence
 				let ns = playButton.startPlayback(i, true);
-				print(ns);
+				if (ns === undefined || ns === null) {
+     				ns = playButton.startPlayback(i, true);
+				}
 				ns = mm.sequences.quantizeNoteSequence(ns,4);
 
 				// generate similar samples 
