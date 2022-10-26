@@ -34,7 +34,7 @@ class AIBlockCreator
 
 		//================================================================================
 
-		if (this.vae.initialized && !playButton.player.isPlaying())
+		if (this.vae.initialized)
 		{
 			// Find AI blocks in the grey
 			processDataset ("all");
