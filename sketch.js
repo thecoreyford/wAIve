@@ -65,6 +65,8 @@ var blockIDTracker;
 
 var startTime;
 
+var globalFlashOffset = 0.001;
+
 //========================================================================================
 
 // MAIN FUNCTIONS  

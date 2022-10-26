@@ -50,7 +50,7 @@ class AIBlockCreator
 
 			// ---
 
-			let vaeTemperature = 1.8;
+			let vaeTemperature = 1.75;
 			print(vaeTemperature);
 
 			// For the workspaces
