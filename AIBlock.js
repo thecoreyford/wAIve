@@ -25,6 +25,8 @@ class AIBlock extends MusicBlock
     this.interacted = false;
 
     this.flying = false;
+    this.flyPhase = 0;
+    this.pendingTime = 0.0; 
     this.flyData = {"beginX": 20.0, // Initial x-coordinate
                    "beginY": 10.0, // Initial y-coordinate
                    "endX": 570.0, // Final x-coordinate
@@ -94,12 +96,14 @@ class AIBlock extends MusicBlock
       this.flyData.pct = 0.0;
       this.flyData.beginX = this.x;
       this.flyData.beginY = this.y;
-      this.flyData.endX = targets[myIdx].x + this.width + 10;
+      this.flyData.endX = targets[myIdx].x + this.width;
       this.flyData.endY = targets[myIdx].y;
       this.flyData.distX = this.flyData.endX - this.flyData.beginX;
       this.flyData.distY = this.flyData.endY - this.flyData.beginY;
 
       this.flying = true;
+      this.pendingTime = 0.0; 
+      this.flyPhase = 0; 
     }
   }
 
@@ -109,20 +113,62 @@ class AIBlock extends MusicBlock
    */
 	show() 
   {
-      if (this.flying == true)
+      if (this.interacted == false)
       {
-          this.flyData.pct += this.flyData.step;
-          if (this.flyData.pct < 1.0) {
-            this.x = this.flyData.beginX + this.flyData.pct * this.flyData.distX;
-            this.y = this.flyData.beginY 
-                + pow(this.flyData.pct, this.flyData.exponent) 
-                * this.flyData.distY;
-          }else{
-            this.flying=false;
+          if (this.flying == true)
+          {
+              this.flyData.pct += this.flyData.step;
+              if (this.flyData.pct < 1.0) {
+                this.x = this.flyData.beginX + this.flyData.pct * this.flyData.distX;
+                this.y = this.flyData.beginY 
+                    + pow(this.flyData.pct, this.flyData.exponent) 
+                    * this.flyData.distY;
+              }
+              else
+              {
+                if (this.flyPhase === 0)
+                {
+                  this.flyPhase = 1; 
+                  this.flying = false;
+                  this.pendingTime = millis();
+                }
+
+                if (this.flyPhase === 2)
+                {
+                  this.flyPhase = 0;
+                  this.flying=false;
+                  this.pendingTime = 0.0;
+                  bin.mouseReleased (musicBlocks); //< delete
+                }
+                
+              }
+
+              this.grid.update(this.x + 15, this.y, this.width - 15, this.height);
           }
 
-          this.grid.update(this.x + 15, this.y, this.width - 15, this.height);
+          print((this.pendingTime - startTime))
+          if (this.flyPhase === 1)
+          {
+            if ((this.pendingTime - startTime) > (15 * 1000))
+            {
+              this.flyData.pct = 0.0;
+              this.flyData.beginX = this.x;
+              this.flyData.beginY = this.y;
+              this.flyData.endX = 1337;
+              this.flyData.endY = 808;
+              this.flyData.distX = this.flyData.endX - this.flyData.beginX;
+              this.flyData.distY = this.flyData.endY - this.flyData.beginY;
+              this.flyPhase = 2;
+              this.flying = true;
+            }
+            else
+            {
+              this.pendingTime = millis();
+            }
+          }
       }
+
+      //----- 
 
       if (this.x < workspace[0].getX() 
         || this.x > workspace[0].getX()+workspace[0].getWidth() 

@@ -141,7 +141,7 @@ function draw()
 
   	// every so many seconds... 
   	let elapsedTime = millis() - startTime; 
-	if (elapsedTime > (5 * 1000))
+	if (elapsedTime > (25 * 1000))
 	{
 		startTime = millis();
 		logger.save();
@@ -164,10 +164,10 @@ function draw()
 				var idx, didInteract; 
 				do
 				{
-					idx = int(random(0,aiBlocks.length));
+					idx = int (random(0,aiBlocks.length));
 					didInteract = aiBlocks[idx]["block"].getInteracted();
 				}
-				while(didInteract === true)
+				while (didInteract === true)
 					
 				// start fly 
 				aiBlocks[idx]["block"].startFly();

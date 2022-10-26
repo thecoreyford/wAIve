@@ -134,7 +134,12 @@ class MusicGrid
 		{
 	  		if(this.toggleButtons[i].hasMouseOver())
 	  		{
-	  			this.toggleButtons[i].toogle();
+	  			if (this.parent.flying === true){
+	  				this.parent.flying == false;
+	  			} else {
+	  				this.toggleButtons[i].toogle();	
+	  			}
+	  			
 
 	  			logger.log(JSON.stringify({"timestamp": str(round(millis(),3)),
 										   "blockID": this.parent.getID(),
@@ -144,8 +149,6 @@ class MusicGrid
 										   "setToOn": this.toggleButtons[i].isOn,
 										   "isAI": this.parent.isAI}, null, "\t") 
 	  									   + "\n");
-
-	  			this.parent.flying = false; // stop flying 
 	  		}	
 	  	}
 	}
