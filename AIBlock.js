@@ -22,8 +22,6 @@ class AIBlock extends MusicBlock
 
     this.defaultColour = defaultColour;
 
-    this.interacted = false;
-
     this.flying = false;
     this.flyPhase = 0;
     this.pendingTime = 0.0; 
@@ -36,18 +34,17 @@ class AIBlock extends MusicBlock
                    "exponent": 4, // Determines the curve
                    "x": 0.0, // Current x-coordinate
                    "y": 0.0, // Current y-coordinate
-                   "step": 0.01, // Size of each step along the path
+                   "step": 0.015, // Size of each step along the path
                    "pct": 0.0}; // Percentage traveled (0.0 to 1.0)
   }
-
-  getInteracted(){return this.interacted;}
-
-    /**
+  
+  /**
    * On pressed, sets the offset values for where the mouse has selected the block. 
    * @return {void} Nothing
    */
   pressed() //override
   {
+    print("look!");
       // Did I click on the rectangle?
       if (mouseX > this.x 
         && mouseX < this.x + this.width 
@@ -63,14 +60,6 @@ class AIBlock extends MusicBlock
       this.offsetX = this.x - mouseX;
       this.offsetY = this.y - mouseY;
 
-      }
-
-      if (mouseX > this.x 
-        && mouseX < this.x + this.width 
-        && mouseY > this.y 
-        && mouseY < this.y + this.height){
-        // We interacted with this!!!! 
-        this.interacted = true;
       }
 
       this.tinyPlay.onClicked(); //< should this be played?.
@@ -97,7 +86,7 @@ class AIBlock extends MusicBlock
       this.flyData.beginX = this.x;
       this.flyData.beginY = this.y;
       this.flyData.endX = targets[myIdx].x + this.width;
-      this.flyData.endY = targets[myIdx].y;
+      this.flyData.endY = targets[myIdx].y + 5;
       this.flyData.distX = this.flyData.endX - this.flyData.beginX;
       this.flyData.distY = this.flyData.endY - this.flyData.beginY;
 
@@ -113,9 +102,9 @@ class AIBlock extends MusicBlock
    */
 	show() 
   {
-      if (this.interacted == false)
+      if (this.interacted === false)
       {
-          if (this.flying == true)
+          if (this.flying === true)
           {
               this.flyData.pct += this.flyData.step;
               if (this.flyData.pct < 1.0) {
@@ -146,11 +135,11 @@ class AIBlock extends MusicBlock
               this.grid.update(this.x + 15, this.y, this.width - 15, this.height);
           }
 
-          print((this.pendingTime - startTime))
           if (this.flyPhase === 1)
           {
-            if ((this.pendingTime - startTime) > (15 * 1000))
+            if ((this.pendingTime - startTime) > (15 * 1000)) // after 15 seconds
             {
+              // send the block away to the bin! 
               this.flyData.pct = 0.0;
               this.flyData.beginX = this.x;
               this.flyData.beginY = this.y;

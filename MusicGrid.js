@@ -134,11 +134,11 @@ class MusicGrid
 		{
 	  		if(this.toggleButtons[i].hasMouseOver())
 	  		{
-	  			if (this.parent.flying === true){
-	  				this.parent.flying == false;
-	  			} else {
-	  				this.toggleButtons[i].toogle();	
-	  			}
+	  			this.parent.interacted = true;
+
+	  			// if (this.parent.flying === false && this.parent.flying !== undefined){
+	  			this.toggleButtons[i].toogle();	
+	  			// }
 	  			
 
 	  			logger.log(JSON.stringify({"timestamp": str(round(millis(),3)),

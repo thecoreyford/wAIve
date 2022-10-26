@@ -38,6 +38,8 @@ class MusicBlock
 
 	   	// Create the tiny play button and parse the id
 	   	this.tinyPlay = new TinyPlayButton(this.x, this.y, this.width, this.height, this.id, this.muteButton);
+
+	   	this.interacted = false;
 	}
 
 	//=================================================================	
@@ -236,6 +238,8 @@ class MusicBlock
 	    }
 
     	this.dragging = false; // Quit dragging
+    	// this.interacted = true;
+    	// print(this.interacted);
   	}
 
   	//=================================================================
@@ -377,5 +381,8 @@ class MusicBlock
 	{
 		return this.id;
 	}
+
+	//TODO: comment
+	getInteracted(){return this.interacted;}
 
 }
