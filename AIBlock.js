@@ -21,14 +21,59 @@ class AIBlock extends MusicBlock
 		this.isAI = true;
 
     this.defaultColour = defaultColour;
+
+    this.interacted = false;
 	}
+
+    /**
+   * On pressed, sets the offset values for where the mouse has selected the block. 
+   * @return {void} Nothing
+   */
+  pressed() //override
+  {
+      // Did I click on the rectangle?
+      if (mouseX > this.x 
+        && mouseX < this.x + this.width 
+        && mouseY > this.y 
+        && mouseY < this.y + this.height
+        && this.grid.hasMouseOver() === false) {
+      
+      // Start dragging
+      this.dragging = true;
+
+      // If so, keep track of relative location 
+      // of click to corner of rectangle
+      this.offsetX = this.x - mouseX;
+      this.offsetY = this.y - mouseY;
+
+      
+      }
+
+      if (mouseX > this.x 
+        && mouseX < this.x + this.width 
+        && mouseY > this.y 
+        && mouseY < this.y + this.height){
+        // We interacted with this!!!! 
+        this.interacted = true;
+      }
+
+      this.tinyPlay.onClicked(); //< should this be played?.
+      this.muteButton.mousePressed();
+  }
+
+  //TODO: Comment 
+  fly()
+  {
+
+  }
 
   /** 
    * Overridden show button with the different coloured puzzle piece image.
    * return {void} Nothing.
    */
 	show() 
-  	{
+  {
+      print(this.interacted);
       if (this.x < workspace[0].getX() 
         || this.x > workspace[0].getX()+workspace[0].getWidth() 
         || this.y < workspace[0].getY() 
@@ -49,29 +94,29 @@ class AIBlock extends MusicBlock
       
       // Change whole block colours when dragged to a timeline
       for (let wks = 1; wks < workspace.length; ++wks)
+      {
+        if (this.x > workspace[wks].getX() 
+        && this.x < workspace[wks].getX() + workspace[wks].getWidth() 
+        && this.y > workspace[wks].getY() 
+        && this.y < workspace[wks].getY() + workspace[wks].getHeight())
         {
-          if (this.x > workspace[wks].getX() 
-          && this.x < workspace[wks].getX() + workspace[wks].getWidth() 
-          && this.y > workspace[wks].getY() 
-          && this.y < workspace[wks].getY() + workspace[wks].getHeight())
-          {
-            this.grid.setAllButtonOnColours (workspace[wks].getColour());
-            break;
-          }
-          else
-          {
-            this.grid.setAllButtonOnColours (this.defaultColour); 
-          }
+          this.grid.setAllButtonOnColours (workspace[wks].getColour());
+          break;
         }
+        else
+        {
+          this.grid.setAllButtonOnColours (this.defaultColour); 
+        }
+      }
 
-	    image(puzzle_image2, this.x, this.y, this.width, this.height);
+      image(puzzle_image2, this.x, this.y, this.width, this.height);
 
-	    // copied over from music block so highlighting on playback is preserved 
-	    if (this.showHighlight === true){
-	    	let highlightColour = color(yellow);
-  			highlightColour.setAlpha(80);
-  			fill(highlightColour);
-  			rect(this.x - 5, this.y - 2.5, this.width + 5, this.height + 5, 10);
-	    }
+      // copied over from music block so highlighting on playback is preserved 
+      if (this.showHighlight === true){
+      	let highlightColour = color(yellow);
+	  		highlightColour.setAlpha(80);
+	  		fill(highlightColour);
+	  		rect(this.x - 5, this.y - 2.5, this.width + 5, this.height + 5, 10);
+      } 
 	}
 }
