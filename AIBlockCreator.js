@@ -11,7 +11,6 @@ class AIBlockCreator
 
 		this.vae = new mm.MusicVAE('https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/mel_2bar_small');
 		this.vae.initialize();
-
 	}	
 
 	magentaUpdate(musicBlocks)
@@ -51,7 +50,7 @@ class AIBlockCreator
 			// ---
 
 			let vaeTemperature = 1.75;
-			print(vaeTemperature);
+			// print(vaeTemperature);
 
 			// For the workspaces
 			for (let i = -2; i > -5; i=i-1)

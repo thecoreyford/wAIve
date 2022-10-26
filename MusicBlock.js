@@ -40,6 +40,11 @@ class MusicBlock
 	   	this.tinyPlay = new TinyPlayButton(this.x, this.y, this.width, this.height, this.id, this.muteButton);
 
 	   	this.interacted = false;
+
+
+		this.flashing = false;
+		globalFlashOffset = 0.001;
+
 	}
 
 	//=================================================================	
@@ -186,6 +191,13 @@ class MusicBlock
   			rect(this.x - 5, this.y - 2.5, this.width + 5, this.height + 5, 10);
 	    }
 
+	    if (this.flashing) //... Implement the flashing...
+		{
+			drawingContext.shadowBlur = 100 * sin(globalFlashOffset) * 0.2; 
+			drawingContext.shadowColor = color(darkBlue);
+			globalFlashOffset += 0.005;
+		}
+
 	    // ellipse(this.x + 180, this.y, 10, 10);
 	    // ellipse(this.x + this.width, this.y, 10, 10);
 	    // ellipse(this.x + 180, this.y + this.height, 10, 10);
@@ -208,6 +220,7 @@ class MusicBlock
 			
 			// Start dragging
 			this.dragging = true;
+			this.interacted = true; 
 
 			// If so, keep track of relative location 
 			// of click to corner of rectangle
@@ -238,8 +251,6 @@ class MusicBlock
 	    }
 
     	this.dragging = false; // Quit dragging
-    	// this.interacted = true;
-    	// print(this.interacted);
   	}
 
   	//=================================================================

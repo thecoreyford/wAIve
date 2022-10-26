@@ -42,29 +42,29 @@ class AIBlock extends MusicBlock
    * On pressed, sets the offset values for where the mouse has selected the block. 
    * @return {void} Nothing
    */
-  pressed() //override
-  {
-    print("look!");
+  // pressed() //override
+  // {
+    // print("look!");
       // Did I click on the rectangle?
-      if (mouseX > this.x 
-        && mouseX < this.x + this.width 
-        && mouseY > this.y 
-        && mouseY < this.y + this.height
-        && this.grid.hasMouseOver() === false) {
+      // if (mouseX > this.x 
+        // && mouseX < this.x + this.width 
+        // && mouseY > this.y 
+        // && mouseY < this.y + this.height
+        // && this.grid.hasMouseOver() === false) {
       
       // Start dragging
-      this.dragging = true;
+      // this.dragging = true;
 
       // If so, keep track of relative location 
       // of click to corner of rectangle
-      this.offsetX = this.x - mouseX;
-      this.offsetY = this.y - mouseY;
+      // this.offsetX = this.x - mouseX;
+      // this.offsetY = this.y - mouseY;
 
-      }
+      // }
 
-      this.tinyPlay.onClicked(); //< should this be played?.
-      this.muteButton.mousePressed();
-  }
+      // this.tinyPlay.onClicked(); //< should this be played?.
+      // this.muteButton.mousePressed();
+  // }
 
   //TODO: Comment 
   startFly()
@@ -93,6 +93,7 @@ class AIBlock extends MusicBlock
       this.flying = true;
       this.pendingTime = 0.0; 
       this.flyPhase = 0; 
+      this.flashing = true;
     }
   }
 
@@ -127,6 +128,7 @@ class AIBlock extends MusicBlock
                   this.flyPhase = 0;
                   this.flying=false;
                   this.pendingTime = 0.0;
+                  this.flashing = false;
                   bin.mouseReleased (musicBlocks); //< delete
                 }
                 
@@ -155,6 +157,10 @@ class AIBlock extends MusicBlock
               this.pendingTime = millis();
             }
           }
+      }
+      else
+      {
+        this.flashing = false;
       }
 
       //----- 
@@ -203,6 +209,14 @@ class AIBlock extends MusicBlock
 	  		fill(highlightColour);
 	  		rect(this.x - 5, this.y - 2.5, this.width + 5, this.height + 5, 10);
       } 
+
+      if (this.flashing) //... Implement the flashing...
+      {
+        drawingContext.shadowBlur = 100 * sin(globalFlashOffset) * 0.2; 
+        drawingContext.shadowColor = color(darkBlue);
+        globalFlashOffset += 0.005;
+      }
+
 	}
 
 
@@ -218,16 +232,20 @@ class AIBlock extends MusicBlock
         && mouseY > this.y 
         && mouseY < this.y + this.height
         && this.grid.hasMouseOver() === false) {
-      
+    
+      print("akljshgfdeasdf!!!!!");
+
       // Start dragging
       this.dragging = true;
+
+
+      this.interacted = true;
 
       // If so, keep track of relative location 
       // of click to corner of rectangle
       this.offsetX = this.x - mouseX;
       this.offsetY = this.y - mouseY;
 
-      this.flying = false; // stop flying 
       }
 
       this.tinyPlay.onClicked(); //< should this be played?.
