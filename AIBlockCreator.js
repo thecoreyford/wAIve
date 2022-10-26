@@ -50,7 +50,7 @@ class AIBlockCreator
 
 			// ---
 
-			let vaeTemperature = 1.5;
+			let vaeTemperature = 1.8;
 			print(vaeTemperature);
 
 			// For the workspaces
@@ -66,12 +66,13 @@ class AIBlockCreator
 				// get note sequence
 				let ns = playButton.startPlayback(i, true);
 				if (ns === undefined || ns === null) {
-     				ns = playButton.startPlayback(i, true);
+					print("err: undefined");
+     				return;
 				}
 				ns = mm.sequences.quantizeNoteSequence(ns,4);
 
 				// generate similar samples 
-				this.vae.similar(ns, 1, 0.7, vaeTemperature).then(function(sample)  {
+				this.vae.similar(ns, 1, 0.65, vaeTemperature).then(function(sample)  {
 					let s1 = mm.sequences.unquantizeSequence(sample[0]); //unquantize 
 
 					// convert note sequences to blocks (checking the right notes)	
@@ -83,7 +84,7 @@ class AIBlockCreator
 												   200, 100, grid, colour));
 				});
 				
-				this.vae.similar(ns, 1, 0.7, vaeTemperature).then(function(sample)  {
+				this.vae.similar(ns, 1, 0.65, vaeTemperature).then(function(sample)  {
 					let s1 = mm.sequences.unquantizeSequence(sample[0]); //unquantize 
 
 					// convert note sequences to blocks (checking the right notes)	
