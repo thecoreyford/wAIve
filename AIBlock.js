@@ -23,7 +23,22 @@ class AIBlock extends MusicBlock
     this.defaultColour = defaultColour;
 
     this.interacted = false;
-	}
+
+    this.flying = false;
+    this.flyData = {"beginX": 20.0, // Initial x-coordinate
+                   "beginY": 10.0, // Initial y-coordinate
+                   "endX": 570.0, // Final x-coordinate
+                   "endY": 320.0, // Final y-coordinate
+                   "distX": 0.0, // X-axis distance to move
+                   "distY": 0.0,// Y-axis distance to move
+                   "exponent": 4, // Determines the curve
+                   "x": 0.0, // Current x-coordinate
+                   "y": 0.0, // Current y-coordinate
+                   "step": 0.01, // Size of each step along the path
+                   "pct": 0.0}; // Percentage traveled (0.0 to 1.0)
+  }
+
+  getInteracted(){return this.interacted;}
 
     /**
    * On pressed, sets the offset values for where the mouse has selected the block. 
@@ -46,7 +61,6 @@ class AIBlock extends MusicBlock
       this.offsetX = this.x - mouseX;
       this.offsetY = this.y - mouseY;
 
-      
       }
 
       if (mouseX > this.x 
@@ -62,9 +76,31 @@ class AIBlock extends MusicBlock
   }
 
   //TODO: Comment 
-  fly()
+  startFly()
   {
+    // get blocks in the workspace & with no right connection
+    let targets = data.filter(function(d){return d["rightConnection"] === null;});
+    targets = targets.filter(function(d){return d["x"] >= workspace[0].getX();});
+    targets = targets.filter(function(d){return d["y"] >= workspace[0].getY();});
+    targets = targets.filter(function(d){return d["x"] < workspace[0].getX()+workspace[0].getWidth();});
+    targets = targets.filter(function(d){return d["y"] < workspace[0].getY()+workspace[0].getHeight();});
 
+    if (targets.length > 0) 
+    {
+      // pick a block 
+      let myIdx = int(random(0, targets.length));
+
+      // update the stats 
+      this.flyData.pct = 0.0;
+      this.flyData.beginX = this.x;
+      this.flyData.beginY = this.y;
+      this.flyData.endX = targets[myIdx].x + this.width + 10;
+      this.flyData.endY = targets[myIdx].y;
+      this.flyData.distX = this.flyData.endX - this.flyData.beginX;
+      this.flyData.distY = this.flyData.endY - this.flyData.beginY;
+
+      this.flying = true;
+    }
   }
 
   /** 
@@ -73,7 +109,21 @@ class AIBlock extends MusicBlock
    */
 	show() 
   {
-      print(this.interacted);
+      if (this.flying == true)
+      {
+          this.flyData.pct += this.flyData.step;
+          if (this.flyData.pct < 1.0) {
+            this.x = this.flyData.beginX + this.flyData.pct * this.flyData.distX;
+            this.y = this.flyData.beginY 
+                + pow(this.flyData.pct, this.flyData.exponent) 
+                * this.flyData.distY;
+          }else{
+            this.flying=false;
+          }
+
+          this.grid.update(this.x + 15, this.y, this.width - 15, this.height);
+      }
+
       if (this.x < workspace[0].getX() 
         || this.x > workspace[0].getX()+workspace[0].getWidth() 
         || this.y < workspace[0].getY() 
@@ -119,4 +169,33 @@ class AIBlock extends MusicBlock
 	  		rect(this.x - 5, this.y - 2.5, this.width + 5, this.height + 5, 10);
       } 
 	}
+
+
+  /**
+   * On pressed, sets the offset values for where the mouse has selected the block. 
+   * @return {void} Nothing
+   */
+  pressed() //override
+  {
+      // Did I click on the rectangle?
+      if (mouseX > this.x 
+        && mouseX < this.x + this.width 
+        && mouseY > this.y 
+        && mouseY < this.y + this.height
+        && this.grid.hasMouseOver() === false) {
+      
+      // Start dragging
+      this.dragging = true;
+
+      // If so, keep track of relative location 
+      // of click to corner of rectangle
+      this.offsetX = this.x - mouseX;
+      this.offsetY = this.y - mouseY;
+
+      this.flying = false; // stop flying 
+      }
+
+      this.tinyPlay.onClicked(); //< should this be played?.
+      this.muteButton.mousePressed();
+  }
 }

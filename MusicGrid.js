@@ -144,6 +144,8 @@ class MusicGrid
 										   "setToOn": this.toggleButtons[i].isOn,
 										   "isAI": this.parent.isAI}, null, "\t") 
 	  									   + "\n");
+
+	  			this.parent.flying = false; // stop flying 
 	  		}	
 	  	}
 	}
