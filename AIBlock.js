@@ -128,7 +128,6 @@ class AIBlock extends MusicBlock
                   this.flyPhase = 0;
                   this.flying=false;
                   this.pendingTime = 0.0;
-                  this.flashing = false;
                   bin.mouseReleased (musicBlocks); //< delete
                 }
                 
