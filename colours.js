@@ -41,7 +41,7 @@ const green = "#40b44c";
 
 const googGreen = "#00e26b";
 
-const red = "#6f0000";
+const red = "#ae0600";//"#6f0000";
 
 const yellow = "#FBBC05";
 

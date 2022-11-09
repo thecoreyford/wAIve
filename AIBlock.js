@@ -199,7 +199,7 @@ class AIBlock extends MusicBlock
       //   }
       // }
 
-      image(puzzle_image2, this.x, this.y, this.width, this.height);
+      image(puzzle_image_orange, this.x, this.y, this.width, this.height);
 
       // copied over from music block so highlighting on playback is preserved 
       if (this.showHighlight === true){

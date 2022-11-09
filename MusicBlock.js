@@ -182,7 +182,7 @@ class MusicBlock
     //   		}
     //   	}
 
-	    image(puzzle_image, this.x, this.y, this.width, this.height);
+	    image(puzzle_image_orange, this.x, this.y, this.width, this.height);
 
 	    if (this.showHighlight === true){
 	    	let highlightColour = color(yellow);

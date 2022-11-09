@@ -59,7 +59,7 @@ var musicMetrics = new MusicMetrics(playButton); //< NOTE: MIDI note sequences i
 
 var logger = new Logger();
 
-var puzzle_image, puzzle_image2, binClosed, binOpen;
+var puzzle_image_orange, puzzle_image_pink, puzzle_image_green, binClosed, binOpen;
 
 var blockIDTracker; 
 
@@ -81,8 +81,9 @@ function preload()
 {
 	blockIDTracker = 0;
 	startTime = millis();
-	puzzle_image = loadImage("assets/puzzle.png");
-	puzzle_image2 = loadImage("assets/puzzle2.png");
+	puzzle_image_orange = loadImage("assets/puzzle-orange.png");
+	puzzle_image_pink = loadImage("assets/puzzle-orange.png");
+	puzzle_image_green = loadImage("assets/puzzle-green.png");
 	binClosed = loadImage("assets/binClosed.png");
 	binOpen = loadImage("assets/binOpen.png");
 }
