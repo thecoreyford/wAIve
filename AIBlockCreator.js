@@ -58,9 +58,9 @@ class AIBlockCreator
 				// get id's 
 				let workspaceId = 0; 
 				let colour = "";
-				if(i == -2){workspaceId = 0; colour = orange;}; 
-				if(i == -3){workspaceId = 1; colour = googGreen;} 
-				if(i == -4){workspaceId = 2; colour = purple;};
+				if(i == -2){workspaceId = 0; colour = djOrange;}; 
+				if(i == -3){workspaceId = 1; colour = djGreen2;} 
+				if(i == -4){workspaceId = 2; colour = djPink;};
 
 				// get note sequence
 				let ns = playButton.startPlayback(i, true);
@@ -80,7 +80,7 @@ class AIBlockCreator
 					// push to the blocks at the anchored places 
 					musicBlocks.push (new AIBlock (aiWorkspacePlaces[workspaceId][0].x, 
 												   aiWorkspacePlaces[workspaceId][0].y, 
-												   200, 100, grid, colour));
+												   200, 100, colour, grid));
 				});
 				
 				this.vae.similar(ns, 1, 0.65, vaeTemperature).then(function(sample)  {
@@ -92,7 +92,7 @@ class AIBlockCreator
 					// push to the blocks at the anchored places 
 					musicBlocks.push (new AIBlock (aiWorkspacePlaces[workspaceId][1].x, 
 												   aiWorkspacePlaces[workspaceId][1].y, 
-												   200, 100, grid, colour));
+												   200, 100, colour, grid));
 				});
 
 				// hide the third things...
@@ -105,7 +105,7 @@ class AIBlockCreator
 				// 	// push to the blocks at the anchored places 
 				// 	musicBlocks.push (new AIBlock (aiWorkspacePlaces[workspaceId][2].x, 
 				// 								   aiWorkspacePlaces[workspaceId][2].y, 
-				// 								   200, 100, grid, colour));
+				// 								   200, 100, colour, grid));
 				// });
 			}
 		}
