@@ -64,7 +64,7 @@ class MusicBlock
 
 		this.tinyPlay.draw(this.x, this.y, this.w, this.h);
 
-		this.muteButton.draw();
+		// this.muteButton.draw();
 	}
 
 	/**
@@ -116,7 +116,7 @@ class MusicBlock
 	    }
 
 	    this.tinyPlay.draw(this.x, this.y, this.w, this.h);
-	    this.muteButton.update(this.x, this.y);
+	    // this.muteButton.update(this.x, this.y);
   	}
 
 	/**
@@ -229,7 +229,7 @@ class MusicBlock
 	    }
 
 	    this.tinyPlay.onClicked(); //< should this be played?.
-	    this.muteButton.mousePressed();
+	    // this.muteButton.mousePressed();
 	}
 
 	/**
