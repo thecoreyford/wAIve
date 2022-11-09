@@ -238,7 +238,6 @@ class AIBlock extends MusicBlock
         && mouseY < this.y + this.height
         && this.grid.hasMouseOver() === false) {
     
-      print("akljshgfdeasdf!!!!!");
 
       // Start dragging
       this.dragging = true;
