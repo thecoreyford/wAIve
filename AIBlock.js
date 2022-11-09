@@ -248,6 +248,6 @@ class AIBlock extends MusicBlock
       }
 
       this.tinyPlay.onClicked(); //< should this be played?.
-      this.muteButton.mousePressed();
+      // this.muteButton.mousePressed();
   }
 }
