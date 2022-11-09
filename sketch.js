@@ -25,15 +25,15 @@ var workspace  = [new Workspace(workspaceX,
 					new Workspace(workspace2X, 
 							   workspace2Y, 
 							   workspace2Width, 
-							   workspace2Height, -2, djOrange2),
+							   workspace2Height, -2, djLightLightGrey),
 					new Workspace(workspace2X, 
 								  workspace2Y + 200, 
 								  workspace2Width, 
-								  workspace2Height, -3, djOrange2),
+								  workspace2Height, -3,  djLightLightGrey),
 					new Workspace(workspace2X, 
 								  workspace2Y + 400, 
 								  workspace2Width, 
-								  workspace2Height, -4, djOrange2)];
+								  workspace2Height, -4,  djLightLightGrey)];
 
 // var blockCreator = new BlockCreator(workspace[0].getX() + 60,
 // 									workspace[0].getY() + 10,

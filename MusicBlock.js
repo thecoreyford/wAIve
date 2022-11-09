@@ -194,7 +194,7 @@ class MusicBlock
 	    if (this.flashing) //... Implement the flashing...
 		{
 			drawingContext.shadowBlur = 100 * sin(globalFlashOffset) * 0.2; 
-			drawingContext.shadowColor = color(darkBlue);
+			drawingContext.shadowColor = color(djOrange);
 			globalFlashOffset += 0.005;
 		}
 
