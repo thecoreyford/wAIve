@@ -218,7 +218,7 @@ class AIBlock extends MusicBlock
       if (this.flashing) //... Implement the flashing...
       {
         drawingContext.shadowBlur = 100 * sin(globalFlashOffset) * 0.2; 
-        drawingContext.shadowColor = color(djOrange);
+        drawingContext.shadowColor = color(yellow);
         globalFlashOffset += 0.005;
       }
 

@@ -76,7 +76,7 @@ class TinyPlayButton //TODO: this would be better called surrogate play button o
 		if (this.flashing) //... Implement the flashing...
 		{
 			drawingContext.shadowBlur = 100 * sin(globalFlashOffset); 
-			drawingContext.shadowColor = color(djOrange);
+			drawingContext.shadowColor = color(yellow);
 			globalFlashOffset += 0.075;
 		}
 		rect (this.x, this.y, this.width, this.height, 4);
@@ -109,7 +109,7 @@ class TinyPlayButton //TODO: this would be better called surrogate play button o
 			if (this.flashing) //... Implement the flashing...
 			{
 				drawingContext.shadowBlur = 100 * sin(globalFlashOffset); 
-				drawingContext.shadowColor = color(djOrange);
+				drawingContext.shadowColor = color(yellow);
 				globalFlashOffset += 0.075;
 			}
 			rect (this.x, this.y, this.width, this.height, 5);
