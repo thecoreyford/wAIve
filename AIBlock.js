@@ -182,22 +182,22 @@ class AIBlock extends MusicBlock
         //break;
       }
       
-      // Change whole block colours when dragged to a timeline
-      for (let wks = 1; wks < workspace.length; ++wks)
-      {
-        if (this.x > workspace[wks].getX() 
-        && this.x < workspace[wks].getX() + workspace[wks].getWidth() 
-        && this.y > workspace[wks].getY() 
-        && this.y < workspace[wks].getY() + workspace[wks].getHeight())
-        {
-          this.grid.setAllButtonOnColours (workspace[wks].getColour());
-          break;
-        }
-        else
-        {
-          this.grid.setAllButtonOnColours (this.defaultColour); 
-        }
-      }
+      // // Change whole block colours when dragged to a timeline
+      // for (let wks = 1; wks < workspace.length; ++wks)
+      // {
+      //   if (this.x > workspace[wks].getX() 
+      //   && this.x < workspace[wks].getX() + workspace[wks].getWidth() 
+      //   && this.y > workspace[wks].getY() 
+      //   && this.y < workspace[wks].getY() + workspace[wks].getHeight())
+      //   {
+      //     this.grid.setAllButtonOnColours (workspace[wks].getColour());
+      //     break;
+      //   }
+      //   else
+      //   {
+      //     this.grid.setAllButtonOnColours (this.defaultColour); 
+      //   }
+      // }
 
       image(puzzle_image2, this.x, this.y, this.width, this.height);
 
@@ -212,7 +212,7 @@ class AIBlock extends MusicBlock
       if (this.flashing) //... Implement the flashing...
       {
         drawingContext.shadowBlur = 100 * sin(globalFlashOffset) * 0.2; 
-        drawingContext.shadowColor = color(darkBlue);
+        drawingContext.shadowColor = color(djOrange);
         globalFlashOffset += 0.005;
       }
 

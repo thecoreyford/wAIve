@@ -52,13 +52,13 @@ class PlayButton
 		}
 		else
 		{
-			fill (veryDarkGrey);
+			fill (lightGrey);
 		}
 		
 		if (this.flashing) //... Implement the flashing...
 		{
 			drawingContext.shadowBlur = 100 * sin(globalFlashOffset); 
-			drawingContext.shadowColor = color(darkBlue);
+			drawingContext.shadowColor = color(djOrange);
 			globalFlashOffset += 0.075;
 		}
 		rect (this.x, this.y, this.width, this.height, 5);
@@ -67,9 +67,10 @@ class PlayButton
 		drawingContext.shadowBlur = 0;
 
 
-		fill(lightGrey);
+		// fill(djLightGrey);
 		if (this.mode === "PLAYING")
 		{
+			fill(lightGrey);
 			rect(this.x + 7, this.y + 7, this.width * 0.66, this.height * 0.66);
 
 			if (highlightTrackerIdx !== 0)
@@ -98,6 +99,7 @@ class PlayButton
 		}
 		else
 		{
+			fill(djLightGrey);
 			triangle(this.x + 7, this.y + 7, 
 					 this.x + this.width - 7, (this.y + this.height * 0.5),
 					 this.x + 7, this.y + this.height - 7);

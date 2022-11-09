@@ -165,22 +165,22 @@ class MusicBlock
   			//break;
   		}
 	  	
-	  	// Change whole block colours when dragged to a timeline
-	  	for (let wks = 1; wks < workspace.length; ++wks)
-      	{
-      		if (this.x > workspace[wks].getX() 
-  				&& this.x < workspace[wks].getX() + workspace[wks].getWidth() 
-  				&& this.y > workspace[wks].getY() 
-  				&& this.y < workspace[wks].getY() + workspace[wks].getHeight())
-      		{
-      			this.grid.setAllButtonOnColours (workspace[wks].getColour());
-      			break;
-      		}
-      		else
-      		{
-      			this.grid.setAllButtonOnColours (veryDarkBlue);	
-      		}
-      	}
+	  	// // Change whole block colours when dragged to a timeline
+	  	// for (let wks = 1; wks < workspace.length; ++wks)
+    //   	{
+    //   		if (this.x > workspace[wks].getX() 
+  		// 		&& this.x < workspace[wks].getX() + workspace[wks].getWidth() 
+  		// 		&& this.y > workspace[wks].getY() 
+  		// 		&& this.y < workspace[wks].getY() + workspace[wks].getHeight())
+    //   		{
+    //   			this.grid.setAllButtonOnColours (workspace[wks].getColour());
+    //   			break;
+    //   		}
+    //   		else
+    //   		{
+    //   			this.grid.setAllButtonOnColours (veryDarkBlue);	
+    //   		}
+    //   	}
 
 	    image(puzzle_image, this.x, this.y, this.width, this.height);
 

@@ -9,7 +9,7 @@ class Workspace
 	 * @param {number} height - height of workspace
  	 * @return {void} Nothing
  	 */
-	constructor (x,y,width,height,id,colour=lightBlue)
+	constructor (x,y,width,height,id,colour=djLightGrey)
 	{
 		this.x = x;
 		this.y = y;

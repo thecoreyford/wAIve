@@ -21,19 +21,19 @@ const workspace2Height = 130; //canvasHeight - (2 * workspaceY); //546
 var workspace  = [new Workspace(workspaceX, 
 							   workspaceY, 
 							   workspaceWidth, 
-							   workspaceHeight,-1),
+							   workspaceHeight,-1, djBlack),
 					new Workspace(workspace2X, 
 							   workspace2Y, 
 							   workspace2Width, 
-							   workspace2Height, -2, orange),
+							   workspace2Height, -2, djOrange2),
 					new Workspace(workspace2X, 
 								  workspace2Y + 200, 
 								  workspace2Width, 
-								  workspace2Height, -3, googGreen),
+								  workspace2Height, -3, djOrange2),
 					new Workspace(workspace2X, 
 								  workspace2Y + 400, 
 								  workspace2Width, 
-								  workspace2Height, -4, purple)];
+								  workspace2Height, -4, djOrange2)];
 
 // var blockCreator = new BlockCreator(workspace[0].getX() + 60,
 // 									workspace[0].getY() + 10,
@@ -122,7 +122,7 @@ function draw()
 	// draw background with border
 	strokeWeight (1);
   	stroke (0);
-  	fill (lightGrey);
+  	fill (djLightGrey);
   	rect (0, 0, canvasWidth, canvasHeight, 10);
 	noStroke ();
 

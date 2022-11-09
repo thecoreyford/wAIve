@@ -11,7 +11,7 @@ class TimelineBar
 
 	draw()
 	{
-		fill(darkGrey);
+		fill(djLightLightGrey);
 		rect(180,150,850,30,5);
 
 		// ellipse (this.ellipseX, 155,20,20);
