@@ -11,6 +11,8 @@ class AIBlockCreator
 
 		this.vae = new mm.MusicVAE('https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/mel_2bar_small');
 		this.vae.initialize();
+
+		this.timing = -10000.0;
 	}	
 
 	magentaUpdate(musicBlocks)
@@ -94,7 +96,6 @@ class AIBlockCreator
 												   aiWorkspacePlaces[workspaceId][1].y, 
 												   200, 100, colour, grid));
 				});
-
 				// hide the third things...
 				// this.vae.similar(ns, 1, 0.7, vaeTemperature).then(function(sample)  {
 				// 	let s1 = mm.sequences.unquantizeSequence(sample[0]); //unquantize 
@@ -110,8 +111,79 @@ class AIBlockCreator
 			}
 		}
 
+		this.timing = millis();
+
 		// get orange note sequence 
 	}
+
+	//TODO: comment
+	drawCurves()
+	{
+		if((millis() - this.timing) < 4000.0)
+		{
+
+
+
+			processDataset("all"); //< collect all the blocks into the dataset. 
+			let blks = data.filter(function(d){return d["x"] >= workspace[0].getX();});
+			blks = blks.filter(function(d){return d["y"] >= workspace[0].getY();});
+			blks = blks.filter(function(d){return d["x"] < workspace[0].getX()+workspace[0].getWidth();});
+			blks = blks.filter(function(d){return d["y"] < workspace[0].getY()+workspace[0].getHeight();});
+			
+
+			for (let i = 0; i < blks.length; i++){
+				// top 
+				if(blks[i].y > workspace[1].getY() 
+				  && blks[i].y < workspace[1].getY() + workspace[1].getHeight())
+				{
+					let myColour = color(djOrange);
+					myColour.setAlpha(255 - (((millis() - this.timing) / 4000.0) * 255));
+					curveBetween(blks[i].x + 100, 
+								 blks[i].y, 
+								 1249, 
+								 198,
+								 0.2,
+								 0.2,
+								 1,
+								 myColour);
+				}
+
+				// middle 
+				if(blks[i].y > workspace[2].getY() 
+				  && blks[i].y < workspace[2].getY() + workspace[2].getHeight())
+				{
+					let myColour = color(djGreen2);
+					myColour.setAlpha(255 - (((millis() - this.timing) / 4000.0) * 255));
+					curveBetween(blks[i].x + 100, 
+								 blks[i].y, 
+								 1268, 
+								 420,
+								 0.2,
+								 0.2,
+								 1,
+								 myColour);
+				}
+
+				// bottom 
+				if(blks[i].y > workspace[3].getY() 
+				  && blks[i].y < workspace[3].getY() + workspace[3].getHeight())
+				{
+					let myColour = color(djPink);
+					myColour.setAlpha(255 - (((millis() - this.timing) / 4000.0) * 255));
+					curveBetween(blks[i].x + 100, 
+								 blks[i].y, 
+								 1245, 
+								 698,
+								 0.2,
+								 0.2,
+								 0,
+								 myColour);
+				}
+			}
+
+		}
+	}
+
 
 
 	/**

@@ -187,6 +187,8 @@ function draw()
 
   	timeline.draw();
   	playButton.draw();
+
+  	aiBlockCreator.drawCurves();
 }
 
 //===========================================================================
