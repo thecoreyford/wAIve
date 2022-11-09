@@ -373,7 +373,7 @@ class PlayButton
 			// listen to everything as a whole!
 			this.flashing = true;	
 		}
-		else if (this.playLevelCounts["all"] > this.playLevelCounts["timeline"]) // no middles
+		else //if (this.playLevelCounts["all"] < this.playLevelCounts["timeline"]) // no middles
 		{
 			// if listening to everything
 			let myData, timelineID;
