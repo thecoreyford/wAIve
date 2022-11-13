@@ -15,7 +15,7 @@ class TimelineBar
 		rect(180,150,850,30,5);
 
 		// ellipse (this.ellipseX, 155,20,20);
-		playButton.setXandY(this.ellipseX - 20,145);
+		playButton.setXandY(this.ellipseX - 20,142.5);
 
 		// if (mouseIsPressed === true 
 		// 	&& mouseX > 180 

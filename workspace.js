@@ -22,8 +22,8 @@ class Workspace
 		
 		this.tinyPlay = new TinyPlayButton(this.x - 50,
 										   this.y - 5,
-										   40,
-										   40,
+										   35,
+										   35,
 										   this.id,
 										   null,
 										   true);

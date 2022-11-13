@@ -42,8 +42,8 @@ var workspace  = [new Workspace(workspaceX,
 
 var playButton = new PlayButton(workspace[0].getX() + 10,
 								workspace[0].getY() + 10,
-								40,
-								40);
+								45,
+								45);
 
 var bin = new Bin(workspace[0].getX() + workspace[0].getWidth() + 220, 
 				  20 + workspace[0].getHeight() + 130, 
