@@ -29,6 +29,15 @@ class TimelineBar
 			rect (this.ellipseX - 3, 150, 5, 600, 5);
 		// }
 
+		fill (yellow);
+		rect (180,150,this.ellipseX - 180,30,5);
+
+		textSize(32);
+		let myColour2 = color(djLightGrey);
+		myColour2.setAlpha(40);
+		fill(myColour2);
+		text("> > > > > > > > > > > > > > > > > > > > > > > > > > > > > >", 185, 174);
+
 		// rect(this.ellipseX,150,900 - (this.ellipseX - 300),12,5);
 	}
 
