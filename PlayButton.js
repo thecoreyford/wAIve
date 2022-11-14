@@ -220,13 +220,13 @@ class PlayButton
 
 				var current = startBlocks[i]["block"];
 				var previous;//startBlocks[i]["block"];
-
+				print(current);
 				do
 				{
 					if (this.highlightBuffer[index] !== undefined)
 					{
 						// add to the master buffer 
-						let x = this.gridArrayToNoteSequence (current.getGridArray(), index * 4.0)["notes"];
+						let x = this.gridArrayToNoteSequence (current.getGridArray(), index * 4.0, current.x, current.y)["notes"];
 						for(let i = 0; i < x.length; ++i) {
 							this.midiBuffer[0]["notes"].push (x[i]);
 							this.highlights[0].push ({"block": current, 
@@ -241,7 +241,8 @@ class PlayButton
 					{
 						if (index === 0 /* create buffer if not there */) 
 						{
-							this.midiBuffer.push (this.gridArrayToNoteSequence(current.getGridArray()));
+							this.midiBuffer.push (this.gridArrayToNoteSequence(current.getGridArray(),0,current.x, current.y));
+
 
 							for(let i = 0; i < this.midiBuffer[0]["notes"].length; ++i) {
 								this.highlights[0].push ({"block": current, 
@@ -251,7 +252,7 @@ class PlayButton
 						} 
 						else 
 						{
-							let x = this.gridArrayToNoteSequence(current.getGridArray(), index * 4.0)["notes"];
+							let x = this.gridArrayToNoteSequence(current.getGridArray(), index * 4.0,current.x, current.y)["notes"];
 							for(let i = 0; i < x.length; ++i) {
 								this.midiBuffer[0]["notes"].push(x[i]);
 								this.highlights[0].push ({"block": current, 
@@ -278,7 +279,7 @@ class PlayButton
 			// only play the block requested! 
 			startBlocks = data.filter(function(d){return d["id"] === id;});
 			var current = startBlocks[0]["block"];	
-			this.midiBuffer.push(this.gridArrayToNoteSequence(current.getGridArray()));
+			this.midiBuffer.push(this.gridArrayToNoteSequence(current.getGridArray(),0,current.x, current.y));
 			for (let i = 0; i < this.midiBuffer[0]["notes"].length; ++i) {
 								this.highlights[0].push({"block": current, 
 													 	"time": this.midiBuffer[0]["notes"][i]["startTime"],
@@ -349,8 +350,36 @@ class PlayButton
 	 * @param {float} offset - the amount to offset note values by
  	 * @return {void} Nothing
  	 */
-	gridArrayToNoteSequence (gridArray, offset = 0)
+	gridArrayToNoteSequence (gridArray, offset = 0, _x, _y)
 	{
+
+		// figure out the instrument
+		let inst = -1;
+		if(_x >= workspace[1].getX() 
+			&& _y >= workspace[1].getY()
+			&& _x < workspace[1].getX()+workspace[1].getWidth()
+			&& _y < workspace[1].getY()+workspace[1].getHeight()){
+			inst = 72; // Clarinet
+		}	
+		if(_x >= workspace[2].getX() 
+			&& _y >= workspace[2].getY()
+			&& _x < workspace[2].getX()+workspace[2].getWidth()
+			&& _y < workspace[2].getY()+workspace[2].getHeight()){
+			inst = 43; // Cello
+		}
+		if(_x >= workspace[3].getX() 
+			&& _y >= workspace[3].getY()
+			&& _x < workspace[3].getX()+workspace[3].getWidth()
+			&& _y < workspace[3].getY()+workspace[3].getHeight()){
+			inst = 0; // Piano
+		}
+		// return d["x"] >= workspace[workspaceID].getX();});
+		// startBlocks = startBlocks.filter(function(d){return ;});
+		// startBlocks = startBlocks.filter(function(d){return ;});
+		// startBlocks = startBlocks.filter(function(d){return ;});
+
+
+
 		// TODO: Hard-coding here is bad, but as we need the note 
 		// list this will suffice for now.!
 
@@ -367,11 +396,11 @@ class PlayButton
 
   				if (gridArray[counter].isOn === true)
   				{
-  					noteSequence["notes"].push({instrument: int(random(0,20)),
-  												pitch: midiPitch[row], 
+  					noteSequence["notes"].push({program: inst,
+  												pitch: inst === 43 ? midiPitch[row] - 12 : midiPitch[row], 
   												startTime: midiStartTime[col], 
   												endTime: midiEndTime[col],
-  												velocity: 45});
+  												velocity: 60});
   				}
 
   				counter++;

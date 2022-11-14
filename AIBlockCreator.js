@@ -129,12 +129,8 @@ class AIBlockCreator
 	//TODO: comment
 	drawCurves()
 	{
-		print(mouseX, " | ", mouseY);
 		if((millis() - this.timing) < 4000.0)
 		{
-
-
-
 			processDataset("all"); //< collect all the blocks into the dataset. 
 			let blks = data.filter(function(d){return d["x"] >= workspace[0].getX();});
 			blks = blks.filter(function(d){return d["y"] >= workspace[0].getY();});
