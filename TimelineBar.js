@@ -51,6 +51,16 @@ class TimelineBar
 		}
 	}
 
+	setX(newX)
+	{
+		this.ellipseX = newX;
+	}
+
+	shift(amount)
+	{
+		this.ellipseX = this.ellipseX + amount;
+	}
+
 	getX()
 	{
 		return this.ellipseX; 

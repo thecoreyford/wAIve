@@ -29,7 +29,7 @@ class PlayButton
 		this.mode = "STOPPED"; // "PREPARE_BUFFER" || "PLAYING"
 		this.callbackObject  = {run: function()
 									{
-										highlightTrackerIdx++;
+										highlightTrackerIdx++;										
 									}, 
 							   stop: function(){}};
 		this.player.callbackObject = this.callbackObject; 
@@ -38,6 +38,11 @@ class PlayButton
 		this.playLevelCounts = {"all": 0, "timeline": 0,  "block": 0};
 
 		this.flashing = false;
+
+		// for playhead movement
+		this.timelineStartOffset = 25;
+		this.shiftAmount = 10;
+		this.prevHighTracker = 0;
 	}
 
 	/** 
@@ -46,9 +51,23 @@ class PlayButton
 	 */
 	draw()
 	{
+
+		if (this.mode === "PLAYING")
+		{
+			if (musicBlocks.length <= 9)
+			{
+				this.shiftAmount += 1.0;				
+			}
+			else
+			{
+				this.shiftAmount += 1.5;
+			}
+
+		}
+
 		// Play button GUI
 		if (this.mode === "PLAYING") 
-		{
+		{			
 			fill (red);
 		}
 		else
@@ -94,6 +113,19 @@ class PlayButton
 					// c = c.filter(function(d){return d["time"] >/ (currTime-4.0);});
 					for (let i = 0; i < c.length; ++i){
 						c[i]["block"].showHighlight = true;
+
+						// do things for the playhead GUI
+						// let blks = data.filter(function(d){return timeline.getX() >= d["x"]
+						// 				  			  && timeline.getX() <= d["x"]
+						// 				  			  	 + d["block"].width});
+						if (this.prevHighTracker !== currTime)
+						{
+							this.shiftAmount = 0;
+							this.prevHighTracker = currTime;
+						}
+						timeline.setX(c[i]["block"]["x"] 
+									  + this.timelineStartOffset
+									  + this.shiftAmount);
 					}
 				}
 				catch(err){}
@@ -283,6 +315,14 @@ class PlayButton
 
 		if (this.mode === "START_PLAYING")
 		{
+			// do things for the playhead GUI
+			let blks = data.filter(function(d){return timeline.getX() >= d["x"]
+										  			  && timeline.getX() <= d["x"]
+										  			  	 + d["block"].width});
+			timeline.setX(blks[0]["x"] + this.timelineStartOffset);
+			this.shiftAmount = 0;
+
+			// then actually start playing
 			this.player.start(this.midiBuffer[0]);
 			this.mode = "PLAYING";
 		}
@@ -409,6 +449,12 @@ class PlayButton
 		return this.PlayLevelCounts;
 	}
 
+
+	// TODO: Comment 
+	setX(newX)
+	{
+		this.x = newX;
+	}
 
 	// TODO: Comment 
 	setXandY(x,y)
