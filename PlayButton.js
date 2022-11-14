@@ -20,7 +20,8 @@ class PlayButton
 		this.width = width;
 		this.height = height;
 
-		this.player = new mm.Player();
+		// this.player = new mm.Player();
+		this.player = new mm.SoundFontPlayer('https://storage.googleapis.com/magentadata/js/soundfonts/sgm_plus');
 
 		this.midiBuffer = [];
 		this.highlightBuffer = [];
@@ -77,18 +78,19 @@ class PlayButton
 			{
 				try
 				{
-					// figure out the boundary for showing hilights 
+					// figure out the boundary for showing highlights 
 					let currTime = this.highlights[0][highlightTrackerIdx-1]["time"] + 0.5; 
 					currTime = 4.0*Math.ceil(currTime/4.0);
 					// print(highlightTrackerIdx-1, (" : ") ,currTime);
 					
-					// Turn off highlights
-					for (let i = 0; i < data.length; ++i){
-						data[i]["block"].showHighlight = false;
-					}
+					// Turn off highlights --- removed for optimised
+					// for (let i = 0; i < data.length; ++i){
+					// 	data[i]["block"].showHighlight = false;
+					// }
 
 					// filter the blocks that need to be turned on
-					let c = this.highlights[0].filter(function(d){return d["elapsed"] === currTime;});
+					// change below to === current time for not continuing highlighting 
+					let c = this.highlights[0].filter(function(d){return d["elapsed"] <= currTime;});
 					// c = c.filter(function(d){return d["time"] >/ (currTime-4.0);});
 					for (let i = 0; i < c.length; ++i){
 						c[i]["block"].showHighlight = true;
@@ -325,10 +327,11 @@ class PlayButton
 
   				if (gridArray[counter].isOn === true)
   				{
-  					noteSequence["notes"].push({pitch: midiPitch[row], 
+  					noteSequence["notes"].push({instrument: int(random(0,20)),
+  												pitch: midiPitch[row], 
   												startTime: midiStartTime[col], 
   												endTime: midiEndTime[col],
-  												velocity: 20});
+  												velocity: 45});
   				}
 
   				counter++;
