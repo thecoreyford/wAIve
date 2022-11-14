@@ -84,6 +84,9 @@ function preload()
 	puzzle_image_orange = loadImage("assets/puzzle-orange.png");
 	puzzle_image_pink = loadImage("assets/puzzle-pink.png");
 	puzzle_image_green = loadImage("assets/puzzle-green.png");
+	clarinet = loadImage("assets/clarinet.png");
+	piano = loadImage("assets/piano.png");
+	cello = loadImage("assets/cello.png");
 	binClosed = loadImage("assets/binClosed.png");
 	binOpen = loadImage("assets/binOpen.png");
 }
@@ -191,6 +194,11 @@ function draw()
   	playButton.draw();
 
   	aiBlockCreator.drawCurves();
+
+  	//instrument images for the timelines
+  	image(piano, 90, 655, 50, 50);
+  	image(cello, 90, 460, 50, 50);
+  	image(clarinet, 88, 260, 50, 50);
 }
 
 //===========================================================================
