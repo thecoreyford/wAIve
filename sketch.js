@@ -176,7 +176,6 @@ function draw()
 		}
 		else
 		{
-			print("DO IT!");
 			if (!playButton.player.isPlaying()){
 				aiBlockCreator.magentaUpdate (musicBlocks);
 				playButton.setPlayLevelCountsAndGUI();
