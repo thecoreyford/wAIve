@@ -56,11 +56,11 @@ class PlayButton
 		{
 			if (musicBlocks.length <= 9)
 			{
-				this.shiftAmount += 1.0;				
+				this.shiftAmount += 1.5;				
 			}
 			else
 			{
-				this.shiftAmount += 1.5;
+				this.shiftAmount += 2.5;
 			}
 
 		}
@@ -220,7 +220,7 @@ class PlayButton
 
 				var current = startBlocks[i]["block"];
 				var previous;//startBlocks[i]["block"];
-				print(current);
+
 				do
 				{
 					if (this.highlightBuffer[index] !== undefined)
@@ -397,10 +397,10 @@ class PlayButton
   				if (gridArray[counter].isOn === true)
   				{
   					noteSequence["notes"].push({program: inst,
-  												pitch: inst === 43 ? midiPitch[row] - 12 : midiPitch[row], 
+  												pitch: inst === 43 ? midiPitch[row] - 24 : midiPitch[row], 
   												startTime: midiStartTime[col], 
   												endTime: midiEndTime[col],
-  												velocity: 60});
+  												velocity: 100});
   				}
 
   				counter++;
@@ -516,7 +516,9 @@ class PlayButton
 
 
   			let midiPitch = [72, 71, 69, 67, 65, 64, 62, 60];
-			const needle = noteSequence[n]["pitch"];
+			let needle = noteSequence[n]["pitch"];
+			if(needle < 60){needle = needle + 24;}; //< for the cello
+
 			const closest = midiPitch.reduce((a, b) => {
     			return Math.abs(b - needle) < Math.abs(a - needle) ? b : a;
 			});
