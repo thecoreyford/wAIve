@@ -144,10 +144,8 @@ function draw()
   	let elapsedTime = millis() - startTime; 
 	if (elapsedTime > (25 * 1000))
 	{
-		startTime = millis();
 		logger.save();
 
-		
 		if (doFly)
 		{
 			// get ai blocks not in the workspace and AI
@@ -173,14 +171,19 @@ function draw()
 				// start fly 
 				aiBlocks[idx]["block"].startFly();
 			}
-
+			startTime = millis();
+			doFly = !doFly;
 		}
 		else
 		{
-			aiBlockCreator.magentaUpdate (musicBlocks);
-			playButton.setPlayLevelCountsAndGUI();
+			print("DO IT!");
+			if (!playButton.player.isPlaying()){
+				aiBlockCreator.magentaUpdate (musicBlocks);
+				playButton.setPlayLevelCountsAndGUI();
+				startTime = millis();
+				doFly = !doFly;
+			}
 		}
-		doFly = !doFly;
 	}
 
   	playButton.updatePlayback();
