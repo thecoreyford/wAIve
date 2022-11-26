@@ -1,8 +1,11 @@
 
 
-const djLightGrey = "#2e2e2e";
 
-const djBlack = "#131313";
+//================================
+
+const djLightGrey = "#14213d";//#315a80";//"#2e2e2e";
+
+const djBlack = "#315a80"//"#131313";
 
 const djOrange = "#ce5e32";
 
@@ -16,7 +19,7 @@ const djOrange4 = "#ce5e32";
 const djPink = "#ef5eba";
 
 const djGreen = "#1dc75e";
-const djGreen2 = "#88c93d";
+const djGreen2 = "#88c93d"; // the one i'm using 
 
 
 //====================================
