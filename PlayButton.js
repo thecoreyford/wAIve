@@ -359,13 +359,13 @@ class PlayButton
 			&& _y >= workspace[1].getY()
 			&& _x < workspace[1].getX()+workspace[1].getWidth()
 			&& _y < workspace[1].getY()+workspace[1].getHeight()){
-			inst = 72; // Clarinet
+			inst = 27; // Clean guitar
 		}	
 		if(_x >= workspace[2].getX() 
 			&& _y >= workspace[2].getY()
 			&& _x < workspace[2].getX()+workspace[2].getWidth()
 			&& _y < workspace[2].getY()+workspace[2].getHeight()){
-			inst = 43; // Cello
+			inst = 35; // Picked bass
 		}
 		if(_x >= workspace[3].getX() 
 			&& _y >= workspace[3].getY()
@@ -391,16 +391,27 @@ class PlayButton
   			for (let row = 0; row < 8; ++row) // row 
   			{
   				let midiPitch = [72, 71, 69, 67, 65, 64, 62, 60];
+  				// let drumPitch = [35, 38, 41, 47, 43, 42, 46, 55];
+  				let drumPitch = [55, 46, 42, 43, 47, 41, 38, 35];
   				let midiStartTime = [0.0 + offset, 0.5 + offset, 1.0 + offset, 1.5 + offset, 2.0 + offset, 2.5 + offset, 3.0 + offset, 3.5 + offset];
   				let midiEndTime = [0.5 + offset, 1.0 + offset, 1.5 + offset, 2.0 + offset, 2.5 + offset, 3.0 + offset, 3.5+ offset, 4.0 + offset];
 
   				if (gridArray[counter].isOn === true)
   				{
+  					let p = 0;
+  					if(inst === 35){
+  						p = midiPitch[row] - 24; 
+  					} else if (inst === 0){
+  						p = drumPitch[row];
+  					} else {
+  						p = midiPitch[row];
+  					}
   					noteSequence["notes"].push({program: inst,
-  												pitch: inst === 43 ? midiPitch[row] - 24 : midiPitch[row], 
+  												pitch: p, 
   												startTime: midiStartTime[col], 
   												endTime: midiEndTime[col],
-  												velocity: 100});
+  												velocity: 100,
+  												isDrum: inst === 0 ? true: false});
   				}
 
   				counter++;
