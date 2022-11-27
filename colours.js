@@ -5,21 +5,21 @@
 
 const djLightGrey = "#1f2c65"; //"#14213d";//#315a80";//"#2e2e2e";
 
-const djBlack = "#5052b3";//"#315a80"//"#131313";
+const djBlack = "#5052b3"; //"#315a80"//"#131313";
 
 const djOrange = "#4de0f8"; //"#4EDFFC";//"#ce5e32";
 
-const djLightLightGrey = "#A6A6A8";//"#cdbef5";//"#828282";
+const djLightLightGrey = "#A6A6A8"; //"#cdbef5";//"#828282";
 
 const djOrange1 = "#f5ded6";
 const djOrange2 = "#ebbead";
 const djOrange3 = "#d77e5a";
 const djOrange4 = "#ce5e32";
 
-const djPink = "#F4A4FD";//"#ef5eba";
+const djPink = "#F4A4FD"; //"#ef5eba";
 
 const djGreen = "#1dc75e";
-const djGreen2 = "#FF785A"//"#88c93d"; // the one i'm using 
+const djGreen2 = "#FF785A"; //"#88c93d"; // the one i'm using 
 
 
 //====================================
