@@ -81,9 +81,15 @@ class PlayButton
 			drawingContext.shadowColor = color(yellow);
 			globalFlashOffset += 0.075;
 		}
-		rect (this.x, this.y, this.width, this.height, 5);
-		rect (this.x, this.y, this.width, this.height, 5);
-		rect (this.x, this.y, this.width, this.height, 5);
+		ellipse (this.x + (this.width*0.5), 
+				 this.y + (this.height*0.5), 
+				 this.width + 5, this.height + 5, 5);
+		ellipse (this.x + (this.width*0.5), 
+				 this.y + (this.height*0.5), 
+				 this.width + 5, this.height + 5, 5);
+		ellipse (this.x + (this.width*0.5), 
+				 this.y + (this.height*0.5), 
+				 this.width + 5, this.height + 5, 5);
 		drawingContext.shadowBlur = 0;
 
 
