@@ -43,6 +43,8 @@ class PlayButton
 		this.timelineStartOffset = 25;
 		this.shiftAmount = 10;
 		this.prevHighTracker = 0;
+
+		this.playLines = 0; //< mode to control the playback line! 
 	}
 
 	/** 
@@ -52,7 +54,7 @@ class PlayButton
 	draw()
 	{
 
-		if (this.mode === "PLAYING")
+		if (this.mode === "PLAYING" && this.playLines === 1)
 		{
 			if (musicBlocks.length <= 9)
 			{
@@ -121,17 +123,20 @@ class PlayButton
 						c[i]["block"].showHighlight = true;
 
 						// do things for the playhead GUI
-						// let blks = data.filter(function(d){return timeline.getX() >= d["x"]
-						// 				  			  && timeline.getX() <= d["x"]
-						// 				  			  	 + d["block"].width});
-						if (this.prevHighTracker !== currTime)
+						if (this.playLines === 1)
 						{
-							this.shiftAmount = 0;
-							this.prevHighTracker = currTime;
+							// let blks = data.filter(function(d){return timeline.getX() >= d["x"]
+							// 				  			  && timeline.getX() <= d["x"]
+							// 				  			  	 + d["block"].width});
+							if (this.prevHighTracker !== currTime)
+							{
+								this.shiftAmount = 0;
+								this.prevHighTracker = currTime;
+							}
+							timeline.setX(c[i]["block"]["x"] 
+										  + this.timelineStartOffset
+										  + this.shiftAmount);
 						}
-						timeline.setX(c[i]["block"]["x"] 
-									  + this.timelineStartOffset
-									  + this.shiftAmount);
 					}
 				}
 				catch(err){}
@@ -178,7 +183,7 @@ class PlayButton
  	 */
 	startPlayback(id, returnNoteSequence = false)
 	{
-		processDataset("all") //< collect all the blocks into the dataset. 
+		processDataset("all"); //< collect all the blocks into the dataset. 
 
 		highlightTrackerIdx = 0;
 		// Empty the buffers! 
@@ -190,13 +195,15 @@ class PlayButton
 		var startBlocks;
 		if (id < 0)
 		{
-			if(returnNoteSequence === true) {
+			if(returnNoteSequence === true || id !== -1) {
 				// Count up all the start blocks and play the entire piece!!!
 				startBlocks = data.filter(function(d){return d["leftConnection"] === null;});
+				this.playLines = 0;
 			}else{
 				//Find blocks where timeline.getX() is between X and X + block.width; 
 				startBlocks = data.filter(function(d){return timeline.getX() >= d["x"]
 										   && timeline.getX() <= d["x"]+d["block"].width});
+				this.playLines = 1;
 			}			
 
 			let workspaceID = -1;
@@ -323,11 +330,14 @@ class PlayButton
 		if (this.mode === "START_PLAYING")
 		{
 			// do things for the playhead GUI
-			let blks = data.filter(function(d){return timeline.getX() >= d["x"]
-										  			  && timeline.getX() <= d["x"]
-										  			  	 + d["block"].width});
-			timeline.setX(blks[0]["x"] + this.timelineStartOffset);
-			this.shiftAmount = 0;
+			if (this.playLines === 1)
+			{
+				let blks = data.filter(function(d){return timeline.getX() >= d["x"]
+											  			  && timeline.getX() <= d["x"]
+											  			  	 + d["block"].width});
+				timeline.setX(blks[0]["x"] + this.timelineStartOffset);
+				this.shiftAmount = 0;
+			}
 
 			// then actually start playing
 			this.player.start(this.midiBuffer[0]);
