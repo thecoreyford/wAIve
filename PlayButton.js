@@ -53,7 +53,6 @@ class PlayButton
 	 */
 	draw()
 	{
-
 		if (this.mode === "PLAYING" && this.playLines === 1)
 		{
 			if (musicBlocks.length <= 9)
@@ -133,9 +132,10 @@ class PlayButton
 								this.shiftAmount = 0;
 								this.prevHighTracker = currTime;
 							}
+
 							timeline.setX(c[i]["block"]["x"] 
 										  + this.timelineStartOffset
-										  + this.shiftAmount);
+										  + this.shiftAmount);	
 						}
 					}
 				}
@@ -533,7 +533,17 @@ class PlayButton
 	// TODO: Comment 
 	setX(newX)
 	{
-		this.x = newX;
+		// do not fly off the end of the timeline
+		if (newX > 1007.0){
+			this.x = 1007.0; return;
+		}
+
+		// do not fly before the end of the timeline bar
+		if (newX < 160.0){
+			this.ellipseX = 160.0; return;
+		}
+
+		this.ellipseX = newX;
 	}
 
 	// TODO: Comment 

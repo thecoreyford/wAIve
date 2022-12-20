@@ -53,6 +53,16 @@ class TimelineBar
 
 	setX(newX)
 	{
+		// do not fly off the end of the timeline
+		if (newX > 1007.0){
+			this.x = 1007.0; return;
+		}
+
+		// do not fly before the end of the timeline bar
+		if (newX < 160.0){
+			this.ellipseX = 160.0; return;
+		}
+
 		this.ellipseX = newX;
 	}
 
