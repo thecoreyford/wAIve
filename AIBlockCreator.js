@@ -138,10 +138,15 @@ class AIBlockCreator
 			blks = blks.filter(function(d){return d["y"] < workspace[0].getY()+workspace[0].getHeight();});
 			
 
+			let top = 1;
+			let middle = 1; 
+			let bottom = 1;
+
 			for (let i = 0; i < blks.length; i++){
 				// top 
 				if(blks[i].y > workspace[1].getY() 
-				  && blks[i].y < workspace[1].getY() + workspace[1].getHeight())
+				  && blks[i].y < workspace[1].getY() + workspace[1].getHeight()
+				  && top === 1)
 				{
 					let myColour = color(djOrange);
 					myColour.setAlpha(255 - (((millis() - this.timing) / 4000.0) * 255));
@@ -153,11 +158,13 @@ class AIBlockCreator
 								 0.2,
 								 1,
 								 myColour);
+					top = 0;
 				}
 
 				// middle 
 				if(blks[i].y > workspace[2].getY() 
-				  && blks[i].y < workspace[2].getY() + workspace[2].getHeight())
+				  && blks[i].y < workspace[2].getY() + workspace[2].getHeight()
+				  && middle === 1)
 				{
 					let myColour = color(djGreen2);
 					myColour.setAlpha(255 - (((millis() - this.timing) / 4000.0) * 255));
@@ -169,11 +176,13 @@ class AIBlockCreator
 								 0.2,
 								 1,
 								 myColour);
+					middle = 0;
 				}
 
 				// bottom 
 				if(blks[i].y > workspace[3].getY() 
-				  && blks[i].y < workspace[3].getY() + workspace[3].getHeight())
+				  && blks[i].y < workspace[3].getY() + workspace[3].getHeight()
+				  && bottom === 1)
 				{
 					let myColour = color(djPink);
 					myColour.setAlpha(255 - (((millis() - this.timing) / 4000.0) * 255));
@@ -185,6 +194,7 @@ class AIBlockCreator
 								 0.2,
 								 0,
 								 myColour);
+					bottom = 0;
 				}
 			}
 
