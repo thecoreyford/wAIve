@@ -163,6 +163,16 @@ class PlayButton
 		    && mouseY <= this.y+this.height)
 		{
 
+			//====
+	    	logger.log(JSON.stringify({"timestamp": str(round(millis(),3)),
+									   "desc": "Big play pressed",
+									   "x": this.x,
+									   "y": this.y,
+									   "wasFlashing": this.flashing,
+									   "toPlay?": !(this.player.isPlaying())}
+									   	, null, "\t"));	
+			//====
+
 			if (this.player.isPlaying())
 			{
 				this.stopPlayback();

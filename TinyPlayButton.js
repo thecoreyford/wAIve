@@ -1,5 +1,5 @@
 /** A play button which triggers to the larger play button class, to playback snippets of audio for a block..*/
-class TinyPlayButton //TODO: this would be better called surrogate play button or something like that... 
+class TinyPlayButton //TODO: this would be better called surrogate play button or something like that, maybe... 
 {
 	/**
  	 * Constructor
@@ -11,7 +11,7 @@ class TinyPlayButton //TODO: this would be better called surrogate play button o
 	 * @param {object} mute - the mute button also on this block
  	 * @return {void} Nothing
  	 */
-	constructor(x,y,w,h,id,mute,workspace = false)
+	constructor(x,y,w,h,id,mute,workspace = false, parent = null)
 	{
 		this.x = x + 10; 
 		this.y = y + 6; 
@@ -28,6 +28,8 @@ class TinyPlayButton //TODO: this would be better called surrogate play button o
 
 		this.flashing = false;
 		globalFlashOffset = 0.001;
+
+		this.parent = parent; //< to log the block it belongs to
 	}
 
 	/**
@@ -145,6 +147,31 @@ class TinyPlayButton //TODO: this would be better called surrogate play button o
 			&& mouseX < this.x + this.width 
 			&& mouseY > this.y 
 			&& mouseY < this.y + this.height) {
+
+			//====
+			if(this.id < 0){
+				logger.log(JSON.stringify({"timestamp": str(round(millis(),3)),
+									   "desc": "Medium play pressed",
+									   "x": this.x,
+									   "y": this.y,
+									   "wasFlashing": this.flashing,
+									   "toPlay?": playButton.mode === "STOPPED"}
+									   	, null, "\t"));	
+			} else {
+				print("ewww")
+				console.log(JSON.stringify({"timestamp": str(round(millis(),3)),
+									   "desc": "Tiny play pressed",
+									   "x": this.x,
+									   "y": this.y,
+									   "wasFlashing": this.flashing,
+									   "toPlay?": playButton.mode === "STOPPED",
+									   "blockID": this.parent.getID(),
+									   "blockGrid": this.parent.grid.getBooleanArray(),
+										"blockIsAI": this.parent.isAI,
+										"blockWasFlying": (this.parent.flying === undefined ? false : this.parent.flying)}
+									   	, null, "\t"));	
+			}
+			//====
 
 			if (playButton.mode === "STOPPED")
 			{

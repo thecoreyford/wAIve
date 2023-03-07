@@ -44,8 +44,10 @@ class MusicBlock
 	   										this.width, 
 	   										this.height, 
 	   										this.id, 
-	   										this.muteButton);
-
+	   										this.muteButton,
+	   										false,
+	   										this);
+	   	
 	   	this.interacted = false;
 
 
@@ -255,13 +257,18 @@ class MusicBlock
   		// log if we are about to end dragging... 
   		if (this.dragging && playButton.player.isPlaying() === false)
     	{
+    		//====
 	    	logger.log(JSON.stringify({"timestamp": str(round(millis(),3)),
 									   "blockID": this.getID(),
-									   "blockGrid": this.getGridArray(), 
+									   "blockGrid": this.grid.getBooleanArray(),
 									   "desc": "Dragged block",
 									   "x": this.x,
 									   "y": this.y,
-									   "isAI": this.isAI}, null, "\t"));
+									   "isAI": this.isAI,
+									   "wasFlying": (this.flying === undefined ? false : this.flying)}
+									   	, null, "\t"));	
+			this.flying = false; //< pretty hacky place to do this but whatever.
+			//====		
 	    }
 
     	this.dragging = false; // Quit dragging
@@ -385,7 +392,7 @@ class MusicBlock
 			return this.grid.getInternalButtonsArray();
 		}
 
-		// If muted.... 
+		// If muted return a blank array.... 
 		let arr = [];
 		for (let j = 0; j < 8; ++j){
   			for (let i = 0; i < 8; ++i){

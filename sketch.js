@@ -153,7 +153,7 @@ function draw()
   	let elapsedTime = millis() - startTime; 
 	if (elapsedTime > (25 * 1000))
 	{
-		logger.save();
+		// logger.save();
 
 		if (doFly)
 		{
@@ -217,19 +217,6 @@ function draw()
  */
 function mousePressed() 
 {
-	// // If block creator is pressed
-	// if (blockCreator.hasMouseOver()) 
-	// {
-	// 	musicBlocks.push (new MusicBlock(300 + random(0, 40),
-	// 								     270 + random(-20,40),
-	// 								     200,
-	// 								     100));
-	// 	logger.log(JSON.stringify({"timestamp": str(round(millis(),3)),
-	// 				"blockID": musicBlocks[musicBlocks.length-1].getID(),
-	// 				"blockGrid": "blank",//musicBlocks[musicBlocks.length-1].getGridArray() 
-	// 				"desc": "Added non-AI block."},null, "\t") + "\n");
-	// }
-
 	// If a music block is pressed 
 	for (let i = 0; i < musicBlocks.length; ++i)
 	{

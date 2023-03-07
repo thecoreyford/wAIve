@@ -141,14 +141,19 @@ class MusicGrid
 	  			// }
 	  			
 
-	  			logger.log(JSON.stringify({"timestamp": str(round(millis(),3)),
+	  			//=====
+	  			console.log(JSON.stringify({"timestamp": str(round(millis(),3)),
 										   "blockID": this.parent.getID(),
-										   "blockGrid": this.parent.getGridArray(), 
+										   "blockGrid": this.parent.grid.getBooleanArray(), 
 										   "desc": "Toggled note",
 										   "indexOfButton": str(i),
 										   "setToOn": this.toggleButtons[i].isOn,
-										   "isAI": this.parent.isAI}, null, "\t") 
+										   "isAI": this.parent.isAI,
+										   "wasFlying": (this.parent.flying === undefined ? false : this.parent.flying)}, 
+										   null, "\t") 
 	  									   + "\n");
+	  			this.parent.flying = false; //< pretty hacky place to do this but whatever.
+	  			//=====
 	  		}	
 	  	}
 	}
@@ -279,5 +284,17 @@ class MusicGrid
 	//TODO: comment
 	getCurrentToggleColour(){
 		return this.toggleButtons[0].onColour;
+	}
+
+	getBooleanArray()
+	{
+		let myBoolArray = [];
+
+		for (let i = 0; i < this.toggleButtons.length; ++i)
+		{
+			myBoolArray.push(this.toggleButtons[i].isOn === true ? 1 : 0);
+		}
+
+		return myBoolArray;
 	}
 }
