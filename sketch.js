@@ -69,6 +69,8 @@ var globalFlashOffset = 0.001;
 
 var doFly = false;
 
+let loggerText; 
+
 //========================================================================================
 
 // MAIN FUNCTIONS  
@@ -121,6 +123,11 @@ function setup()
   musicBlocks.push (new MusicBlock(35, 760, 200, 100, djPink));
   musicBlocks.push (new MusicBlock(295, 760, 200, 100, djGreen2));
   musicBlocks.push (new MusicBlock(545, 760, 200, 100, djOrange));
+
+
+  // for the logger 
+  loggerText = createInput();
+  loggerText.position(0, 900);
 }
 
 /**

@@ -142,7 +142,7 @@ class MusicGrid
 	  			
 
 	  			//=====
-	  			console.log(JSON.stringify({"timestamp": str(round(millis(),3)),
+	  			logger.log(JSON.stringify({"timestamp": str(round(millis(),3)),
 										   "blockID": this.parent.getID(),
 										   "blockGrid": this.parent.grid.getBooleanArray(), 
 										   "desc": "Toggled note",

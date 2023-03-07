@@ -3,13 +3,14 @@ class Logger
 {
 	constructor() 
 	{
-		this.logFiles = false;
+		this.logFiles = true;
 		this.logged_items = ""; 
 	}
 
 	log (newString)
 	{ 
-		if (this.logFiles) {this.logged_items  = this.logged_items + newString;}	
+		if (this.logFiles) {this.logged_items  = this.logged_items + newString;}
+		loggerText.value(this.logged_items);	
 	}
 
 	printLog()

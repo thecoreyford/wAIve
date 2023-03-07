@@ -158,8 +158,7 @@ class TinyPlayButton //TODO: this would be better called surrogate play button o
 									   "toPlay?": playButton.mode === "STOPPED"}
 									   	, null, "\t"));	
 			} else {
-				print("ewww")
-				console.log(JSON.stringify({"timestamp": str(round(millis(),3)),
+				logger.log(JSON.stringify({"timestamp": str(round(millis(),3)),
 									   "desc": "Tiny play pressed",
 									   "x": this.x,
 									   "y": this.y,
