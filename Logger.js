@@ -18,6 +18,31 @@ class Logger
 		if (this.logFiles) {print (this.logged_items);}
 	}
 
+	saveLog()
+	{
+		if (this.logFiles)
+		{
+			// Write to file... 
+			var today = new Date();
+			var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+			var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+			var dateTime = date+' '+time;
+	 
+			var file_name = "log file " + dateTime + ".json";
+
+			var dbx = new Dropbox.Dropbox({ accessToken: access_token });
+
+			dbx.filesUpload({path: '/' + file_name, contents: this.logged_items})
+			.then(function (response) {
+				console.log(response);
+			})
+			.catch(function (error){
+				console.log(error);
+			})
+		}
+
+	}
+
 	save()
 	{
 		if (this.logFiles)

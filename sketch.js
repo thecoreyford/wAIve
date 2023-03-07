@@ -189,6 +189,9 @@ function draw()
 			}
 			startTime = millis();
 			doFly = !doFly;
+
+			// Let's also save the log at this point 
+			logger.saveLog();
 		}
 		else
 		{
