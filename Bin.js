@@ -60,6 +60,21 @@ class Bin
 			// if a block is over the bin delete it
 			if ((lx1 < rx2 || lx2 > rx1) && (ly1 < ry2 || ly2 > ry1)) 
 			{   
+
+				//=====
+	    		logger.log(JSON.stringify({"timestamp": str(round(millis(),3)),
+									   "blockID": musicBlocks[i].getID(),
+									   "blockGrid": musicBlocks[i].grid.getBooleanArray(),
+									   "desc": "Deleted block",
+									   "x": this.x,
+									   "y": this.y,
+									   "isAI": musicBlocks[i].isAI,
+									   "wasFlying": (musicBlocks[i].flying === undefined ? false : musicBlocks[i].flying)}
+									   	, null, "\t"));	
+				musicBlocks[i].flying = false; //< pretty hacky place to do this but whatever.
+				//=====
+
+
 				//deleted music block I which is an AI block??????
 				musicBlocks = musicBlocks.splice (musicBlocks.indexOf(musicBlocks[i]), 1);
 				if (i != 0) {i = i - 1;}
