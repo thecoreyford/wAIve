@@ -1,14 +1,14 @@
-# PhD Study 2 Tool
+# wAIve
 ___
 ## About The Project
-TODO
+A AI-based CST for composing music. Iteratively informd by human-centred insights from Computer Science students with skills ranging from Data Science, to HCI, to Design.
 ___
 ## Getting Started
 **Prerequisites**
 
 If you want to used the data logger, you need to create a file called AppKey.js, containing the string variable access_token, which will include the token used to save and load files to Dropbox.
 
-To run the project locally you need to start a server. 
+To run the project locally you need to start a server. E.g. http-server -p 8000.
 
 ___
 ## Contributing
@@ -23,6 +23,8 @@ ___
 
 ## Credits
 * **Corey Ford** - Developer
+
+Special thanks to the (anonymised for research purposes) iterative design participants! 
 ___
 
 ## License
@@ -30,12 +32,10 @@ The library licenses are as written by the respective author(s).
 Otherwise, this work is open sourced. 
 
 If using this tool, please consider referencing this paper: 
+[COMING SOON - please email c.j.ford@qmul.ac.uk if interested]
 
 ___
 ## Contact
 For any more information, project idea, or generally a nice chat, please get in touch!
 * **Corey Ford** - c.j.ford@qmul.ac.uk
-
 ___
-## Acknowledgments
-TODO
