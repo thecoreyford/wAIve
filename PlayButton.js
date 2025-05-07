@@ -57,11 +57,11 @@ class PlayButton
 		{
 			if (musicBlocks.length <= 9)
 			{
-				this.shiftAmount += 1.5;				
+				this.shiftAmount += 0.6; //tweaked for demo
 			}
 			else
 			{
-				this.shiftAmount += 2.5;
+				this.shiftAmount += 0.6; //tweaked for demo
 			}
 
 		}
