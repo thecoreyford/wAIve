@@ -8,16 +8,16 @@
 // VARIABLES
 
 const canvasWidth = 1410;
-const canvasHeight = 870; //580;
+const canvasHeight = 870;
 
-const workspaceX = 60; //canvasWidth * 0.10; //125
-const workspaceY = 130; //canvasHeight * 0.15; //117
-const workspaceWidth = 1050; //canvasWidth - (2 * workspaceX); //1000
-const workspaceHeight = 620; //canvasHeight - (2 * workspaceY); //546
-const workspace2X = workspaceX + 35 + 45; //canvasWidth * 0.10; //125
-const workspace2Y = 200; //canvasHeight * 0.15; //117
-const workspace2Width = workspaceWidth - 80 - 45; //canvasWidth - (2 * workspaceX); //1000
-const workspace2Height = 130; //canvasHeight - (2 * workspaceY); //546
+const workspaceX = 60;
+const workspaceY = 130;
+const workspaceWidth = 1050;
+const workspaceHeight = 620;
+const workspace2X = workspaceX + 35 + 45;
+const workspace2Y = 200;
+const workspace2Width = workspaceWidth - 80 - 45;
+const workspace2Height = 130;
 var workspace  = [new Workspace(workspaceX, 
 							   workspaceY, 
 							   workspaceWidth, 
@@ -34,11 +34,6 @@ var workspace  = [new Workspace(workspaceX,
 								  workspace2Y + 400, 
 								  workspace2Width, 
 								  workspace2Height, -4,  djLightLightGrey, djPink)];
-
-// var blockCreator = new BlockCreator(workspace[0].getX() + 60,
-// 									workspace[0].getY() + 10,
-// 									40,
-// 									40);
 
 var playButton = new PlayButton(workspace[0].getX() + 10,
 								workspace[0].getY() + 10,
@@ -86,10 +81,6 @@ function preload()
 	puzzle_image_orange = loadImage("assets/puzzle-orange.png");
 	puzzle_image_pink = loadImage("assets/puzzle-pink.png");
 	puzzle_image_green = loadImage("assets/puzzle-green.png");
-	
-	// clarinet = loadImage("assets/clarinet.png");
-	// piano = loadImage("assets/piano.png");
-	// cello = loadImage("assets/cello.png");
 	
 	binClosed = loadImage("assets/binClosed.png");
 	binOpen = loadImage("assets/binOpen.png");
@@ -169,9 +160,6 @@ function draw()
 			processDataset("all");
 			let aiBlocks = data.filter(function(d){return d["isAI"] === true;});
 			aiBlocks = aiBlocks.filter(function(d){return d["x"] >= workspace[0].getWidth();});
-    		// aiBlocks = aiBlocks.filter(function(d){return d["y"] >= workspace[0].getY();});
-    		// aiBlocks = aiBlocks.filter(function(d){return d["x"] < workspace[0].getX()+workspace[0].getWidth();});
-    		// aiBlocks = aiBlocks.filter(function(d){return d["y"] < workspace[0].getY()+workspace[0].getHeight();});
 
 			// randomly pick one 
 			if (aiBlocks.length > 0)
@@ -233,7 +221,7 @@ function mousePressed()
 		musicBlocks[i].mousePressed();
 	}
 
-	// If a tiny plan button is pressed
+	// If a tiny play button is pressed
 	for (let i = 1; i < workspace.length; ++i)
 	{
 		workspace[i].onClicked();
@@ -248,7 +236,6 @@ function mousePressed()
  */
 function keyPressed() {
   if (keyCode === LEFT_ARROW && true) {
- 	// aiBlockCreator.update (musicBlocks);
  	aiBlockCreator.magentaUpdate (musicBlocks);
   }
 }
